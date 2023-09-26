@@ -13,8 +13,8 @@ import { Menu } from "lucide-react";
 export const Nav = () => {
   const links = [
     {
-      href: "/#books",
-      label: "Кітаптар",
+      href: "/#works",
+      label: "Шығармалар",
     },
     {
       href: "/#about",
