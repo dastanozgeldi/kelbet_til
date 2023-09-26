@@ -1,22 +1,46 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-export const GradeSelector = () => {
+export const GradeSelector = ({ data }: { data: any }) => {
   const grades = ["7", "8", "9", "10", "11", "12"];
+  const languages = ["Қазақша", "Орысша"];
 
   return (
-    <Tabs defaultValue={grades[0]} className="w-[400px]">
-      <TabsList>
-        {grades.map((grade) => (
-          <TabsTrigger key={grade} value={grade}>
-            {grade}
-          </TabsTrigger>
-        ))}
-      </TabsList>
-      {/* {grades.map((grade) => (
+    <div className="flex flex-col sm:flex-row sm:items-center gap-6">
+      <div>
+        <h2>Сынып</h2>
+        <Tabs defaultValue={grades[0]}>
+          <TabsList>
+            {grades.map((grade) => (
+              <TabsTrigger key={grade} value={grade}>
+                {grade}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+          {/* {grades.map((grade) => (
         <TabsContent key={grade} value={grade}>
           {grade}
         </TabsContent>
       ))} */}
-    </Tabs>
+        </Tabs>
+      </div>
+
+      <div>
+        <h2>Оқыту тілі</h2>
+        <Tabs defaultValue={languages[0]}>
+          <TabsList>
+            {languages.map((language) => (
+              <TabsTrigger key={language} value={language}>
+                {language}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+          {/* {grades.map((grade) => (
+        <TabsContent key={grade} value={grade}>
+          {grade}
+        </TabsContent>
+      ))} */}
+        </Tabs>
+      </div>
+    </div>
   );
 };

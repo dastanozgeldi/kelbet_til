@@ -19,7 +19,9 @@ export const Works = () => {
           <h1 className="text-3xl my-2 md:text-4xl font-bold">Шығармалар</h1>
           <hr className="border-0 max-w-[36px] h-[6px] bg-[#6C63FF]" />
         </div>
-        <GradeSelector />
+        {/* TODO: ALL LITERARY DATA PASSED THEN FILTERED OUT THERE. */}
+        {/* MEANING IT'S ALSO DISPLAYED FROM THERE. */}
+        <GradeSelector data={[]} />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
           <WorkItem />
