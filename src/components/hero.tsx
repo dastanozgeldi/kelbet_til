@@ -7,7 +7,7 @@ export const Hero = () => {
       <div className="w-full flex flex-col items-center lg:flex-row lg:justify-between lg:gap-8">
         <div className="lg:w-1/2 space-y-8">
           <h1 className="text-3xl lg:text-4xl font-bold">
-            Барлық НЗМ әдебиеті, бір жерде.
+            НЗМ әдеби шығармалары, бір жерде.
           </h1>
           <Search />
         </div>
