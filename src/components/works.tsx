@@ -1,22 +1,8 @@
 "use client";
 import { useState } from "react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { WorkItem } from "./work-item";
 import data from "../../public/works.json";
-import Link from "next/link";
-
-interface WorkItemProps {
-  name: string;
-  grade: string;
-  language: string;
-}
-
-const WorkItem = ({ name, grade, language }: WorkItemProps) => {
-  return (
-    <Link href={`/${grade}${language}=${name}`} className="rounded bg-[#F8F8F8] p-8 min-w-[300px]">
-      <h2 className="text-2xl font-bold">{name}</h2>
-    </Link>
-  );
-};
 
 export const Works = () => {
   const grades = ["7", "8", "9", "10", "11", "12"];
