@@ -1,5 +1,6 @@
+import Link from "next/link";
 import Image from "next/image";
-import { Search } from "./search";
+import { Button } from "./ui/button";
 
 export const Hero = () => {
   return (
@@ -9,7 +10,14 @@ export const Hero = () => {
           <h1 className="text-3xl lg:text-4xl font-bold">
             НЗМ әдеби шығармалары бір жерде.
           </h1>
-          <Search />
+
+          <Button
+            variant="default"
+            size="lg"
+            className="text-xl bg-[#6C63FF] hover:bg-[#6C63FF]/90"
+          >
+            <Link href="/#works">Бастау</Link>
+          </Button>
         </div>
         <div className="lg:w-1/2">
           <Image
