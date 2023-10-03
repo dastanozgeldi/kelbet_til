@@ -1,7 +1,6 @@
 "use client";
 import { PDFBook } from "@/components/pdf-book";
 import { pdfjs } from "react-pdf";
-// import data from "../../../public/works.json";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.js",
@@ -23,18 +22,3 @@ export default function Page({ params }: { params: { work: string } }) {
     </div>
   );
 }
-
-// export async function generateStaticParams() {
-//   const result = [];
-
-//   for (const key in data) {
-//     if (data.hasOwnProperty(key)) {
-//       const namesArray = data[key as keyof typeof data].map((obj) => ({
-//         name: `${obj.name}`,
-//       }));
-//       result.push(...namesArray);
-//     }
-//   }
-
-//   return result;
-// }

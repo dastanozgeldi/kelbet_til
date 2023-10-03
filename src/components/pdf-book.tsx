@@ -1,6 +1,7 @@
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Document, Page } from "react-pdf";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import "react-pdf/dist/Page/AnnotationLayer.css";
 
 export const PDFBook = ({ file }: { file: string }) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -22,30 +23,32 @@ export const PDFBook = ({ file }: { file: string }) => {
     }
   };
 
+  const hasMultiplePages = numPages >= 3;
+
   return (
-    <div className="pdf-book">
-      <p>
-        {currentPage} of {numPages}
-      </p>
-      {numPages >= 3 && (
-        <div className="flex items-center gap-6">
-          <button onClick={prevPage}>
-            <ChevronLeft />
-          </button>
-          <button onClick={nextPage}>
-            <ChevronRight />
-          </button>
-        </div>
-      )}
+    <>
+      <div className="flex items-center justify-between gap-6">
+        <button disabled={!hasMultiplePages} onClick={prevPage}>
+          <ChevronLeft className="w-8 h-8" />
+        </button>
+        <p>
+          {currentPage} бет (жалпы {numPages})
+        </p>
+        <button disabled={!hasMultiplePages} onClick={nextPage}>
+          <ChevronRight className="w-8 h-8" />
+        </button>
+      </div>
       <Document
-        className="flex"
+        className="flex items-center flex-col xl:flex-row"
         file={file}
         onLoadSuccess={onDocumentLoadSuccess}
         onLoadError={console.error}
       >
-        <Page pageNumber={currentPage} />
-        {currentPage + 1 <= numPages && <Page pageNumber={currentPage + 1} />}
+        <Page pageNumber={currentPage} renderTextLayer={false} />
+        {currentPage + 1 <= numPages && (
+          <Page pageNumber={currentPage + 1} renderTextLayer={false} />
+        )}
       </Document>
-    </div>
+    </>
   );
 };
