@@ -16,10 +16,6 @@ export const Nav = () => {
       href: "/#works",
       label: "Шығармалар",
     },
-    {
-      href: "/#about",
-      label: "Сайт туралы",
-    },
   ];
 
   return (
@@ -35,7 +31,7 @@ export const Nav = () => {
           <DropdownMenuSeparator />
           {links.map((link, i) => (
             <DropdownMenuItem key={i}>
-              <Link href={link.href}>{link.label}</Link>
+              <a href={link.href}>{link.label}</a>
             </DropdownMenuItem>
           ))}
         </DropdownMenuContent>
