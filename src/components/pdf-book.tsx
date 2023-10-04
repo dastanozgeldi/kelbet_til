@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Document, Page } from "react-pdf";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import "react-pdf/dist/Page/AnnotationLayer.css";
+import { PDFBookLoading } from "./pdf-book-loading";
 
 export const PDFBook = ({ file }: { file: string }) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -39,6 +40,7 @@ export const PDFBook = ({ file }: { file: string }) => {
         </button>
       </div>
       <Document
+        loading={<PDFBookLoading />}
         className="flex items-center flex-col xl:flex-row"
         file={file}
         onLoadSuccess={onDocumentLoadSuccess}
