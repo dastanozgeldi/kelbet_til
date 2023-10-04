@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Document, Page } from "react-pdf";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Icons } from "./icons";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import { PDFBookLoading } from "./pdf-book-loading";
 
@@ -30,13 +30,13 @@ export const PDFBook = ({ file }: { file: string }) => {
     <>
       <div className="flex items-center justify-between gap-6">
         <button disabled={!hasMultiplePages} onClick={prevPage}>
-          <ChevronLeft className="w-8 h-8" />
+          <Icons.left className="w-8 h-8" />
         </button>
         <p>
           {currentPage} бет (жалпы {numPages})
         </p>
         <button disabled={!hasMultiplePages} onClick={nextPage}>
-          <ChevronRight className="w-8 h-8" />
+          <Icons.right className="w-8 h-8" />
         </button>
       </div>
       <Document
