@@ -1,4 +1,3 @@
-import Link from "next/link";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,7 +7,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Logo } from "./logo";
-import { Menu } from "lucide-react";
+import { Icons } from "./icons";
 
 export const Nav = () => {
   const links = [
@@ -24,7 +23,7 @@ export const Nav = () => {
 
       <DropdownMenu>
         <DropdownMenuTrigger>
-          <Menu />
+          <Icons.menu />
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuLabel>Сілтемелер</DropdownMenuLabel>

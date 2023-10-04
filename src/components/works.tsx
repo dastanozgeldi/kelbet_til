@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
-import { Search } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { WorkItem } from "./work-item";
+import { Icons } from "./icons";
 import data from "../../public/works.json";
 
 export const Works = () => {
@@ -68,7 +68,7 @@ export const Works = () => {
             onChange={(e) => setSearchValue(e.target.value)}
           />
           <label htmlFor="search">
-            <Search
+            <Icons.search
               className="absolute left-4 top-1/2 -translate-y-1/2"
               size={20}
             />
