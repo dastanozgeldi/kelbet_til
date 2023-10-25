@@ -20,8 +20,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <GoogleAnalytics GA_TRACKING_ID={process.env.GA_TRACKING_ID!} />
       <body className={cn(inter.className, "min-h-screen px-8 lg:px-24 py-4")}>
-        <GoogleAnalytics />
         <Nav />
         {children}
       </body>
