@@ -14,13 +14,7 @@ export const GoogleAnalytics = ({ GA_TRACKING_ID }: Props) => {
         strategy="afterInteractive"
       />
       <Script id="google-analytics" strategy="afterInteractive">
-        {`
-        window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-
-          gtag('config', '${GA_TRACKING_ID}');
-        `}
+        {`window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', "${GA_TRACKING_ID}");`}
       </Script>
     </>
   );
