@@ -15,8 +15,15 @@ export const Works = () => {
   const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
-    setGrade(localStorage.getItem("grade")!);
-    setLanguage(localStorage.getItem("language")!);
+    const getStorageItems = () => {
+      const grade = localStorage.getItem("grade");
+      if (grade) setGrade(grade);
+
+      const language = localStorage.getItem("language");
+      if (language) setLanguage(language);
+    };
+
+    getStorageItems();
   }, []);
 
   // explanation: russian-speaking 12th graders don't have a T2.
