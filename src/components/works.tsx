@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { WorkItem } from "./work-item";
 import { Icons } from "./icons";
@@ -8,10 +8,16 @@ import data from "../../public/works.json";
 export const Works = () => {
   const grades = ["7", "8", "9", "10", "11", "12"];
   const languages = ["T1", "T2"];
+
   const [grade, setGrade] = useState(grades[0]);
   const [language, setLanguage] = useState(languages[0]);
 
   const [searchValue, setSearchValue] = useState("");
+
+  useEffect(() => {
+    setGrade(localStorage.getItem("grade")!);
+    setLanguage(localStorage.getItem("language")!);
+  }, []);
 
   // explanation: russian-speaking 12th graders don't have a T2.
   let works = null;
@@ -35,7 +41,13 @@ export const Works = () => {
         <div className="flex flex-col sm:flex-row sm:items-center gap-6">
           <div>
             <h2>Сынып</h2>
-            <Tabs value={grade} onValueChange={setGrade}>
+            <Tabs
+              value={grade}
+              onValueChange={(value) => {
+                setGrade(value);
+                localStorage.setItem("grade", value);
+              }}
+            >
               <TabsList>
                 {grades.map((grade) => (
                   <TabsTrigger key={grade} value={grade}>
@@ -48,7 +60,13 @@ export const Works = () => {
 
           <div>
             <h2>Оқыту тілі</h2>
-            <Tabs value={language} onValueChange={setLanguage}>
+            <Tabs
+              value={language}
+              onValueChange={(value) => {
+                setLanguage(value);
+                localStorage.setItem("language", value);
+              }}
+            >
               <TabsList>
                 <TabsTrigger value="T1">Қазақша</TabsTrigger>
                 <TabsTrigger value="T2">Орысша</TabsTrigger>
