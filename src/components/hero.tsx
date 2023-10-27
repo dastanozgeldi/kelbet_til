@@ -11,13 +11,17 @@ export const Hero = () => {
             НЗМ әдеби шығармалары бір жерде.
           </h1>
 
-          <Button
-            variant="default"
-            size="lg"
-            className="text-xl bg-[#6C63FF] hover:bg-[#6C63FF]/90"
-          >
-            <Link href="/#works">Бастау</Link>
-          </Button>
+          <div>
+            <Link href="/#works">
+              <Button
+                variant="default"
+                size="lg"
+                className="text-xl bg-[#6C63FF] hover:bg-[#6C63FF]/90"
+              >
+                Бастау
+              </Button>
+            </Link>
+          </div>
         </div>
         <div className="lg:w-1/2">
           <Image
