@@ -8,9 +8,11 @@ import data from "../../public/works.json";
 export const Works = () => {
   const grades = ["7", "8", "9", "10", "11", "12"];
   const languages = ["T1", "T2"];
+  const terms = ["1", "2", "3", "4"];
 
   const [grade, setGrade] = useState(grades[0]);
   const [language, setLanguage] = useState(languages[0]);
+  const [term, setTerm] = useState(terms[0]);
 
   const [searchValue, setSearchValue] = useState("");
 
@@ -21,6 +23,9 @@ export const Works = () => {
 
       const language = localStorage.getItem("language");
       if (language) setLanguage(language);
+
+      const term = localStorage.getItem("term");
+      if (term) setTerm(term);
     };
 
     getStorageItems();
@@ -46,6 +51,7 @@ export const Works = () => {
           <hr className="border-0 max-w-[36px] h-[6px] bg-[#6C63FF]" />
         </div>
         <div className="flex flex-col sm:flex-row sm:items-center gap-6">
+          {/* grade tabs */}
           <div>
             <h2>Сынып</h2>
             <Tabs
@@ -65,6 +71,7 @@ export const Works = () => {
             </Tabs>
           </div>
 
+          {/* language tabs */}
           <div>
             <h2>Оқыту тілі</h2>
             <Tabs
@@ -80,8 +87,28 @@ export const Works = () => {
               </TabsList>
             </Tabs>
           </div>
+
+          {/* term tabs */}
+          <div>
+            <h2>Тоқсан</h2>
+            <Tabs
+              value={term}
+              onValueChange={(value) => {
+                setTerm(value);
+                localStorage.setItem("term", value);
+              }}
+            >
+              <TabsList>
+                <TabsTrigger value="1">1</TabsTrigger>
+                <TabsTrigger value="2">2</TabsTrigger>
+                <TabsTrigger value="3">3</TabsTrigger>
+                <TabsTrigger value="4">4</TabsTrigger>
+              </TabsList>
+            </Tabs>
+          </div>
         </div>
 
+        {/* search bar */}
         <div className="relative">
           <input
             id="search"
@@ -100,15 +127,22 @@ export const Works = () => {
           </label>
         </div>
 
+        <div className="pb-3">
+          <h2 className="text-2xl my-2 font-bold">{term} тоқсан</h2>
+          <hr className="border-0 max-w-[36px] h-[6px] bg-[#6C63FF]" />
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
-          {filteredWorks.map((work) => (
-            <WorkItem
-              key={work.name}
-              grade={grade}
-              language={language}
-              name={work.name}
-            />
-          ))}
+          {filteredWorks.map(
+            (work) =>
+              work.term === term && (
+                <WorkItem
+                  key={work.name}
+                  grade={grade}
+                  language={language}
+                  name={work.name}
+                />
+              )
+          )}
         </div>
       </div>
     </div>
