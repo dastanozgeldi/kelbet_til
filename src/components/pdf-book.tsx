@@ -3,6 +3,7 @@ import { Document, Page } from "react-pdf";
 import { Icons } from "./icons";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import { PDFBookLoading } from "./pdf-book-loading";
+import { PDFBookError } from "./pdf-book-error";
 
 export const PDFBook = ({ file }: { file: string }) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -49,7 +50,8 @@ export const PDFBook = ({ file }: { file: string }) => {
       </div>
       <Document
         loading={<PDFBookLoading />}
-        className="flex items-center flex-col xl:flex-row"
+        error={<PDFBookError />}
+        className="flex items-center justify-center flex-col xl:flex-row"
         file={file}
         onLoadSuccess={onDocumentLoadSuccess}
         onLoadError={console.error}

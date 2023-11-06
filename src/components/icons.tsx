@@ -8,11 +8,13 @@ import {
   ChevronLeft,
   Menu,
   Search,
+  X,
 } from "lucide-react";
 
 export type Icon = LucideIcon;
 
 export const Icons = {
+  x: X,
   left: ChevronLeft,
   right: ChevronRight,
   check: Check,
