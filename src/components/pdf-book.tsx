@@ -29,13 +29,21 @@ export const PDFBook = ({ file }: { file: string }) => {
   return (
     <>
       <div className="flex items-center justify-between gap-6">
-        <button disabled={!hasMultiplePages} onClick={prevPage}>
+        <button
+          className="disabled:text-gray-400"
+          disabled={!hasMultiplePages || currentPage === 1}
+          onClick={prevPage}
+        >
           <Icons.left className="w-8 h-8" />
         </button>
-        <p>
-          {currentPage} бет (жалпы {numPages})
-        </p>
-        <button disabled={!hasMultiplePages} onClick={nextPage}>
+        <span>
+          {currentPage}-бет (жалпы {numPages})
+        </span>
+        <button
+          className="disabled:text-gray-400"
+          disabled={!hasMultiplePages || currentPage === numPages}
+          onClick={nextPage}
+        >
           <Icons.right className="w-8 h-8" />
         </button>
       </div>
