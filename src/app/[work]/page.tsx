@@ -13,7 +13,7 @@ export default function Page({ params }: { params: { work: string } }) {
   const name = work.split("=")[1];
 
   return (
-    <div className="my-6">
+    <div className="my-6 overflow-hidden">
       <div className="mb-6">
         <h1 className="text-3xl my-2 md:text-4xl font-bold">{name}</h1>
         <hr className="border-0 max-w-[36px] h-[6px] bg-[#6C63FF]" />
