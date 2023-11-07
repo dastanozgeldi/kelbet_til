@@ -128,7 +128,7 @@ export const Works = () => {
         </div>
 
         <div className="pb-3">
-          <h2 className="text-2xl my-2 font-bold">{term} тоқсан</h2>
+          <h2 className="text-2xl my-2 font-bold">{term}-тоқсан</h2>
           <hr className="border-0 max-w-[36px] h-[6px] bg-[#6C63FF]" />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
