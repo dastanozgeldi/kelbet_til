@@ -27,12 +27,18 @@ export const PDFBook = ({ file }: { file: string }) => {
 
   const hasMultiplePages = numPages >= 3;
 
+  const noPrevPage = !hasMultiplePages || currentPage === 1;
+  const noNextPage =
+    !hasMultiplePages ||
+    currentPage === numPages ||
+    currentPage + 1 === numPages;
+
   return (
     <>
       <div className="flex items-center justify-between gap-6">
         <button
           className="disabled:text-gray-400"
-          disabled={!hasMultiplePages || currentPage === 1}
+          disabled={noPrevPage}
           onClick={prevPage}
         >
           <Icons.left className="w-8 h-8" />
@@ -42,7 +48,7 @@ export const PDFBook = ({ file }: { file: string }) => {
         </span>
         <button
           className="disabled:text-gray-400"
-          disabled={!hasMultiplePages || currentPage === numPages}
+          disabled={noNextPage}
           onClick={nextPage}
         >
           <Icons.right className="w-8 h-8" />
