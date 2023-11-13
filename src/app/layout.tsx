@@ -10,7 +10,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Келбет Тіл",
   description:
-    "Назарбаев Зияткерлік Мектептердің қазақ әдебиеті бағдарламасы бойынша шығармалар жинағы.",
+    "Назарбаев Зияткерлік Мектептерінің қазақ тілі мен әдебиеті бағдарламасы бойынша шығармалар жинағы.",
 };
 
 export default function RootLayout({
