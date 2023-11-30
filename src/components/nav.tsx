@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Logo } from "./logo";
 import { Icons } from "./icons";
+import Link from "next/link";
 
 export const Nav = () => {
   const links = [
@@ -30,7 +31,7 @@ export const Nav = () => {
           <DropdownMenuSeparator />
           {links.map((link, i) => (
             <DropdownMenuItem key={i}>
-              <a href={link.href}>{link.label}</a>
+              <Link href={link.href}>{link.label}</Link>
             </DropdownMenuItem>
           ))}
         </DropdownMenuContent>
