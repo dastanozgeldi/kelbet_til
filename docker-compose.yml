@@ -1,0 +1,14 @@
+version: "3.6"
+services:
+  postgres:
+    image: postgres:13
+    ports:
+      - "1234:5432"
+    restart: always
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: ${PGPASSWORD}
+      POSTGRES_HOST_AUTH_METHOD: trust
+volumes:
+  db_data:
