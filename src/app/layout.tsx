@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Nav } from "@/components/nav";
 import { cn } from "@/lib/utils";
+import { EdgeStoreProvider } from "@/lib/edgestore";
 import { GoogleAnalytics } from "./google-analytics";
 import "./globals.css";
 
@@ -23,7 +24,7 @@ export default function RootLayout({
       <GoogleAnalytics GA_TRACKING_ID={process.env.GA_TRACKING_ID!} />
       <body className={cn(inter.className, "min-h-screen px-8 lg:px-24 py-4")}>
         <Nav />
-        {children}
+        <EdgeStoreProvider>{children}</EdgeStoreProvider>
       </body>
     </html>
   );
