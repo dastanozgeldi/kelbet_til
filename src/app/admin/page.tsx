@@ -1,9 +1,29 @@
 import Link from "next/link";
+import { type Book } from "@prisma/client";
 
-import { NoAccess } from "@/components/no-access";
-import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { db } from "@/server/db";
 import { getServerAuthSession } from "@/server/auth";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { NoAccess } from "@/components/errors";
+import { NoBooks } from "@/components/errors";
+
+const WorkItem = ({ book }: { book: Book }) => {
+  return (
+    <div className="border rounded-lg w-full p-3">
+      <div>
+        <h1 className="text-xl font-semibold">{book.title}</h1>
+        <span>{book.createdAt.toLocaleDateString()}</span>
+      </div>
+      <a
+        href={book.fileUrl}
+        className={cn(buttonVariants({ variant: "link" }), "p-0")}
+      >
+        {book.fileUrl}
+      </a>
+    </div>
+  );
+};
 
 export default async function Page() {
   const session = await getServerAuthSession();
@@ -27,11 +47,15 @@ export default async function Page() {
       </div>
 
       {/* list of books */}
-      <div className="flex flex-col items-center justify-between">
-        {books.map((book) => (
-          <div key={book.id}>{book.fileUrl}</div>
-        ))}
-      </div>
+      {books.length > 0 ? (
+        <div className="space-y-3">
+          {books.map((book) => (
+            <WorkItem key={book.id} book={book} />
+          ))}
+        </div>
+      ) : (
+        <NoBooks />
+      )}
     </div>
   );
 }
