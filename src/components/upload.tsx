@@ -28,6 +28,8 @@ export const Upload = ({ data, setData }: { data: any; setData: any }) => {
         </div>
 
         <Button
+          // if we don't specify the type, it will be a submit button inside a form
+          type="button"
           disabled={!file || uploadProgress > 0}
           onClick={async () => {
             // reset previous files if any
