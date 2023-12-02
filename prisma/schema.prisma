@@ -10,6 +10,24 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Language {
+  T1
+  T2
+}
+
+model Book {
+  id      String @id @default(cuid())
+  title   String
+  fileUrl String // set from uploadthing
+
+  grade    String // [7, 8, 9, 10, 11, 12]
+  language Language
+  term     String // [1, 2, 3, 4]
+
+  user   User?   @relation(fields: [userId], references: [id])
+  userId String?
+}
+
 // Necessary for Next auth
 model Account {
   id                String  @id @default(cuid())
@@ -51,6 +69,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  books         Book[]
 }
 
 model VerificationToken {
