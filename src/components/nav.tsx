@@ -9,6 +9,7 @@ import {
 import { Logo } from "./logo";
 import { Icons } from "./icons";
 import Link from "next/link";
+import { LoginButton } from "./login-button";
 
 export const Nav = () => {
   const links = [
@@ -22,20 +23,23 @@ export const Nav = () => {
     <nav className="w-full flex items-center justify-between">
       <Logo />
 
-      <DropdownMenu>
-        <DropdownMenuTrigger>
-          <Icons.menu />
-        </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <DropdownMenuLabel>Сілтемелер</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          {links.map((link, i) => (
-            <DropdownMenuItem key={i}>
-              <Link href={link.href}>{link.label}</Link>
-            </DropdownMenuItem>
-          ))}
-        </DropdownMenuContent>
-      </DropdownMenu>
+      <div className="flex items-center space-x-3 lg:space-x-6">
+        <LoginButton />
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <Icons.menu />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuLabel>Сілтемелер</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            {links.map((link, i) => (
+              <DropdownMenuItem key={i}>
+                <Link href={link.href}>{link.label}</Link>
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
     </nav>
   );
 };
