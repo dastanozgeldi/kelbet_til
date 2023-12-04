@@ -133,8 +133,7 @@ export function Works({ books }: { books: Book[] }) {
       </div>
       <div className="space-y-6 my-3">
         {filteredWorks.map(
-          (work) =>
-            work.term === term && <WorkItem key={work.title} book={work} />
+          (work) => work.term === term && <WorkItem key={work.id} book={work} />
         )}
       </div>
     </div>
