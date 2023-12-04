@@ -1,8 +1,8 @@
 "use client";
+import { useEffect, useState } from "react";
 import { type Book } from "@prisma/client";
 
 import { WorkItem } from "./work-item";
-import { useEffect, useState } from "react";
 import { Icons } from "../icons";
 import { Tabs, TabsList, TabsTrigger } from "../ui/tabs";
 
@@ -139,14 +139,4 @@ export function Works({ books }: { books: Book[] }) {
       </div>
     </div>
   );
-
-  //   return books.length > 0 ? (
-  //     <div className="space-y-6">
-  //       {books.map((book: Book) => (
-  //         <WorkItem key={book.id} book={book} />
-  //       ))}
-  //     </div>
-  //   ) : (
-  //     <NoBooks />
-  //   );
 }
