@@ -23,7 +23,7 @@ export default async function Page() {
           <hr className="border-0 max-w-[36px] h-[6px] bg-[#6C63FF]" />
         </div>
         <Link href="/admin/new">
-          <Button>Жаңа кітап</Button>
+          <Button>Жаңа шығарма</Button>
         </Link>
       </div>
 
