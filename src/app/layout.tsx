@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Toaster } from "@/components/ui/toaster";
 import { Nav } from "@/components/nav";
 import { cn } from "@/lib/utils";
 import { EdgeStoreProvider } from "@/lib/edgestore";
@@ -25,6 +26,7 @@ export default function RootLayout({
       <body className={cn(inter.className, "min-h-screen px-8 lg:px-24 py-4")}>
         <Nav />
         <EdgeStoreProvider>{children}</EdgeStoreProvider>
+        <Toaster />
       </body>
     </html>
   );
