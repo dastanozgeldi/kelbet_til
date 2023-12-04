@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,6 +8,8 @@ import { Label } from "@/components/ui/label";
 import { Upload } from "@/components/upload";
 
 export default function Page() {
+  const router = useRouter();
+
   const grades = ["7", "8", "9", "10", "11", "12"];
   const languages = ["T1", "T2"];
   const terms = ["1", "2", "3", "4"];
@@ -32,6 +35,8 @@ export default function Page() {
     const book = await res.json();
 
     console.log("created book: ", book);
+
+    router.push("/admin");
   };
 
   return (

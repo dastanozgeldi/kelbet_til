@@ -1,7 +1,7 @@
+import "react-pdf/dist/Page/AnnotationLayer.css";
 import { useState } from "react";
 import { Document, Page } from "react-pdf";
 import { Icons } from "./icons";
-import "react-pdf/dist/Page/AnnotationLayer.css";
 import { PDFBookLoading } from "./pdf-book-loading";
 import { PDFBookError } from "./errors";
 
