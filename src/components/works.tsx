@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { WorkItem } from "./work-item";
 import { Icons } from "./icons";
-import data from "../../public/works.json";
+import { type Book } from "@prisma/client";
 
-export const Works = () => {
+export const Works = ({ books }: { books: Book[] }) => {
   const grades = ["7", "8", "9", "10", "11", "12"];
   const languages = ["T1", "T2"];
   const terms = ["1", "2", "3", "4"];
@@ -34,13 +34,17 @@ export const Works = () => {
   // explanation: russian-speaking 12th graders don't have a T2.
   let works = null;
   if (grade === "12" && language === "T2") {
-    works = data[`12T1`];
+    works = books.filter(
+      (book) => book.grade === "12" && book.language === "T1"
+    );
   } else {
-    works = data[`${grade}${language}` as keyof typeof data];
+    works = books.filter(
+      (book) => book.grade === grade && book.language === language
+    );
   }
 
-  const filteredWorks = works.filter((work) =>
-    work.name.toLowerCase().includes(searchValue.toLowerCase())
+  const filteredWorks = works.filter((book) =>
+    book.title.toLowerCase().includes(searchValue.toLowerCase())
   );
 
   return (
@@ -135,12 +139,7 @@ export const Works = () => {
           {filteredWorks.map(
             (work) =>
               work.term === term && (
-                <WorkItem
-                  key={work.name}
-                  grade={grade}
-                  language={language}
-                  name={work.name}
-                />
+                <WorkItem key={work.id} id={work.id} name={work.title} />
               )
           )}
         </div>
