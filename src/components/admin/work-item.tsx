@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { type Book } from "@prisma/client";
 
 import { cn } from "@/lib/utils";
@@ -36,20 +37,38 @@ export const WorkItem = ({ book }: { book: Book }) => {
           <h1 className="text-xl font-semibold">{book.title}</h1>
           <span>{book.createdAt.toLocaleDateString()}</span>
         </div>
+      </div>
+
+      {/* actions */}
+      <div className="flex items-center justify-between">
+        <div className="space-x-3">
+          <Link
+            href={{
+              pathname: `/admin/edit/${book.id}`,
+              query: {
+                title: book.title,
+                grade: book.grade,
+                language: book.language,
+                term: book.term,
+              },
+            }}
+            className={cn(buttonVariants({ size: "sm" }))}
+          >
+            Өзгерту
+          </Link>
+          <Button variant="destructive" size="sm" onClick={handleClick}>
+            Жою
+          </Button>
+        </div>
         <a
           href={book.fileUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className={cn(buttonVariants({ variant: "link" }), "p-0")}
+          className={cn(buttonVariants({ variant: "outline", size: "sm" }))}
         >
-          Сілтеме
+          Жүктеу
         </a>
       </div>
-
-      {/* actions */}
-      <Button variant="destructive" size="sm" onClick={handleClick}>
-        Жою
-      </Button>
     </div>
   );
 };

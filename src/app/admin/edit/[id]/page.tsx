@@ -1,15 +1,17 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Upload } from "@/components/upload";
 import { useToast } from "@/components/ui/use-toast";
 
-export default function Page() {
+export default function Page({ params }: { params: { id: string } }) {
+  const id = params.id;
   const router = useRouter();
+  const searchParams = useSearchParams();
+
   const { toast } = useToast();
 
   const grades = ["7", "8", "9", "10", "11", "12"];
@@ -17,28 +19,29 @@ export default function Page() {
   const terms = ["1", "2", "3", "4"];
 
   const [data, setData] = useState({
-    title: "",
-    fileUrl: "",
-    grade: grades[0],
-    language: languages[0],
-    term: terms[0],
+    title: searchParams.get("title"),
+    grade: searchParams.get("grade"),
+    language: searchParams.get("language"),
+    term: searchParams.get("term"),
   });
+
+  console.log(data);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     // prisma call
-    const res = await fetch("/api/add-book", {
+    const res = await fetch("/api/edit-book", {
       method: "POST",
-      body: JSON.stringify(data),
+      body: JSON.stringify({ id, data }),
     });
 
     if (res.ok) {
       const data = await res.json();
 
       toast({
-        title: "Шығарма сәтті жүктелді",
-        description: `Жүктелген шығарма: ${data.book.title}`,
+        title: "Шығарма сәтті өзгертілді",
+        description: `Өзгертілген шығарма: ${data.book.title}`,
       });
       return router.push("/admin");
     }
@@ -52,7 +55,7 @@ export default function Page() {
   return (
     <div className="m-6 p-6 max-w-[60ch] mx-auto">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold">Жаңа шығарма</h1>
+        <h1 className="text-2xl font-bold">Шығарманы өзгерту</h1>
         <hr className="border-0 max-w-[36px] h-[4px] bg-[#6C63FF]" />
       </div>
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -61,32 +64,17 @@ export default function Page() {
           <Input
             id="title"
             type="text"
+            value={data.title || ""}
             placeholder="Абай жолы"
             onChange={(e) => setData({ ...data, title: e.target.value })}
           />
-        </div>
-        <div>
-          <Upload data={data} setData={setData} />
-          {data.fileUrl && (
-            <div className="flex items-center space-x-3 my-3">
-              <a
-                href={data.fileUrl}
-                target="_blank"
-                rel="noreferrer"
-                className={buttonVariants({ variant: "outline" })}
-              >
-                Көру
-              </a>
-              <span>Файл жүктелді</span>
-            </div>
-          )}
         </div>
         <div>
           <Label htmlFor="grade">Сынып</Label>
           <select
             id="grade"
             className="w-full px-3 py-2 rounded-md bg-transparent border"
-            defaultValue={grades[0]}
+            defaultValue={data.grade || grades[0]}
             onChange={(e) => setData({ ...data, grade: e.target.value })}
           >
             {grades.map((grade) => (
@@ -97,11 +85,11 @@ export default function Page() {
           </select>
         </div>
         <div>
-          <label htmlFor="language">Тіл</label>
+          <Label htmlFor="language">Тіл</Label>
           <select
             id="language"
             className="w-full px-3 py-2 rounded-md bg-transparent border"
-            defaultValue="T1"
+            defaultValue={data.language || languages[0]}
             onChange={(e) => setData({ ...data, language: e.target.value })}
           >
             {languages.map((language) => (
@@ -116,7 +104,7 @@ export default function Page() {
           <select
             id="term"
             className="w-full px-3 py-2 rounded-md bg-transparent border"
-            defaultValue="1"
+            defaultValue={data.term || terms[0]}
             onChange={(e) => setData({ ...data, term: e.target.value })}
           >
             {terms.map((term) => (
@@ -126,7 +114,7 @@ export default function Page() {
             ))}
           </select>
         </div>
-        <Button disabled={!data.fileUrl}>Сақтау</Button>
+        <Button>Сақтау</Button>
       </form>
     </div>
   );
