@@ -35,25 +35,23 @@ export const PDFBook = ({ file }: { file: string }) => {
 
   return (
     <>
-      <div className="flex items-center justify-between gap-6">
-        <button
-          className="disabled:text-gray-400"
-          disabled={noPrevPage}
-          onClick={prevPage}
-        >
-          <Icons.left className="w-8 h-8" />
-        </button>
-        <span>
-          {currentPage}-бет (жалпы {numPages})
-        </span>
-        <button
-          className="disabled:text-gray-400"
-          disabled={noNextPage}
-          onClick={nextPage}
-        >
-          <Icons.right className="w-8 h-8" />
-        </button>
-      </div>
+      <button
+        className="fixed z-10 top-1/2 left-3 disabled:text-gray-400"
+        disabled={noPrevPage}
+        onClick={prevPage}
+      >
+        <Icons.left className="w-8 h-8" />
+      </button>
+      <span className="flex items-center justify-center font-bold">
+        {currentPage}-бет (жалпы {numPages})
+      </span>
+      <button
+        className="fixed z-10 top-1/2 right-3 disabled:text-gray-400"
+        disabled={noNextPage}
+        onClick={nextPage}
+      >
+        <Icons.right className="w-8 h-8" />
+      </button>
       <Document
         loading={<PDFBookLoading />}
         error={<PDFBookError />}
