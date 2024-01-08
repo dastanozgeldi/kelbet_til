@@ -9,7 +9,11 @@ import { Works } from "@/components/admin/works";
 export default async function Page() {
   const session = await getServerAuthSession();
 
-  const books = await db.book.findMany({ orderBy: { createdAt: "desc" } });
+  const books = await db.book.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
 
   if (session?.user.role !== "ADMIN") {
     return <NoAccess />;
@@ -19,7 +23,7 @@ export default async function Page() {
       {/* header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-3xl font-bold">Шығармалар</h1>
+          <h1 className="text-3xl font-bold">Сәлем, Дастан Өзгелді!</h1>
           <hr className="border-0 max-w-[36px] h-[6px] bg-[#6C63FF]" />
         </div>
         <Link href="/admin/new">
