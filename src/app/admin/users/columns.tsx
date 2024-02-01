@@ -1,15 +1,9 @@
 "use client";
 
+import { type User } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "@/components/ui/badge";
 import { UserDropdown } from "./user-dropdown";
-
-export type User = {
-  id: string;
-  name: string | null;
-  email: string | null;
-  role: "ADMIN" | "USER";
-};
 
 function translateRole(role: User["role"]) {
   switch (role) {
@@ -23,17 +17,17 @@ function translateRole(role: User["role"]) {
 export const columns: ColumnDef<User>[] = [
   {
     accessorKey: "name",
-    header: "Name",
+    header: "Аты-жөні",
     cell: ({ row }) => row.getValue("name"),
   },
   {
     accessorKey: "email",
-    header: "Email",
+    header: "Пошта",
     cell: ({ row }) => row.getValue("email"),
   },
   {
     accessorKey: "role",
-    header: "Role",
+    header: "Рөл",
     cell: ({ row }) => (
       <Badge variant="outline">{translateRole(row.getValue("role"))}</Badge>
     ),
