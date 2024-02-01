@@ -15,7 +15,7 @@ export default async function Page() {
     return <NoAccess />;
   }
   return (
-    <div className="max-w-[60ch] mx-auto m-6">
+    <>
       {/* header */}
       <div className="flex items-center justify-between mb-6">
         <div>
@@ -29,6 +29,6 @@ export default async function Page() {
 
       {/* list of books */}
       <Works books={books} />
-    </div>
+    </>
   );
 }
