@@ -1,29 +1,11 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Book, Plus, Users } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { links } from "@/config/links";
 
 export const Sidebar = () => {
   const pathname = usePathname();
-
-  const links = [
-    {
-      href: "/admin",
-      label: "Шығармалар",
-      icon: <Book width={20} height={20} />,
-    },
-    {
-      href: "/admin/new",
-      label: "Жаңа шығарма",
-      icon: <Plus width={20} height={20} />,
-    },
-    {
-      href: "/admin/users",
-      label: "Қолданушылар",
-      icon: <Users width={20} height={20} />,
-    },
-  ];
 
   return (
     <div className="fixed h-screen w-64 p-6 border-r">

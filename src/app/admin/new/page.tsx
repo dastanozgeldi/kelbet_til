@@ -50,87 +50,78 @@ export default function Page() {
   };
 
   return (
-    <>
-      {/* header */}
+    <form onSubmit={handleSubmit} className="space-y-4 my-6">
       <div>
-        <h1 className="text-3xl font-bold">Жаңа шығарма</h1>
-        <hr className="border-0 max-w-[36px] h-[6px] bg-[#6C63FF]" />
+        <Label htmlFor="title">Кітап атауы</Label>
+        <Input
+          id="title"
+          type="text"
+          placeholder="Абай жолы"
+          onChange={(e) => setData({ ...data, title: e.target.value })}
+        />
       </div>
-
-      {/* form */}
-      <form onSubmit={handleSubmit} className="space-y-4 my-6">
-        <div>
-          <Label htmlFor="title">Кітап атауы</Label>
-          <Input
-            id="title"
-            type="text"
-            placeholder="Абай жолы"
-            onChange={(e) => setData({ ...data, title: e.target.value })}
-          />
-        </div>
-        <div>
-          <Upload data={data} setData={setData} />
-          {data.fileUrl && (
-            <div className="flex items-center space-x-3 my-3">
-              <a
-                href={data.fileUrl}
-                target="_blank"
-                rel="noreferrer"
-                className={buttonVariants({ variant: "outline" })}
-              >
-                Көру
-              </a>
-              <span>Файл жүктелді</span>
-            </div>
-          )}
-        </div>
-        <div>
-          <Label htmlFor="grade">Сынып</Label>
-          <select
-            id="grade"
-            className="w-full px-3 py-2 rounded-md bg-transparent border"
-            defaultValue={grades[0]}
-            onChange={(e) => setData({ ...data, grade: e.target.value })}
-          >
-            {grades.map((grade) => (
-              <option key={grade} value={grade}>
-                {grade}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label htmlFor="language">Тіл</label>
-          <select
-            id="language"
-            className="w-full px-3 py-2 rounded-md bg-transparent border"
-            defaultValue="T1"
-            onChange={(e) => setData({ ...data, language: e.target.value })}
-          >
-            {languages.map((language) => (
-              <option key={language} value={language}>
-                {language}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <Label htmlFor="term">Тоқсан</Label>
-          <select
-            id="term"
-            className="w-full px-3 py-2 rounded-md bg-transparent border"
-            defaultValue="1"
-            onChange={(e) => setData({ ...data, term: e.target.value })}
-          >
-            {terms.map((term) => (
-              <option key={term} value={term}>
-                {term}
-              </option>
-            ))}
-          </select>
-        </div>
-        <Button disabled={!data.fileUrl}>Сақтау</Button>
-      </form>
-    </>
+      <div>
+        <Upload data={data} setData={setData} />
+        {data.fileUrl && (
+          <div className="flex items-center space-x-3 my-3">
+            <a
+              href={data.fileUrl}
+              target="_blank"
+              rel="noreferrer"
+              className={buttonVariants({ variant: "outline" })}
+            >
+              Көру
+            </a>
+            <span>Файл жүктелді</span>
+          </div>
+        )}
+      </div>
+      <div>
+        <Label htmlFor="grade">Сынып</Label>
+        <select
+          id="grade"
+          className="w-full px-3 py-2 rounded-md bg-transparent border"
+          defaultValue={grades[0]}
+          onChange={(e) => setData({ ...data, grade: e.target.value })}
+        >
+          {grades.map((grade) => (
+            <option key={grade} value={grade}>
+              {grade}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div>
+        <label htmlFor="language">Тіл</label>
+        <select
+          id="language"
+          className="w-full px-3 py-2 rounded-md bg-transparent border"
+          defaultValue="T1"
+          onChange={(e) => setData({ ...data, language: e.target.value })}
+        >
+          {languages.map((language) => (
+            <option key={language} value={language}>
+              {language}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div>
+        <Label htmlFor="term">Тоқсан</Label>
+        <select
+          id="term"
+          className="w-full px-3 py-2 rounded-md bg-transparent border"
+          defaultValue="1"
+          onChange={(e) => setData({ ...data, term: e.target.value })}
+        >
+          {terms.map((term) => (
+            <option key={term} value={term}>
+              {term}
+            </option>
+          ))}
+        </select>
+      </div>
+      <Button disabled={!data.fileUrl}>Сақтау</Button>
+    </form>
   );
 }
