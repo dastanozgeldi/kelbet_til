@@ -1,14 +1,11 @@
-import { User, columns } from "./columns";
-import { data } from "./data";
+import { db } from "@/server/db";
+import { columns } from "./columns";
 import { DataTable } from "./data-table";
 
-async function getData(): Promise<User[]> {
-  // Fetch data from your API here.
-  return data;
-}
-
-export default async function DemoPage() {
-  const data = await getData();
+export default async function Page() {
+  const data = await db.user.findMany({
+    orderBy: { role: "desc" },
+  });
 
   return <DataTable columns={columns} data={data} />;
 }
