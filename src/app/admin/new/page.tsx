@@ -50,12 +50,15 @@ export default function Page() {
   };
 
   return (
-    <div className="m-6 p-6 max-w-[60ch] mx-auto">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold">Жаңа шығарма</h1>
-        <hr className="border-0 max-w-[36px] h-[4px] bg-[#6C63FF]" />
+    <>
+      {/* header */}
+      <div>
+        <h1 className="text-3xl font-bold">Жаңа шығарма</h1>
+        <hr className="border-0 max-w-[36px] h-[6px] bg-[#6C63FF]" />
       </div>
-      <form onSubmit={handleSubmit} className="space-y-4">
+
+      {/* form */}
+      <form onSubmit={handleSubmit} className="space-y-4 my-6">
         <div>
           <Label htmlFor="title">Кітап атауы</Label>
           <Input
@@ -128,6 +131,6 @@ export default function Page() {
         </div>
         <Button disabled={!data.fileUrl}>Сақтау</Button>
       </form>
-    </div>
+    </>
   );
 }
