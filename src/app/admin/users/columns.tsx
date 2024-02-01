@@ -24,12 +24,12 @@ export const columns: ColumnDef<User>[] = [
   {
     accessorKey: "name",
     header: "Name",
-    cell: ({ row }) => <div className="capitalize">{row.getValue("name")}</div>,
+    cell: ({ row }) => row.getValue("name"),
   },
   {
     accessorKey: "email",
     header: "Email",
-    cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
+    cell: ({ row }) => row.getValue("email"),
   },
   {
     accessorKey: "role",
