@@ -1,3 +1,4 @@
+import { Header } from "@/components/admin/header";
 import { Sidebar } from "@/components/admin/sidebar";
 
 export default function AdminLayout({
@@ -10,7 +11,10 @@ export default function AdminLayout({
       <div>
         <Sidebar />
       </div>
-      <div className="w-full m-6">{children}</div>
+      <div className="my-5">
+        <Header />
+        <div className="w-full">{children}</div>
+      </div>
     </div>
   );
 }
