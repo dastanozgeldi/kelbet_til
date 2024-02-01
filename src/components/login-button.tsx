@@ -1,5 +1,5 @@
-import { getServerAuthSession } from "@/server/auth";
 import Link from "next/link";
+import { getServerAuthSession } from "@/server/auth";
 
 export async function LoginButton() {
   const session = await getServerAuthSession();
@@ -9,8 +9,11 @@ export async function LoginButton() {
   }
   return (
     <>
-      {session.user.role === "ADMIN" && <Link href="/admin">Админ</Link>}
-      <Link href="/api/auth/signout">Шығу</Link>
+      {session.user.role === "ADMIN" ? (
+        <Link href="/admin">Админ</Link>
+      ) : (
+        <Link href="/api/auth/signout">Шығу</Link>
+      )}
     </>
   );
 }
