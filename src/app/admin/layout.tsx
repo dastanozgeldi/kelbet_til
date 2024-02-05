@@ -1,5 +1,4 @@
-import { Header } from "@/components/admin/header";
-import { Sidebar } from "@/components/admin/sidebar";
+import { Header, Sidebar } from "@/components/admin";
 import { NoAccess } from "@/components/errors";
 import { getServerAuthSession } from "@/server/auth";
 
