@@ -2,6 +2,11 @@ import { db } from "@/server/db";
 import { getServerAuthSession } from "@/server/auth";
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Қолданушылар",
+};
 
 export default async function Page() {
   const session = await getServerAuthSession();

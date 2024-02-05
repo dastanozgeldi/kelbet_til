@@ -1,6 +1,15 @@
+import { Metadata } from "next";
+
 import { Header, Sidebar } from "@/components/admin";
 import { NoAccess } from "@/components/errors";
 import { getServerAuthSession } from "@/server/auth";
+
+export const metadata: Metadata = {
+  title: {
+    template: "%s | Админ",
+    default: "Админ",
+  },
+};
 
 export default async function AdminLayout({
   children,

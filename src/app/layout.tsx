@@ -10,7 +10,10 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Келбет Тіл",
+  title: {
+    template: "%s | Келбет тіл",
+    default: "Басты бет | Келбет тіл"
+  },
   description:
     "Назарбаев Зияткерлік Мектептерінің қазақ тілі мен әдебиеті бағдарламасы бойынша шығармалар жинағы.",
 };
