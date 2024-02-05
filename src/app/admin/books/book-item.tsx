@@ -6,6 +6,7 @@ import { buttonVariants } from "@/components/ui/button";
 
 import { EditBook } from "./edit-book";
 import { DeleteBook } from "./delete-book";
+import Link from "next/link";
 
 export const BookItem = ({ book }: { book: Book }) => {
   return (
@@ -24,14 +25,22 @@ export const BookItem = ({ book }: { book: Book }) => {
           <EditBook book={book} />
           <DeleteBook book={book} />
         </div>
-        <a
-          href={book.fileUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={cn(buttonVariants({ variant: "outline", size: "sm" }))}
-        >
-          Жүктеу
-        </a>
+        <div className="space-x-3">
+          <Link
+            href={`/${book.id}`}
+            className={cn(buttonVariants({ variant: "outline", size: "sm" }))}
+          >
+            Оқу
+          </Link>
+          <a
+            href={book.fileUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={cn(buttonVariants({ variant: "outline", size: "sm" }))}
+          >
+            Жүктеу
+          </a>
+        </div>
       </div>
     </div>
   );
