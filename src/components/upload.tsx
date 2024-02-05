@@ -1,7 +1,9 @@
 "use client";
 
-import { useEdgeStore } from "@/lib/edgestore";
 import { useState } from "react";
+
+import { useEdgeStore } from "@/lib/edgestore";
+
 import { Progress } from "./ui/progress";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";

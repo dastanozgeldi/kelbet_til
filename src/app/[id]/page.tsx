@@ -1,8 +1,9 @@
 "use client";
-import { PDFBook } from "@/components/pdf-book";
-import { type Book } from "@prisma/client";
 import { useEffect, useState } from "react";
 import { pdfjs } from "react-pdf";
+import { type Book } from "@prisma/client";
+
+import { PDFBook } from "@/components/pdf-book";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.js",
