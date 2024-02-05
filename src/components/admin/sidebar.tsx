@@ -12,11 +12,8 @@ export const Sidebar = () => {
   const pathname = usePathname();
 
   return (
-    <div className="fixed h-[90vh] w-64 p-6 border-r">
-      {/* sidebar header */}
-      <div>
-        <h1 className="text-xl font-bold">Администратор</h1>
-      </div>
+    <div className="fixed h-[90vh] w-64 py-8 pr-6 border-r">
+      <h1 className="text-xl font-bold">Администратор</h1>
 
       <div className="my-5 w-full h-[1.5px] bg-gray-100" />
 
