@@ -47,7 +47,6 @@ export const Upload = ({ data, setData }: { data: any; setData: any }) => {
               // you can run some server action or api here
               // to add the necessary data to your database
               setData({ ...data, fileUrl: res.url });
-              console.log(res);
             }
           }}
         >
