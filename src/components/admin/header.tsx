@@ -1,8 +1,8 @@
 "use client";
 
-import { links } from "@/config/links";
-import { usePathname } from "next/navigation";
 import { useCallback } from "react";
+import { usePathname } from "next/navigation";
+import { links } from "@/config/links";
 
 export const Header = () => {
   const pathname = usePathname();
