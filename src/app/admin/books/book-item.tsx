@@ -1,13 +1,13 @@
 "use client";
-import Link from "next/link";
 import { type Book } from "@prisma/client";
 
 import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
 
-import { buttonVariants } from "../ui/button";
-import { DeleteButton } from "./delete-button";
+import { EditBook } from "./edit-book";
+import { DeleteBook } from "./delete-book";
 
-export const WorkItem = ({ book }: { book: Book }) => {
+export const BookItem = ({ book }: { book: Book }) => {
   return (
     <div className="border rounded-lg w-full p-3">
       {/* info */}
@@ -21,22 +21,8 @@ export const WorkItem = ({ book }: { book: Book }) => {
       {/* actions */}
       <div className="flex items-center justify-between">
         <div className="space-x-3">
-          <Link
-            href={{
-              pathname: `/admin/books/edit/${book.id}`,
-              query: {
-                title: book.title,
-                grade: book.grade,
-                language: book.language,
-                term: book.term,
-              },
-            }}
-            className={cn(buttonVariants({ size: "sm" }))}
-          >
-            Өзгерту
-          </Link>
-
-          <DeleteButton book={book} />
+          <EditBook book={book} />
+          <DeleteBook book={book} />
         </div>
         <a
           href={book.fileUrl}

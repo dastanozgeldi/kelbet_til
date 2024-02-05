@@ -1,6 +1,6 @@
 import React from "react";
-import { MoreHorizontal } from "lucide-react";
 import { type User } from "@prisma/client";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
+import { Icons } from "@/components/icons";
 
 export const UserDropdown = ({ user }: { user: User }) => {
   const { toast } = useToast();
@@ -41,7 +42,7 @@ export const UserDropdown = ({ user }: { user: User }) => {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="h-8 w-8 p-0">
           <span className="sr-only">Меню</span>
-          <MoreHorizontal className="h-4 w-4" />
+          <Icons.more className="h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
