@@ -2,9 +2,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
-import { LogOut } from "lucide-react";
+
 import { cn } from "@/lib/utils";
 import { links } from "@/config/links";
+
+import { Icons } from "../icons";
 
 export const Sidebar = () => {
   const pathname = usePathname();
@@ -39,7 +41,7 @@ export const Sidebar = () => {
         className="absolute bottom-0 text-red-500 flex items-center gap-3 text-sm my-6"
         onClick={() => signOut()}
       >
-        <LogOut width={20} height={20} /> Шығу
+        <Icons.logout width={20} height={20} /> Шығу
       </button>
     </div>
   );
