@@ -10,10 +10,10 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Button } from "../ui/button";
-import { useToast } from "../ui/use-toast";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
 
-export const DeleteButton = ({ book }: { book: Book }) => {
+export const DeleteBook = ({ book }: { book: Book }) => {
   const { toast } = useToast();
 
   const handleClick = async () => {

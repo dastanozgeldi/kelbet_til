@@ -1,12 +1,12 @@
 import { db } from "@/server/db";
-import { Works } from "@/components/admin/works";
+import { Books } from "./books";
 
 export default async function Page() {
-  const books = await db.book.findMany({
+  const data = await db.book.findMany({
     orderBy: {
       createdAt: "desc",
     },
   });
 
-  return <Works books={books} />;
+  return <Books data={data} />;
 }

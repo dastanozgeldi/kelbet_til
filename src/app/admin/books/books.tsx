@@ -2,12 +2,13 @@
 import { useEffect, useState } from "react";
 import { type Book } from "@prisma/client";
 
-import { NewBook } from "./new";
-import { WorkItem } from "./work-item";
-import { Icons } from "../icons";
-import { Tabs, TabsList, TabsTrigger } from "../ui/tabs";
+import { Icons } from "@/components/icons";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-export function Works({ books }: { books: Book[] }) {
+import { NewBook } from "./new-book";
+import { BookItem } from "./book-item";
+
+export function Books({ data }: { data: Book[] }) {
   const grades = ["7", "8", "9", "10", "11", "12"];
   const languages = ["T1", "T2"];
   const terms = ["1", "2", "3", "4"];
@@ -34,23 +35,23 @@ export function Works({ books }: { books: Book[] }) {
   }, []);
 
   // explanation: russian-speaking 12th graders don't have a T2.
-  let works = null;
+  let books = null;
   if (grade === "12" && language === "T2") {
-    works = books.filter(
+    books = data.filter(
       (book) => book.grade === "12" && book.language === "T1"
     );
   } else {
-    works = books.filter(
+    books = data.filter(
       (book) => book.grade === grade && book.language === language
     );
   }
 
-  const filteredWorks = works.filter((book) =>
+  const filteredBooks = books.filter((book) =>
     book.title.toLowerCase().includes(searchValue.toLowerCase())
   );
 
   return (
-    <div id="works">
+    <div id="books">
       <div className="flex items-end justify-between">
         <div className="flex flex-col sm:flex-row sm:items-center gap-6">
           {/* grade tabs */}
@@ -136,8 +137,8 @@ export function Works({ books }: { books: Book[] }) {
         <hr className="border-0 max-w-[36px] h-[6px] bg-[#6C63FF]" />
       </div>
       <div className="space-y-6 my-3">
-        {filteredWorks.map(
-          (work) => work.term === term && <WorkItem key={work.id} book={work} />
+        {filteredBooks.map(
+          (book) => book.term === term && <BookItem key={book.id} book={book} />
         )}
       </div>
     </div>
