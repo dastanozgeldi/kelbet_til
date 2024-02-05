@@ -2,7 +2,7 @@ import { type Language, PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-const works = [
+const books = [
   {
     title: "Аяз би ертегісі",
     fileUrl:
@@ -990,17 +990,17 @@ const works = [
 ];
 
 async function main() {
-  const books = await prisma.book.createMany({
-    data: works.map((work) => ({
-      title: work.title,
-      fileUrl: work.fileUrl,
-      grade: work.grade,
-      language: work.language as Language,
-      term: work.term,
+  const data = await prisma.book.createMany({
+    data: books.map((book) => ({
+      title: book.title,
+      fileUrl: book.fileUrl,
+      grade: book.grade,
+      language: book.language as Language,
+      term: book.term,
     })),
   });
 
-  console.log("generated books", books);
+  console.log("generated books", data);
 }
 
 main()
