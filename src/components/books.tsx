@@ -1,11 +1,13 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { WorkItem } from "./work-item";
-import { Icons } from "./icons";
+import Link from "next/link";
 import { type Book } from "@prisma/client";
 
-export const Works = ({ books }: { books: Book[] }) => {
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
+import { Icons } from "./icons";
+
+export const Books = ({ data }: { data: Book[] }) => {
   const grades = ["7", "8", "9", "10", "11", "12"];
   const languages = ["T1", "T2"];
   const terms = ["1", "2", "3", "4"];
@@ -32,23 +34,23 @@ export const Works = ({ books }: { books: Book[] }) => {
   }, []);
 
   // explanation: russian-speaking 12th graders don't have a T2.
-  let works = null;
+  let books = null;
   if (grade === "12" && language === "T2") {
-    works = books.filter(
+    books = data.filter(
       (book) => book.grade === "12" && book.language === "T1"
     );
   } else {
-    works = books.filter(
+    books = data.filter(
       (book) => book.grade === grade && book.language === language
     );
   }
 
-  const filteredWorks = works.filter((book) =>
+  const filteredBooks = books.filter((book) =>
     book.title.toLowerCase().includes(searchValue.toLowerCase())
   );
 
   return (
-    <div id="works">
+    <div id="books">
       <div className="min-h-screen">
         <div className="mb-6">
           <h1 className="text-3xl my-2 md:text-4xl font-bold">Шығармалар</h1>
@@ -136,10 +138,16 @@ export const Works = ({ books }: { books: Book[] }) => {
           <hr className="border-0 max-w-[36px] h-[6px] bg-[#6C63FF]" />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
-          {filteredWorks.map(
-            (work) =>
-              work.term === term && (
-                <WorkItem key={work.id} id={work.id} name={work.title} />
+          {filteredBooks.map(
+            (book) =>
+              book.term === term && (
+                <Link
+                  key={book.id}
+                  href={`/${book.id}`}
+                  className="rounded bg-[#F8F8F8] p-8 min-w-[300px]"
+                >
+                  <h2 className="text-2xl font-bold">{book.title}</h2>
+                </Link>
               )
           )}
         </div>

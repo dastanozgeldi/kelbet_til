@@ -14,11 +14,11 @@ export const Upload = ({ data, setData }: { data: any; setData: any }) => {
 
   return (
     <div>
-      <Label htmlFor="work-file">Шығарма</Label>
+      <Label htmlFor="book-file">Шығарма</Label>
       <div className="flex items-center gap-3">
         <div className="grid w-full items-center gap-1.5">
           <Input
-            id="work-file"
+            id="book-file"
             type="file"
             onChange={(e) => {
               setUploadProgress(0);

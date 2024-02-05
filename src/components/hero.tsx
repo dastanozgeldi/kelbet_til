@@ -12,7 +12,7 @@ export const Hero = () => {
           </h1>
 
           <div>
-            <Link href="/#works">
+            <Link href="/#books">
               <Button
                 variant="default"
                 size="lg"
