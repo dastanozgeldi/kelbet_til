@@ -18,7 +18,7 @@ export default async function AdminLayout({
         <Sidebar />
       </div>
       <div className="my-5">
-        <Header />
+        <Header user={session.user} />
         <div className="w-full">{children}</div>
       </div>
     </div>
