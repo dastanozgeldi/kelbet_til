@@ -3,9 +3,8 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { type Book } from "@prisma/client";
 
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
 import { Icons } from "./icons";
+import { GradeTabs, LanguageTabs, TermTabs } from "./tabs";
 
 export const Books = ({ data }: { data: Book[] }) => {
   const grades = ["7", "8", "9", "10", "11", "12"];
@@ -57,61 +56,18 @@ export const Books = ({ data }: { data: Book[] }) => {
           <hr className="border-0 max-w-[36px] h-[6px] bg-[#6C63FF]" />
         </div>
         <div className="flex flex-col sm:flex-row sm:items-center gap-6">
-          {/* grade tabs */}
-          <div>
-            <h2>Сынып</h2>
-            <Tabs
-              value={grade}
-              onValueChange={(value) => {
-                setGrade(value);
-                localStorage.setItem("grade", value);
-              }}
-            >
-              <TabsList>
-                {grades.map((grade) => (
-                  <TabsTrigger key={grade} value={grade}>
-                    {grade}
-                  </TabsTrigger>
-                ))}
-              </TabsList>
-            </Tabs>
-          </div>
-
-          {/* language tabs */}
-          <div>
-            <h2>Оқыту тілі</h2>
-            <Tabs
-              value={language}
-              onValueChange={(value) => {
-                setLanguage(value);
-                localStorage.setItem("language", value);
-              }}
-            >
-              <TabsList>
-                <TabsTrigger value="T1">Қазақша</TabsTrigger>
-                <TabsTrigger value="T2">Орысша</TabsTrigger>
-              </TabsList>
-            </Tabs>
-          </div>
-
-          {/* term tabs */}
-          <div>
-            <h2>Тоқсан</h2>
-            <Tabs
-              value={term}
-              onValueChange={(value) => {
-                setTerm(value);
-                localStorage.setItem("term", value);
-              }}
-            >
-              <TabsList>
-                <TabsTrigger value="1">1</TabsTrigger>
-                <TabsTrigger value="2">2</TabsTrigger>
-                <TabsTrigger value="3">3</TabsTrigger>
-                <TabsTrigger value="4">4</TabsTrigger>
-              </TabsList>
-            </Tabs>
-          </div>
+          <GradeTabs
+            grades={grades}
+            grade={grade}
+            localStorageKey="grade"
+            setGrade={setGrade}
+          />
+          <LanguageTabs
+            language={language}
+            localStorageKey="language"
+            setLanguage={setLanguage}
+          />
+          <TermTabs term={term} localStorageKey="term" setTerm={setTerm} />
         </div>
 
         {/* search bar */}
