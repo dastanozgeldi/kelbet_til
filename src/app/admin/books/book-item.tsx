@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { type Book } from "@prisma/client";
 
 import { cn } from "@/lib/utils";
@@ -6,7 +7,6 @@ import { buttonVariants } from "@/components/ui/button";
 
 import { EditBook } from "./edit-book";
 import { DeleteBook } from "./delete-book";
-import Link from "next/link";
 
 export const BookItem = ({ book }: { book: Book }) => {
   return (

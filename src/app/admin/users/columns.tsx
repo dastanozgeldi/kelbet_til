@@ -3,6 +3,7 @@
 import { type User } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "@/components/ui/badge";
+
 import { UserDropdown } from "./user-dropdown";
 
 function translateRole(role: User["role"]) {
