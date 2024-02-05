@@ -10,7 +10,7 @@ export async function LoginButton() {
   return (
     <>
       {session.user.role === "ADMIN" ? (
-        <Link href="/admin">Админ</Link>
+        <Link href="/admin/books">Админ</Link>
       ) : (
         <Link href="/api/auth/signout">Шығу</Link>
       )}

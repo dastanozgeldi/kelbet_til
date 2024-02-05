@@ -43,7 +43,7 @@ export default function Page({ params }: { params: { id: string } }) {
         title: "Шығарма сәтті өзгертілді",
         description: `Өзгертілген шығарма: ${data.book.title}`,
       });
-      return router.push("/admin");
+      return router.push("/admin/books");
     }
 
     toast({

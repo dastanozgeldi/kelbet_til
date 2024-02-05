@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { type Book } from "@prisma/client";
 
+import { NewBook } from "./new";
 import { WorkItem } from "./work-item";
 import { Icons } from "../icons";
 import { Tabs, TabsList, TabsTrigger } from "../ui/tabs";
@@ -50,62 +51,65 @@ export function Works({ books }: { books: Book[] }) {
 
   return (
     <div id="works">
-      <div className="flex flex-col sm:flex-row sm:items-center gap-6">
-        {/* grade tabs */}
-        <div>
-          <h2>Сынып</h2>
-          <Tabs
-            value={grade}
-            onValueChange={(value) => {
-              setGrade(value);
-              localStorage.setItem("admin-grade", value);
-            }}
-          >
-            <TabsList>
-              {grades.map((grade) => (
-                <TabsTrigger key={grade} value={grade}>
-                  {grade}
-                </TabsTrigger>
-              ))}
-            </TabsList>
-          </Tabs>
-        </div>
+      <div className="flex items-end justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-6">
+          {/* grade tabs */}
+          <div>
+            <h2>Сынып</h2>
+            <Tabs
+              value={grade}
+              onValueChange={(value) => {
+                setGrade(value);
+                localStorage.setItem("admin-grade", value);
+              }}
+            >
+              <TabsList>
+                {grades.map((grade) => (
+                  <TabsTrigger key={grade} value={grade}>
+                    {grade}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+            </Tabs>
+          </div>
 
-        {/* language tabs */}
-        <div>
-          <h2>Оқыту тілі</h2>
-          <Tabs
-            value={language}
-            onValueChange={(value) => {
-              setLanguage(value);
-              localStorage.setItem("admin-language", value);
-            }}
-          >
-            <TabsList>
-              <TabsTrigger value="T1">Қазақша</TabsTrigger>
-              <TabsTrigger value="T2">Орысша</TabsTrigger>
-            </TabsList>
-          </Tabs>
-        </div>
+          {/* language tabs */}
+          <div>
+            <h2>Оқыту тілі</h2>
+            <Tabs
+              value={language}
+              onValueChange={(value) => {
+                setLanguage(value);
+                localStorage.setItem("admin-language", value);
+              }}
+            >
+              <TabsList>
+                <TabsTrigger value="T1">Қазақша</TabsTrigger>
+                <TabsTrigger value="T2">Орысша</TabsTrigger>
+              </TabsList>
+            </Tabs>
+          </div>
 
-        {/* term tabs */}
-        <div>
-          <h2>Тоқсан</h2>
-          <Tabs
-            value={term}
-            onValueChange={(value) => {
-              setTerm(value);
-              localStorage.setItem("admin-term", value);
-            }}
-          >
-            <TabsList>
-              <TabsTrigger value="1">1</TabsTrigger>
-              <TabsTrigger value="2">2</TabsTrigger>
-              <TabsTrigger value="3">3</TabsTrigger>
-              <TabsTrigger value="4">4</TabsTrigger>
-            </TabsList>
-          </Tabs>
+          {/* term tabs */}
+          <div>
+            <h2>Тоқсан</h2>
+            <Tabs
+              value={term}
+              onValueChange={(value) => {
+                setTerm(value);
+                localStorage.setItem("admin-term", value);
+              }}
+            >
+              <TabsList>
+                <TabsTrigger value="1">1</TabsTrigger>
+                <TabsTrigger value="2">2</TabsTrigger>
+                <TabsTrigger value="3">3</TabsTrigger>
+                <TabsTrigger value="4">4</TabsTrigger>
+              </TabsList>
+            </Tabs>
+          </div>
         </div>
+        <NewBook />
       </div>
 
       {/* search bar */}
