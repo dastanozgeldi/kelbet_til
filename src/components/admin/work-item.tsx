@@ -4,31 +4,10 @@ import { type Book } from "@prisma/client";
 
 import { cn } from "@/lib/utils";
 
-import { Button, buttonVariants } from "../ui/button";
-import { useToast } from "../ui/use-toast";
+import { buttonVariants } from "../ui/button";
+import { DeleteButton } from "./delete-button";
 
 export const WorkItem = ({ book }: { book: Book }) => {
-  const { toast } = useToast();
-
-  const handleClick = async () => {
-    const res = await fetch("/api/delete-book", {
-      method: "POST",
-      body: JSON.stringify({ id: book.id }),
-    });
-
-    if (res.ok) {
-      return toast({
-        title: "Шығарма сәтті жойылды",
-        description: "Осы бетті қайта ашқанда шығарма жоқ болады.",
-      });
-    }
-
-    toast({
-      title: "Қате",
-      description: res.statusText,
-    });
-  };
-
   return (
     <div className="border rounded-lg w-full p-3">
       {/* info */}
@@ -44,7 +23,7 @@ export const WorkItem = ({ book }: { book: Book }) => {
         <div className="space-x-3">
           <Link
             href={{
-              pathname: `/admin/edit/${book.id}`,
+              pathname: `/admin/books/edit/${book.id}`,
               query: {
                 title: book.title,
                 grade: book.grade,
@@ -56,9 +35,8 @@ export const WorkItem = ({ book }: { book: Book }) => {
           >
             Өзгерту
           </Link>
-          <Button variant="destructive" size="sm" onClick={handleClick}>
-            Жою
-          </Button>
+
+          <DeleteButton book={book} />
         </div>
         <a
           href={book.fileUrl}

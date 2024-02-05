@@ -3,12 +3,12 @@ import {
   AlignEndHorizontal,
   Check,
   Loader2,
-  PlusCircle,
   ChevronRight,
   ChevronLeft,
   Menu,
   Search,
   X,
+  Plus,
 } from "lucide-react";
 
 export type Icon = LucideIcon;
@@ -18,7 +18,7 @@ export const Icons = {
   left: ChevronLeft,
   right: ChevronRight,
   check: Check,
-  plus: PlusCircle,
+  plus: Plus,
   dashboard: AlignEndHorizontal,
   spinner: Loader2,
   menu: Menu,
