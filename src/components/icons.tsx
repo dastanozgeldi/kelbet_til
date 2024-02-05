@@ -9,6 +9,10 @@ import {
   Search,
   X,
   Plus,
+  MoreHorizontal,
+  LogOut,
+  Book,
+  Users,
 } from "lucide-react";
 
 export type Icon = LucideIcon;
@@ -23,4 +27,8 @@ export const Icons = {
   spinner: Loader2,
   menu: Menu,
   search: Search,
+  more: MoreHorizontal,
+  logout: LogOut,
+  book: Book,
+  users: Users,
 };
