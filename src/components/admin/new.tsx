@@ -140,7 +140,7 @@ export const NewBook = () => {
               ))}
             </select>
           </div>
-          <Button disabled={!data.fileUrl}>Сақтау</Button>
+          <Button>Сақтау</Button>
         </form>
       </DialogContent>
     </Dialog>
