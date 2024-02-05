@@ -2,6 +2,7 @@
 
 import { useCallback } from "react";
 import { usePathname } from "next/navigation";
+
 import { links } from "@/config/links";
 
 export const Header = () => {
