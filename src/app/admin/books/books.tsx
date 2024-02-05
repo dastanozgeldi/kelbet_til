@@ -1,7 +1,7 @@
 "use client";
 import { type Book } from "@prisma/client";
 
-import { Icons } from "@/components/icons";
+import { SearchBooks } from "@/components/search-books";
 import { GradeTabs, LanguageTabs, TermTabs } from "@/components/tabs";
 
 import { NewBook } from "./new-book";
@@ -46,24 +46,7 @@ export function Books({ data }: { data: Book[] }) {
         <NewBook />
       </div>
 
-      {/* search bar */}
-      <div className="relative">
-        <input
-          id="search"
-          className="pl-12 w-full p-3 my-6 rounded-lg border-[3px] border-[#6C63FF]"
-          type="text"
-          placeholder="Кітап немесе автордың атын енгізіңіз..."
-          aria-label="Кітап немесе автордың атын енгізіңіз..."
-          value={searchValue}
-          onChange={(e) => setSearchValue(e.target.value)}
-        />
-        <label htmlFor="search">
-          <Icons.search
-            className="absolute left-4 top-1/2 -translate-y-1/2"
-            size={20}
-          />
-        </label>
-      </div>
+      <SearchBooks searchValue={searchValue} setSearchValue={setSearchValue} />
 
       <div className="pb-3">
         <h2 className="text-2xl my-2 font-bold">{term}-тоқсан</h2>
