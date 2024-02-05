@@ -1,5 +1,3 @@
-import { Metadata } from "next";
-
 import { Hero } from "@/components/hero";
 import { Books } from "@/components/books";
 import { db } from "@/server/db";

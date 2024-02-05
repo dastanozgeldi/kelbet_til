@@ -50,7 +50,7 @@ export const Books = ({ data }: { data: Book[] }) => {
   );
 
   return (
-    <div id="books">
+    <div id="books" className="py-6">
       <div className="min-h-screen">
         <div className="mb-6">
           <h1 className="text-3xl my-2 md:text-4xl font-bold">Шығармалар</h1>
