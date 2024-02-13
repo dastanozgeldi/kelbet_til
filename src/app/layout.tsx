@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 
 import { Toaster } from "@/components/ui/toaster";
 import { Nav } from "@/components/nav";
-import { cn } from "@/lib/utils";
+import { Announcement } from "@/components/announcement";
 import { EdgeStoreProvider } from "@/lib/edgestore";
 
 import { GoogleAnalytics } from "./google-analytics";
@@ -14,7 +14,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: {
     template: "%s | Келбет тіл",
-    default: "Басты бет | Келбет тіл"
+    default: "Басты бет | Келбет тіл",
   },
   description:
     "Назарбаев Зияткерлік Мектептерінің қазақ тілі мен әдебиеті бағдарламасы бойынша шығармалар жинағы.",
@@ -28,10 +28,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <GoogleAnalytics GA_TRACKING_ID={process.env.GA_TRACKING_ID!} />
-      <body className={cn(inter.className, "min-h-screen px-8 lg:px-24 py-4")}>
-        <Nav />
-        <EdgeStoreProvider>{children}</EdgeStoreProvider>
-        <Toaster />
+      <body className={inter.className}>
+        <Announcement />
+        <div className="min-h-screen px-8 lg:px-24 py-4">
+          <Nav />
+          <EdgeStoreProvider>{children}</EdgeStoreProvider>
+          <Toaster />
+        </div>
       </body>
     </html>
   );
