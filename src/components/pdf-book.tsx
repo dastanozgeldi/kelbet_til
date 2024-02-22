@@ -1,30 +1,19 @@
 import "react-pdf/dist/Page/AnnotationLayer.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Document, Page } from "react-pdf";
 
 import { Icons } from "./icons";
 import { PDFBookLoading } from "./pdf-book-loading";
 import { PDFBookError } from "./errors";
 
-export const PDFBook = ({ file }: { file: string }) => {
+interface Props {
+  bookId: string;
+  file: string;
+}
+
+export const PDFBook = ({ bookId, file }: Props) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [numPages, setNumPages] = useState<number>(1);
-
-  function onDocumentLoadSuccess({ numPages }: { numPages: number }): void {
-    setNumPages(numPages);
-  }
-
-  const nextPage = () => {
-    if (currentPage < numPages) {
-      setCurrentPage(currentPage + 2);
-    }
-  };
-
-  const prevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 2);
-    }
-  };
 
   const hasMultiplePages = numPages >= 3;
 
@@ -33,6 +22,47 @@ export const PDFBook = ({ file }: { file: string }) => {
     !hasMultiplePages ||
     currentPage === numPages ||
     currentPage + 1 === numPages;
+
+  function onDocumentLoadSuccess({ numPages }: { numPages: number }): void {
+    setNumPages(numPages);
+  }
+
+  const nextPage = () => {
+    if (currentPage < numPages) {
+      const newPage = currentPage + 2;
+      setCurrentPage(newPage);
+    }
+  };
+
+  const prevPage = () => {
+    if (currentPage > 1) {
+      const newPage = currentPage - 2;
+      setCurrentPage(newPage);
+    }
+  };
+
+  useEffect(() => {
+    const getStorageItems = () => {
+      const id = localStorage.getItem("last-book-id");
+      if (id && id === bookId) {
+        const page = localStorage.getItem("last-book-page");
+        if (page) setCurrentPage(Number(page));
+      }
+    };
+
+    getStorageItems();
+
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      localStorage.setItem("last-book-page", currentPage.toString());
+      localStorage.setItem("last-book-id", bookId);
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [bookId, currentPage]);
 
   return (
     <>
