@@ -42,16 +42,19 @@ export const PDFBook = ({ bookId, file }: Props) => {
   };
 
   useEffect(() => {
-    const getStorageItems = () => {
+    const getLastPage = () => {
       const id = localStorage.getItem("last-book-id");
-      if (id && id === bookId) {
-        const page = localStorage.getItem("last-book-page");
-        if (page) setCurrentPage(Number(page));
+      const page = Number(localStorage.getItem("last-book-page"));
+
+      if (id && id === bookId && page) {
+        setCurrentPage(page);
       }
     };
 
-    getStorageItems();
+    getLastPage();
+  }, [bookId]);
 
+  useEffect(() => {
     const handleBeforeUnload = (event: BeforeUnloadEvent) => {
       localStorage.setItem("last-book-page", currentPage.toString());
       localStorage.setItem("last-book-id", bookId);
