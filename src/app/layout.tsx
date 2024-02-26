@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
-import { Toaster } from "@/components/ui/toaster";
 import { Nav } from "@/components/nav";
-import { Announcement } from "@/components/announcement";
+import { Toaster } from "@/components/ui/toaster";
 import { EdgeStoreProvider } from "@/lib/edgestore";
+import { cn } from "@/lib/utils";
 
 import { GoogleAnalytics } from "./google-analytics";
 import "./globals.css";
@@ -28,13 +28,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <GoogleAnalytics GA_TRACKING_ID={process.env.GA_TRACKING_ID!} />
-      <body className={inter.className}>
-        <Announcement />
-        <div className="min-h-screen px-8 lg:px-24 py-4">
-          <Nav />
-          <EdgeStoreProvider>{children}</EdgeStoreProvider>
-          <Toaster />
-        </div>
+      <body className={cn(inter.className, "min-h-screen px-8 lg:px-24 py-4")}>
+        <Nav />
+        <EdgeStoreProvider>{children}</EdgeStoreProvider>
+        <Toaster />
       </body>
     </html>
   );
