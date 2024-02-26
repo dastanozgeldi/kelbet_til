@@ -1,10 +1,11 @@
 import "react-pdf/dist/Page/AnnotationLayer.css";
-import { useEffect, useState } from "react";
 import { Document, Page } from "react-pdf";
-
+import { usePDFBook } from "@/hooks/use-pdf-book";
 import { Icons } from "./icons";
 import { PDFBookLoading } from "./pdf-book-loading";
 import { PDFBookError } from "./errors";
+import { Input } from "./ui/input";
+import { Button } from "./ui/button";
 
 interface Props {
   bookId: string;
@@ -12,77 +13,50 @@ interface Props {
 }
 
 export const PDFBook = ({ bookId, file }: Props) => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [numPages, setNumPages] = useState<number>(1);
-
-  const hasMultiplePages = numPages >= 3;
-
-  const noPrevPage = !hasMultiplePages || currentPage === 1;
-  const noNextPage =
-    !hasMultiplePages ||
-    currentPage === numPages ||
-    currentPage + 1 === numPages;
-
-  function onDocumentLoadSuccess({ numPages }: { numPages: number }): void {
-    setNumPages(numPages);
-  }
-
-  const nextPage = () => {
-    if (currentPage < numPages) {
-      const newPage = currentPage + 2;
-      setCurrentPage(newPage);
-    }
-  };
-
-  const prevPage = () => {
-    if (currentPage > 1) {
-      const newPage = currentPage - 2;
-      setCurrentPage(newPage);
-    }
-  };
-
-  useEffect(() => {
-    const getLastPage = () => {
-      const id = localStorage.getItem("last-book-id");
-      const page = Number(localStorage.getItem("last-book-page"));
-
-      if (id && id === bookId && page) {
-        setCurrentPage(page);
-      }
-    };
-
-    getLastPage();
-  }, [bookId]);
-
-  useEffect(() => {
-    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-      localStorage.setItem("last-book-page", currentPage.toString());
-      localStorage.setItem("last-book-id", bookId);
-    };
-
-    window.addEventListener("beforeunload", handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  }, [bookId, currentPage]);
+  const {
+    numPages,
+    currentPage,
+    noPrevPage,
+    noNextPage,
+    isEditing,
+    setCurrentPage,
+    setIsEditing,
+    handlePrevPage,
+    handleNextPage,
+    handleDocumentLoadSuccess,
+  } = usePDFBook(bookId);
 
   return (
     <>
       <button
         className="fixed z-10 top-1/2 left-3 disabled:text-gray-400"
         disabled={noPrevPage}
-        onClick={prevPage}
+        onClick={handlePrevPage}
       >
         <Icons.left className="w-8 h-8" />
       </button>
-      <span className="flex items-center justify-center font-bold">
-        {currentPage}-бет (жалпы {numPages})
-      </span>
+      {isEditing ? (
+        <div className="flex items-center justify-center gap-3 m-3">
+          <Input
+            className="w-16"
+            onChange={(event) =>
+              setCurrentPage(Number(event.currentTarget.value))
+            }
+          />
+          <Button onClick={() => setIsEditing(false)}>OK</Button>
+        </div>
+      ) : (
+        <span
+          onClick={() => setIsEditing(true)}
+          className="flex items-center justify-center font-bold"
+        >
+          {currentPage}-бет (жалпы {numPages})
+        </span>
+      )}
       <button
         className="fixed z-10 top-1/2 right-3 disabled:text-gray-400"
         disabled={noNextPage}
-        onClick={nextPage}
+        onClick={handleNextPage}
       >
         <Icons.right className="w-8 h-8" />
       </button>
@@ -91,7 +65,7 @@ export const PDFBook = ({ bookId, file }: Props) => {
         error={<PDFBookError />}
         className="flex items-center justify-center flex-col xl:flex-row"
         file={file}
-        onLoadSuccess={onDocumentLoadSuccess}
+        onLoadSuccess={handleDocumentLoadSuccess}
         onLoadError={console.error}
       >
         <Page pageNumber={currentPage} renderTextLayer={false} />
