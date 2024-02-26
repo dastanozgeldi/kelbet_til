@@ -1,11 +1,10 @@
-import { db } from "@/server/db";
 import { Language } from "@prisma/client";
+import { db } from "@/server/db";
 
 export async function POST(request: Request) {
-  const { id, data } = await request.json();
+  const data = await request.json();
 
-  const book = await db.book.update({
-    where: { id },
+  const book = await db.book.create({
     data: {
       title: data.title,
       fileUrl: data.fileUrl,

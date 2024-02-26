@@ -1,7 +1,7 @@
 "use client";
+import type { Book, Language } from "@prisma/client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import type { Book, Language } from "@prisma/client";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -42,9 +42,9 @@ export const EditBook = ({ book }: { book: Book }) => {
     event.preventDefault();
 
     // prisma call
-    const res = await fetch("/api/edit-book", {
-      method: "POST",
-      body: JSON.stringify({ id: book.id, data }),
+    const res = await fetch(`/api/book/${book.id}`, {
+      method: "PATCH",
+      body: JSON.stringify({ data }),
     });
 
     if (res.ok) {

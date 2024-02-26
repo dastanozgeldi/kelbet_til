@@ -18,10 +18,7 @@ export const DeleteBook = ({ book }: { book: Book }) => {
   const { toast } = useToast();
 
   const handleClick = async () => {
-    const res = await fetch("/api/delete-book", {
-      method: "POST",
-      body: JSON.stringify({ id: book.id }),
-    });
+    const res = await fetch(`/api/book/${book.id}`, { method: "DELETE" });
 
     if (res.ok) {
       return toast({
