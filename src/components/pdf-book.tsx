@@ -76,7 +76,13 @@ export const PDFBook = ({ bookId, file }: Props) => {
           pageNumber={currentPage}
         />
         {currentPage + 1 <= numPages && (
-          <Page pageNumber={currentPage + 1} renderTextLayer={false} />
+          <Page
+            noData={`Бұндай бет (${currentPage}-бет) жоқ`}
+            error="Бетті жүктеуде қате туындады"
+            loading="Бет жүктелуде..."
+            renderTextLayer={false}
+            pageNumber={currentPage + 1}
+          />
         )}
       </Document>
     </>
