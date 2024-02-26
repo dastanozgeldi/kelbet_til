@@ -1,52 +1,23 @@
 "use client";
-import { useEffect, useState } from "react";
-import Link from "next/link";
 import { type Book } from "@prisma/client";
-
+import Link from "next/link";
+import { grades } from "@/config";
+import { useBooks } from "@/hooks/use-books";
 import { SearchBooks } from "./search-books";
 import { GradeTabs, LanguageTabs, TermTabs } from "./tabs";
 
 export const Books = ({ data }: { data: Book[] }) => {
-  const grades = ["7", "8", "9", "10", "11", "12"];
-  const languages = ["T1", "T2"];
-  const terms = ["1", "2", "3", "4"];
-
-  const [grade, setGrade] = useState(grades[0]);
-  const [language, setLanguage] = useState(languages[0]);
-  const [term, setTerm] = useState(terms[0]);
-
-  const [searchValue, setSearchValue] = useState("");
-
-  useEffect(() => {
-    const getStorageItems = () => {
-      const grade = localStorage.getItem("grade");
-      if (grade) setGrade(grade);
-
-      const language = localStorage.getItem("language");
-      if (language) setLanguage(language);
-
-      const term = localStorage.getItem("term");
-      if (term) setTerm(term);
-    };
-
-    getStorageItems();
-  }, []);
-
-  // explanation: russian-speaking 12th graders don't have a T2.
-  let books = null;
-  if (grade === "12" && language === "T2") {
-    books = data.filter(
-      (book) => book.grade === "12" && book.language === "T1"
-    );
-  } else {
-    books = data.filter(
-      (book) => book.grade === grade && book.language === language
-    );
-  }
-
-  const filteredBooks = books.filter((book) =>
-    book.title.toLowerCase().includes(searchValue.toLowerCase())
-  );
+  const {
+    grade,
+    language,
+    term,
+    searchValue,
+    filteredBooks,
+    setGrade,
+    setLanguage,
+    setTerm,
+    setSearchValue,
+  } = useBooks(data);
 
   return (
     <div id="books" className="py-6">
