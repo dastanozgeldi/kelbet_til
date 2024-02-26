@@ -1,8 +1,9 @@
+import { type UserRole } from "@prisma/client";
 import { db } from "@/server/db";
 
 interface UpdateUserBody {
   id: string;
-  role: "ADMIN" | "USER";
+  role: UserRole;
 }
 
 export async function POST(request: Request) {
