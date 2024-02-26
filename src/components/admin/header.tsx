@@ -4,7 +4,7 @@ import { useCallback } from "react";
 import { usePathname } from "next/navigation";
 import { type Session } from "next-auth";
 
-import { links } from "@/config/links";
+import { links } from "@/config";
 
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
