@@ -36,7 +36,7 @@ export const NewBook = () => {
     event.preventDefault();
 
     // prisma call
-    const res = await fetch("/api/add-book", {
+    const res = await fetch("/api/book", {
       method: "POST",
       body: JSON.stringify(data),
     });

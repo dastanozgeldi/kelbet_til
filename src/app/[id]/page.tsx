@@ -16,10 +16,7 @@ export default function Page({ params }: { params: { id: string } }) {
 
   useEffect(() => {
     const getBook = async () => {
-      const res = await fetch(`/api/get-book`, {
-        method: "POST",
-        body: JSON.stringify({ id }),
-      });
+      const res = await fetch(`/api/book/${id}`);
       const { book } = await res.json();
 
       setBook(book);
