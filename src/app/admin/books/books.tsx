@@ -24,7 +24,14 @@ export function Books({ data }: { data: Book[] }) {
 
   return (
     <div id="books">
-      <div className="flex items-end justify-between">
+      <div className="border rounded-lg p-4">
+        <div className="flex items-center justify-between mb-2">
+          <h3 className="text-sm font-medium">Жалпы шығарма саны</h3>
+        </div>
+        <div className="text-2xl font-bold">{data.length}</div>
+      </div>
+
+      <div className="mt-6 flex items-end justify-between">
         <div className="flex flex-col sm:flex-row sm:items-center gap-6">
           <GradeTabs
             grades={grades}
@@ -48,11 +55,11 @@ export function Books({ data }: { data: Book[] }) {
 
       <SearchBooks searchValue={searchValue} setSearchValue={setSearchValue} />
 
-      <div className="pb-3">
+      <div>
         <h2 className="text-2xl my-2 font-bold">{term}-тоқсан</h2>
         <hr className="border-0 max-w-[36px] h-[6px] bg-[#6C63FF]" />
       </div>
-      <div className="space-y-6 my-3">
+      <div className="space-y-6 mt-6">
         {filteredBooks.map(
           (book) => book.term === term && <BookItem key={book.id} book={book} />
         )}
