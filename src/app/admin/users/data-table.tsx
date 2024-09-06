@@ -48,7 +48,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <>
-      <div className="flex items-center py-4">
+      <div className="flex items-center justify-between">
         <Input
           placeholder="Аты-жөні бойынша іздеу..."
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
@@ -57,8 +57,10 @@ export function DataTable<TData, TValue>({
           }
           className="max-w-sm"
         />
+
+        <div className="font-semibold">{data.length} қолданушы</div>
       </div>
-      <div className="rounded-md border">
+      <div className="rounded-md border mt-4">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
