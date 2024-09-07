@@ -34,24 +34,33 @@ export const PDFBook = ({ bookId, file }: Props) => {
       >
         <Icons.left className="w-8 h-8" />
       </button>
-      {isEditing ? (
-        <div className="flex items-center justify-center gap-3 m-3">
-          <Input
-            className="w-16"
-            onChange={(event) =>
-              setCurrentPage(Number(event.currentTarget.value))
-            }
-          />
-          <Button onClick={() => setIsEditing(false)}>OK</Button>
-        </div>
-      ) : (
-        <span
-          onClick={() => setIsEditing(true)}
-          className="flex items-center justify-center font-bold"
-        >
-          {currentPage}-бет (жалпы {numPages})
-        </span>
-      )}
+
+      <div className="flex items-center justify-between">
+        {isEditing ? (
+          <div className="flex items-center justify-center gap-3">
+            <Input
+              className="ml-2 w-16"
+              onChange={(event) =>
+                setCurrentPage(Number(event.currentTarget.value))
+              }
+            />
+            <Button onClick={() => setIsEditing(false)}>OK</Button>
+          </div>
+        ) : (
+          <span
+            onClick={() => setIsEditing(true)}
+            className="flex items-center justify-center font-bold"
+          >
+            {currentPage}-бет (жалпы {numPages})
+          </span>
+        )}
+
+        <Button className="flex items-center gap-3">
+          <Icons.ai className="h-4 w-4" />
+          AI
+        </Button>
+      </div>
+
       <button
         className="fixed z-10 top-1/2 right-3 disabled:text-gray-400"
         disabled={noNextPage}
