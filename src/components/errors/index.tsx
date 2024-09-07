@@ -1,5 +1,5 @@
 import { NoAccess } from "./no-access";
-import { NoBooks } from "./no-books";
+import { NoBook } from "./no-book";
 import { PDFBookError } from "./pdf-book-error";
 
-export { NoAccess, NoBooks, PDFBookError };
+export { NoAccess, NoBook, PDFBookError };
