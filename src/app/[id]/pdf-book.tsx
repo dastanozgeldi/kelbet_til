@@ -60,19 +60,21 @@ export const PDFBook = ({ bookId, file }: Props) => {
         <Icons.right className="w-8 h-8" />
       </button>
       <Document
+        className="mt-3 flex items-center justify-center flex-col xl:flex-row border-t"
         loading={
-          <div className="flex items-center justify-center gap-3 my-6">
+          <div className="mt-3 flex items-center justify-center gap-2">
             <Icons.spinner className="animate-spin" />
             Кітап ашылуда...
           </div>
         }
         error={
-          <div className="my-6 flex flex-col items-center gap-6">
+          <div className="mt-3 flex flex-col items-center">
             <div className="flex items-center gap-2">
               <Icons.x />
               <span>Шығарма жүктелмеген.</span>
             </div>
             <Image
+              className="mt-6"
               alt="Failed to load."
               src="/failed.svg"
               width={599}
@@ -80,7 +82,6 @@ export const PDFBook = ({ bookId, file }: Props) => {
             />
           </div>
         }
-        className="flex items-center justify-center flex-col xl:flex-row"
         file={file}
         onLoadSuccess={handleDocumentLoadSuccess}
         onLoadError={console.error}
