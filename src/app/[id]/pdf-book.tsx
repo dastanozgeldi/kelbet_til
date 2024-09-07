@@ -1,11 +1,10 @@
 import "react-pdf/dist/Page/AnnotationLayer.css";
+import Image from "next/image";
 import { Document, Page } from "react-pdf";
 import { usePDFBook } from "@/hooks/use-pdf-book";
-import { Icons } from "./icons";
-import { PDFBookLoading } from "./pdf-book-loading";
-import { PDFBookError } from "./errors";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
+import { Icons } from "@/components/icons";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 interface Props {
   bookId: string;
@@ -61,8 +60,26 @@ export const PDFBook = ({ bookId, file }: Props) => {
         <Icons.right className="w-8 h-8" />
       </button>
       <Document
-        loading={<PDFBookLoading />}
-        error={<PDFBookError />}
+        loading={
+          <div className="flex items-center justify-center gap-3 my-6">
+            <Icons.spinner className="animate-spin" />
+            Кітап ашылуда...
+          </div>
+        }
+        error={
+          <div className="my-6 flex flex-col items-center gap-6">
+            <div className="flex items-center gap-2">
+              <Icons.x />
+              <span>Шығарма жүктелмеген.</span>
+            </div>
+            <Image
+              alt="Failed to load."
+              src="/failed.svg"
+              width={599}
+              height={417}
+            />
+          </div>
+        }
         className="flex items-center justify-center flex-col xl:flex-row"
         file={file}
         onLoadSuccess={handleDocumentLoadSuccess}
