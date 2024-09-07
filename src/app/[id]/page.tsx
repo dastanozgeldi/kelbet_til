@@ -4,6 +4,7 @@ import { pdfjs } from "react-pdf";
 import { type Book } from "@prisma/client";
 
 import { PDFBook } from "@/components/pdf-book";
+import { NoBook } from "@/components/errors";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.js",
@@ -25,15 +26,14 @@ export default function Page({ params }: { params: { id: string } }) {
     getBook();
   }, [id]);
 
+  if (!book) return <NoBook messageType="book-is-null" />;
   return (
-    book && (
-      <div className="my-6 overflow-hidden">
-        <div className="mb-6">
-          <h1 className="text-3xl my-2 md:text-4xl font-bold">{book.title}</h1>
-          <hr className="border-0 max-w-[36px] h-[6px] bg-[#6C63FF]" />
-        </div>
-        <PDFBook bookId={id} file={book.fileUrl} />
+    <div className="my-6 overflow-hidden">
+      <div className="mb-6">
+        <h1 className="text-3xl my-2 md:text-4xl font-bold">{book.title}</h1>
+        <hr className="border-0 max-w-[36px] h-[6px] bg-[#6C63FF]" />
       </div>
-    )
+      <PDFBook bookId={id} file={book.fileUrl} />
+    </div>
   );
 }

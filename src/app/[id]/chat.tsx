@@ -1,9 +1,12 @@
 "use client";
 
 import { useChat } from "ai/react";
+import { useSession } from "next-auth/react";
 
-export default function Chat() {
+export function Chat() {
+  const { data: session } = useSession();
   const { messages, input, handleInputChange, handleSubmit } = useChat();
+
   return (
     <div className="flex flex-col w-full max-w-md py-24 mx-auto stretch">
       {messages.map((m) => (
@@ -17,7 +20,7 @@ export default function Chat() {
         <input
           className="fixed bottom-0 w-full max-w-md p-2 mb-8 border border-gray-300 rounded shadow-xl"
           value={input}
-          placeholder="Say something..."
+          placeholder="Сұрақ қойыңыз..."
           onChange={handleInputChange}
         />
       </form>
