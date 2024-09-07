@@ -1,10 +1,8 @@
 "use client";
 
 import { useChat } from "ai/react";
-import { useSession } from "next-auth/react";
 
 export function Chat() {
-  const { data: session } = useSession();
   const { messages, input, handleInputChange, handleSubmit } = useChat();
 
   return (
