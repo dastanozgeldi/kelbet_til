@@ -4,14 +4,25 @@ import { Document, Page } from "react-pdf";
 import { usePDFBook } from "@/hooks/use-pdf-book";
 import { Icons } from "@/components/icons";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { cn } from "@/lib/utils";
+import { Chat } from "./chat";
 
 interface Props {
   bookId: string;
+  title: string;
   file: string;
 }
 
-export const PDFBook = ({ bookId, file }: Props) => {
+export const PDFBook = ({ bookId, title, file }: Props) => {
   const {
     numPages,
     currentPage,
@@ -55,10 +66,24 @@ export const PDFBook = ({ bookId, file }: Props) => {
           </span>
         )}
 
-        <Button className="flex items-center gap-3">
-          <Icons.ai className="h-4 w-4" />
-          AI
-        </Button>
+        <Dialog>
+          <DialogTrigger
+            className={cn(buttonVariants(), "flex items-center gap-3")}
+          >
+            <Icons.ai className="h-4 w-4" />
+            AI
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>{title}</DialogTitle>
+              <DialogDescription>
+                Жасанды интеллект кейде шындыққа жанаспайтын жауаптар беруі
+                мүмкін.
+              </DialogDescription>
+            </DialogHeader>
+            <Chat />
+          </DialogContent>
+        </Dialog>
       </div>
 
       <button

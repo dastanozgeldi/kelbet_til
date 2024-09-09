@@ -31,7 +31,7 @@ export default function Page({ params }: { params: { id: string } }) {
           <h1 className="text-3xl my-2 md:text-4xl font-bold">{book.title}</h1>
           <hr className="border-0 max-w-[36px] h-[6px] bg-[#6C63FF]" />
         </div>
-        <PDFBook bookId={params.id} file={book.fileUrl} />
+        <PDFBook bookId={params.id} title={book.title} file={book.fileUrl} />
       </div>
     )
   );
