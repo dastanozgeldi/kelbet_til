@@ -1,8 +1,10 @@
 "use client";
 
+import { Book } from "@prisma/client";
 import { useChat } from "ai/react";
+import { generateSystemPrompt } from "@/lib/utils";
 
-export function Chat() {
+export function Chat({ book }: { book: Book }) {
   const { messages, input, handleInputChange, handleSubmit } = useChat();
 
   return (
@@ -26,7 +28,13 @@ export function Chat() {
           ),
         )}
 
-        <form onSubmit={handleSubmit}>
+        <form
+          onSubmit={(e) =>
+            handleSubmit(e, {
+              data: { systemPrompt: generateSystemPrompt(book) },
+            })
+          }
+        >
           <input
             className="fixed bottom-0 mb-8 w-full max-w-md rounded border border-gray-300 p-2 shadow-xl"
             value={input}
