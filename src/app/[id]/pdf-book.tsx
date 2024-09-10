@@ -15,14 +15,9 @@ import {
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import { Chat } from "./chat";
+import { Book } from "@prisma/client";
 
-interface Props {
-  bookId: string;
-  title: string;
-  file: string;
-}
-
-export const PDFBook = ({ bookId, title, file }: Props) => {
+export const PDFBook = ({ book }: { book: Book }) => {
   const {
     numPages,
     currentPage,
@@ -34,16 +29,16 @@ export const PDFBook = ({ bookId, title, file }: Props) => {
     handlePrevPage,
     handleNextPage,
     handleDocumentLoadSuccess,
-  } = usePDFBook(bookId);
+  } = usePDFBook(book.id);
 
   return (
     <>
       <button
-        className="fixed z-10 top-1/2 left-3 disabled:text-gray-400"
+        className="fixed left-3 top-1/2 z-10 disabled:text-gray-400"
         disabled={noPrevPage}
         onClick={handlePrevPage}
       >
-        <Icons.left className="w-8 h-8" />
+        <Icons.left className="h-8 w-8" />
       </button>
 
       <div className="flex items-center justify-between">
@@ -75,26 +70,26 @@ export const PDFBook = ({ bookId, title, file }: Props) => {
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>{title}</DialogTitle>
+              <DialogTitle>{book.title}</DialogTitle>
               <DialogDescription>
                 Жасанды интеллект кейде шындыққа жанаспайтын жауаптар беруі
                 мүмкін.
               </DialogDescription>
             </DialogHeader>
-            <Chat />
+            <Chat book={book} />
           </DialogContent>
         </Dialog>
       </div>
 
       <button
-        className="fixed z-10 top-1/2 right-3 disabled:text-gray-400"
+        className="fixed right-3 top-1/2 z-10 disabled:text-gray-400"
         disabled={noNextPage}
         onClick={handleNextPage}
       >
-        <Icons.right className="w-8 h-8" />
+        <Icons.right className="h-8 w-8" />
       </button>
       <Document
-        className="mt-3 flex items-center justify-center flex-col xl:flex-row border-t"
+        className="mt-3 flex flex-col items-center justify-center border-t xl:flex-row"
         loading={
           <div className="mt-3 flex items-center justify-center gap-2">
             <Icons.spinner className="animate-spin" />
@@ -116,7 +111,7 @@ export const PDFBook = ({ bookId, title, file }: Props) => {
             />
           </div>
         }
-        file={file}
+        file={book.fileUrl}
         onLoadSuccess={handleDocumentLoadSuccess}
         onLoadError={console.error}
       >
