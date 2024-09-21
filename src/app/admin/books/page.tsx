@@ -17,28 +17,7 @@ export default async function Page({
 
   return (
     <>
-      {/* <div className="flex items-end justify-between">
-        <div className="flex flex-col gap-3 md:flex-row md:items-center">
-          <GradeFilter
-            grade={grade}
-            localStorageKey="admin-grade"
-            setGrade={setGrade}
-          />
-          <LanguageFilter
-            language={language}
-            localStorageKey="admin-language"
-            setLanguage={setLanguage}
-          />
-          <TermFilter
-            term={term}
-            localStorageKey="admin-term"
-            setTerm={setTerm}
-          />
-        </div>
-      </div> */}
-
       <Search placeholder="Шығарма атауын енгізіңіз..." />
-      {/* <SearchBooks searchValue={searchValue} setSearchValue={setSearchValue} /> */}
 
       {/* <div className="flex items-center justify-between">
         <div>

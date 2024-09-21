@@ -1,23 +1,24 @@
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { filters } from "@/config";
+import { Label } from "./ui/label";
 
 export const GradeFilter = ({
+  key,
   grade,
-  localStorageKey,
   setGrade,
 }: {
+  key: string;
   grade: string;
-  localStorageKey: string;
   setGrade: (grade: string) => void;
 }) => {
   return (
     <div>
-      <h2>Сынып</h2>
+      <Label>Сынып</Label>
       <Tabs
         value={grade}
         onValueChange={(value) => {
           setGrade(value);
-          localStorage.setItem(localStorageKey, value);
+          localStorage.setItem(key, value);
         }}
       >
         <TabsList>
@@ -33,22 +34,22 @@ export const GradeFilter = ({
 };
 
 export const LanguageFilter = ({
+  key,
   language,
-  localStorageKey,
   setLanguage,
 }: {
+  key: string;
   language: string;
-  localStorageKey: string;
   setLanguage: (language: string) => void;
 }) => {
   return (
     <div>
-      <h2>Оқыту тілі</h2>
+      <Label>Оқыту тілі</Label>
       <Tabs
         value={language}
         onValueChange={(value) => {
           setLanguage(value);
-          localStorage.setItem(localStorageKey, value);
+          localStorage.setItem(key, value);
         }}
       >
         <TabsList>
@@ -61,22 +62,22 @@ export const LanguageFilter = ({
 };
 
 export const TermFilter = ({
+  key,
   term,
-  localStorageKey,
   setTerm,
 }: {
+  key: string;
   term: string;
-  localStorageKey: string;
   setTerm: (term: string) => void;
 }) => {
   return (
     <div>
-      <h2>Тоқсан</h2>
+      <Label>Тоқсан</Label>
       <Tabs
         value={term}
         onValueChange={(value) => {
           setTerm(value);
-          localStorage.setItem(localStorageKey, value);
+          localStorage.setItem(key, value);
         }}
       >
         <TabsList>
