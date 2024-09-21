@@ -12,25 +12,23 @@ export const Sidebar = () => {
   const pathname = usePathname();
 
   return (
-    <div className="fixed h-[87vh] w-12 border-r md:w-64">
-      <div className="pt-4">
-        {links.map(({ href, label, icon }) => (
-          <Link
-            key={label}
-            href={href}
-            className={cn(
-              "mb-6 flex items-center gap-3 text-sm",
-              href === pathname && "text-[#6C63FF]",
-            )}
-          >
-            {icon}
-            <span className="hidden md:block">{label}</span>
-          </Link>
-        ))}
-      </div>
+    <div className="fixed h-[87vh] w-12 border-r pt-6 md:w-64">
+      {links.map(({ href, label, icon }) => (
+        <Link
+          key={label}
+          href={href}
+          className={cn(
+            "mb-6 flex items-center gap-3 text-sm",
+            href === pathname && "text-[#6C63FF]",
+          )}
+        >
+          {icon}
+          <span className="hidden md:block">{label}</span>
+        </Link>
+      ))}
 
       <button
-        className="absolute bottom-0 my-6 flex items-center gap-3 text-sm text-red-500"
+        className="absolute bottom-6 flex items-center gap-3 text-sm text-red-500"
         onClick={() => signOut()}
       >
         <Icons.logout width={20} height={20} />

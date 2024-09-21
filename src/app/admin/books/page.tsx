@@ -1,8 +1,6 @@
 import { Metadata } from "next";
-
 import { db } from "@/server/db";
-
-import { Books } from "./books";
+import { Books } from "./_components/books";
 
 export const metadata: Metadata = {
   title: "Шығармалар",

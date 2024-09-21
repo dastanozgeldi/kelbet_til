@@ -23,23 +23,22 @@ export const Header = ({ user }: { user: Session["user"] }) => {
     <>
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">{getPageTitle()}</h1>
-          <hr className="border-0 max-w-[36px] h-[6px] bg-[#6C63FF]" />
+          <h1 className="text-2xl font-bold md:text-3xl">{getPageTitle()}</h1>
+          <hr className="h-[6px] max-w-[36px] border-0 bg-[#6C63FF]" />
         </div>
         <div className="flex items-center space-x-2">
-          <Avatar className="w-8 h-8">
+          <Avatar className="h-8 w-8">
             <AvatarImage src={image!} alt="админ" />
             <AvatarFallback>{name ? name[0] : "KT"}</AvatarFallback>
           </Avatar>
           <div>
-            <span className="text-[#7d8385] text-[11px]">Администратор</span>
+            <span className="text-[11px] text-[#7d8385]">Администратор</span>
             <h3 className="-mt-1 text-[15px] font-semibold">{user.name}</h3>
           </div>
         </div>
       </div>
 
-      {/* divider */}
-      <div className="my-5 w-full h-[1.5px] bg-gray-100" />
+      <div className="my-5 h-[1.5px] w-full bg-gray-100" />
     </>
   );
 };
