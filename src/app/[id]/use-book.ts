@@ -13,7 +13,7 @@ export const useBook = (bookId: string) => {
       try {
         setLoading(true);
 
-        const res = await fetch(`/api/book/${bookId}`);
+        const res = await fetch(`/api/books/${bookId}`);
         const { book } = await res.json();
 
         setBook(book);

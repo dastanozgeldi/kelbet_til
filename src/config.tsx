@@ -13,8 +13,10 @@ const links = [
   },
 ];
 
-const grades = ["7", "8", "9", "10", "11", "12"];
-const languages = ["T1", "T2"];
-const terms = ["1", "2", "3", "4"];
+const filters = {
+  grades: ["7", "8", "9", "10", "11", "12"],
+  languages: ["T1", "T2"],
+  terms: ["1", "2", "3", "4"],
+};
 
-export { links, grades, languages, terms };
+export { links, filters };
