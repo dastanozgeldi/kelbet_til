@@ -26,17 +26,13 @@ export const Books = ({ data }: { data: Book[] }) => {
           <hr className="h-[6px] max-w-[36px] border-0 bg-[#6C63FF]" />
         </div>
         <div className="flex flex-col gap-6 sm:flex-row sm:items-center">
-          <GradeFilter
-            grade={grade}
-            localStorageKey="grade"
-            setGrade={setGrade}
-          />
+          <GradeFilter key="grade" grade={grade} setGrade={setGrade} />
           <LanguageFilter
+            key="language"
             language={language}
-            localStorageKey="language"
             setLanguage={setLanguage}
           />
-          <TermFilter term={term} localStorageKey="term" setTerm={setTerm} />
+          <TermFilter key="term" term={term} setTerm={setTerm} />
         </div>
 
         <SearchBooks
