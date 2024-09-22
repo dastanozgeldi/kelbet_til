@@ -1,20 +1,21 @@
 "use client";
-
 import { Book } from "@prisma/client";
 import { useChat } from "ai/react";
 import { generateSystemPrompt } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 export function Chat({ book }: { book: Book }) {
   const { messages, input, handleInputChange, handleSubmit } = useChat();
 
   return (
-    <div>
-      <div className="mx-auto mb-16 flex h-[400px] max-w-md flex-col space-y-3 overflow-auto">
+    <div className="flex h-[400px] flex-col">
+      <div className="mb-4 flex-1 space-y-3 overflow-auto">
         {messages.map((m) =>
           m.role === "user" ? (
             <div
               key={m.id}
-              className="ml-auto max-w-max whitespace-pre-wrap rounded-lg bg-blue-600 p-3 text-right text-white"
+              className="ml-auto max-w-max whitespace-pre-wrap rounded-lg bg-[#6C63FF] p-3 text-right text-white"
             >
               {m.content}
             </div>
@@ -27,22 +28,22 @@ export function Chat({ book }: { book: Book }) {
             </div>
           ),
         )}
-
-        <form
-          onSubmit={(e) =>
-            handleSubmit(e, {
-              data: { systemPrompt: generateSystemPrompt(book) },
-            })
-          }
-        >
-          <input
-            className="fixed bottom-0 mb-8 w-full max-w-md rounded border border-gray-300 p-2 shadow-xl"
-            value={input}
-            placeholder="Сұрақ қойыңыз..."
-            onChange={handleInputChange}
-          />
-        </form>
       </div>
+      <form
+        className="sticky bottom-0 flex items-center gap-3 bg-white"
+        onSubmit={(e) =>
+          handleSubmit(e, {
+            data: { systemPrompt: generateSystemPrompt(book) },
+          })
+        }
+      >
+        <Input
+          value={input}
+          placeholder="Сұрақ қойыңыз..."
+          onChange={handleInputChange}
+        />
+        <Button>сұрау</Button>
+      </form>
     </div>
   );
 }
