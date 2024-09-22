@@ -2,11 +2,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
-
 import { cn } from "@/lib/utils";
 import { links } from "@/config";
-
-import { Icons } from "../icons";
+import { Icons } from "@/components/icons";
 
 export const Sidebar = () => {
   const pathname = usePathname();

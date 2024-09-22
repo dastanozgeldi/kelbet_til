@@ -1,8 +1,8 @@
 import { Metadata } from "next";
-
-import { Header, Sidebar } from "@/components/admin";
-import { NoAccess } from "@/components/errors";
+import { notFound } from "next/navigation";
 import { getServerAuthSession } from "@/server/auth";
+import { Header } from "./header";
+import { Sidebar } from "./sidebar";
 
 export const metadata: Metadata = {
   title: {
@@ -18,9 +18,7 @@ export default async function AdminLayout({
 }) {
   const session = await getServerAuthSession();
 
-  if (session?.user.role !== "ADMIN") {
-    return <NoAccess />;
-  }
+  if (session?.user.role !== "ADMIN") return notFound();
   return (
     <div className="grid w-full grid-cols-[64px,1fr] md:grid-cols-[256px,1fr]">
       <div className="my-6">
