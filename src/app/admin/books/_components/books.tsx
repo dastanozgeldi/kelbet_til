@@ -22,6 +22,8 @@ export async function Books({ query }: { query?: string }) {
             <span>{book.createdAt.toLocaleDateString()}</span>
             <BookActions book={book} />
           </div>
+
+          <div>статус: {book.status}</div>
         </div>
       ))}
     </div>
