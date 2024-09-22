@@ -30,18 +30,6 @@ export default async function Page({
       </div>
 
       <BooksTable columns={columns} data={books} />
-
-      {/* <Suspense
-        key={query}
-        fallback={
-          <div className="mt-3 flex flex-col gap-3 md:grid md:grid-cols-2 md:justify-items-center">
-            <Skeleton className="h-24 w-full" />
-            <Skeleton className="h-24 w-full" />
-          </div>
-        }
-      >
-        <Books query={query} />
-      </Suspense> */}
     </>
   );
 }
