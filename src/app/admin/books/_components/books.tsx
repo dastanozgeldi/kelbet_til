@@ -2,13 +2,9 @@ import { db } from "@/server/db";
 import { BookActions } from "./book-actions";
 
 export async function Books({ query }: { query?: string }) {
-  console.log("query", query);
   const books = await db.book.findMany({
     where: {
       title: { search: query?.trim().replace(/\s+/g, " & ") },
-    },
-    orderBy: {
-      createdAt: "desc",
     },
   });
 
