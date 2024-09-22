@@ -2,8 +2,8 @@
 import { type Book } from "@prisma/client";
 import Link from "next/link";
 import { useBooks } from "@/hooks/use-books";
-import { SearchBooks } from "./search-books";
 import { GradeFilter, LanguageFilter, TermFilter } from "./filters";
+import { Icons } from "./icons";
 
 export const Books = ({ data }: { data: Book[] }) => {
   const {
@@ -35,10 +35,24 @@ export const Books = ({ data }: { data: Book[] }) => {
           <TermFilter key="term" term={term} setTerm={setTerm} />
         </div>
 
-        <SearchBooks
-          searchValue={searchValue}
-          setSearchValue={setSearchValue}
-        />
+        {/* search functionality */}
+        <div className="relative">
+          <input
+            id="search"
+            className="my-6 w-full rounded-lg border-[3px] border-[#6C63FF] p-3 pl-12"
+            type="text"
+            placeholder="Кітап немесе автордың атын енгізіңіз..."
+            aria-label="Кітап немесе автордың атын енгізіңіз..."
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+          />
+          <label htmlFor="search">
+            <Icons.search
+              className="absolute left-4 top-1/2 -translate-y-1/2"
+              size={20}
+            />
+          </label>
+        </div>
 
         <div className="pb-3">
           <h2 className="my-2 text-2xl font-bold">{term}-тоқсан</h2>
