@@ -3,10 +3,8 @@
 import { useCallback } from "react";
 import { usePathname } from "next/navigation";
 import { type Session } from "next-auth";
-
 import { links } from "@/config";
-
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export const Header = ({ user }: { user: Session["user"] }) => {
   const { image, name } = user;
