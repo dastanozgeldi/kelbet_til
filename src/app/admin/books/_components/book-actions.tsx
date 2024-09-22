@@ -34,9 +34,11 @@ import { Input } from "@/components/ui/input";
 import { useDeleteBook } from "../hooks/use-delete-book";
 import { useEditBook } from "../hooks/use-edit-book";
 import { filters } from "@/config";
+import { useToggleBook } from "../hooks/use-toggle-book";
 
 export const BookActions = ({ book }: { book: Book }) => {
   const { data, setData, handleEdit } = useEditBook(book);
+  const { handleToggle } = useToggleBook(book);
   const { handleDelete } = useDeleteBook(book);
 
   return (
@@ -132,6 +134,25 @@ export const BookActions = ({ book }: { book: Book }) => {
           </a>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+              {book.status === "ACTIVE" ? "Архивке салу" : "Архивтен шығару"}
+            </DropdownMenuItem>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Сіз сенімдісіз бе?</AlertDialogTitle>
+              <AlertDialogDescription>
+                Оқушылар архивтелген кітаптарды қарай алмайды.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Жоқ</AlertDialogCancel>
+              <AlertDialogAction onClick={handleToggle}>Иә</AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
