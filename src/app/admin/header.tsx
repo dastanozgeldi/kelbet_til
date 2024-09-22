@@ -21,8 +21,10 @@ export const Header = ({ user }: { user: Session["user"] }) => {
     <>
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold md:text-3xl">{getPageTitle()}</h1>
-          <hr className="h-[6px] max-w-[36px] border-0 bg-[#6C63FF]" />
+          <h1 className="text-xl font-bold sm:text-2xl md:text-3xl">
+            {getPageTitle()}
+          </h1>
+          <hr className="h-[3px] sm:h-[6px] max-w-[36px] border-0 bg-[#6C63FF]" />
         </div>
         <div className="flex items-center space-x-2">
           <Avatar className="h-8 w-8">
