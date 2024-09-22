@@ -3,17 +3,8 @@
 import { type User } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "@/components/ui/badge";
-
+import { isAdmin } from "@/lib/utils";
 import { UserDropdown } from "./user-dropdown";
-
-function translateRole(role: User["role"]) {
-  switch (role) {
-    case "ADMIN":
-      return "Админ";
-    case "USER":
-      return "Қолданушы";
-  }
-}
 
 export const columns: ColumnDef<User>[] = [
   {
@@ -30,7 +21,9 @@ export const columns: ColumnDef<User>[] = [
     accessorKey: "role",
     header: "Рөл",
     cell: ({ row }) => (
-      <Badge variant="outline">{translateRole(row.getValue("role"))}</Badge>
+      <Badge variant="outline">
+        {isAdmin(row.getValue("role")) ? "Админ" : "Қолданушы"}
+      </Badge>
     ),
   },
   {

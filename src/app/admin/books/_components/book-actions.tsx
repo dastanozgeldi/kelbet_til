@@ -35,6 +35,7 @@ import { useDeleteBook } from "../hooks/use-delete-book";
 import { useEditBook } from "../hooks/use-edit-book";
 import { filters } from "@/config";
 import { useToggleBook } from "../hooks/use-toggle-book";
+import { isActive } from "@/lib/utils";
 
 export const BookActions = ({ book }: { book: Book }) => {
   const { data, setData, handleEdit } = useEditBook(book);
@@ -137,14 +138,16 @@ export const BookActions = ({ book }: { book: Book }) => {
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-              {book.status === "ACTIVE" ? "Архивке салу" : "Архивтен шығару"}
+              {isActive(book.status) ? "Архивке салу" : "Архивтен шығару"}
             </DropdownMenuItem>
           </AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>
               <AlertDialogTitle>Сіз сенімдісіз бе?</AlertDialogTitle>
               <AlertDialogDescription>
-                Оқушылар архивтелген кітаптарды қарай алмайды.
+                {isActive(book.status)
+                  ? "Оқушылар архивтелген шығарманы қарай алмайды."
+                  : "Оқушылар архивтелген шығарманы қайта көре алады."}
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>

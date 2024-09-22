@@ -1,8 +1,9 @@
 import { Metadata } from "next";
-import { Books } from "./_components/books";
+import { db } from "@/server/db";
+import { BooksTable } from "./_components/books-table";
+import { columns } from "./_components/columns";
+import { AddBook } from "./_components/add-book";
 import Search from "./_components/search";
-import { Suspense } from "react";
-import { Skeleton } from "@/components/ui/skeleton";
 
 export const metadata: Metadata = {
   title: "Шығармалар",
@@ -15,19 +16,22 @@ export default async function Page({
 }) {
   const query = searchParams?.query;
 
+  const books = await db.book.findMany({
+    where: {
+      title: { search: query?.trim().replace(/\s+/g, " & ") },
+    },
+  });
+
   return (
     <>
-      <Search placeholder="Шығарма атауын енгізіңіз..." />
-
-      {/* <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-bold">{term}-тоқсан</h2>
-          <hr className="h-[6px] max-w-[36px] bg-[#6C63FF]" />
-        </div>
+      <div className="flex items-center justify-between gap-3">
+        <Search placeholder="Атауы бойынша іздеу..." />
         <AddBook />
-      </div> */}
+      </div>
 
-      <Suspense
+      <BooksTable columns={columns} data={books} />
+
+      {/* <Suspense
         key={query}
         fallback={
           <div className="mt-3 flex flex-col gap-3 md:grid md:grid-cols-2 md:justify-items-center">
@@ -37,7 +41,7 @@ export default async function Page({
         }
       >
         <Books query={query} />
-      </Suspense>
+      </Suspense> */}
     </>
   );
 }

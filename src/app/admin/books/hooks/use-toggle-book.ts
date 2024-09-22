@@ -1,4 +1,5 @@
 import { useToast } from "@/components/ui/use-toast";
+import { isActive } from "@/lib/utils";
 import { Book } from "@prisma/client";
 
 export const useToggleBook = (book: Book) => {
@@ -12,7 +13,7 @@ export const useToggleBook = (book: Book) => {
 
     if (res.ok) {
       return toast({
-        title: `Шығарма сәтті ${book.status === "ACTIVE" ? "архивке салынды" : "архивтен шығарылды"}`,
+        title: `Шығарма сәтті ${isActive(book.status) ? "архивке салынды" : "архивтен шығарылды"}`,
       });
     }
 
