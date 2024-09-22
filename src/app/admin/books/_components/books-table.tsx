@@ -1,14 +1,5 @@
 "use client";
-import { useState } from "react";
-import {
-  ColumnDef,
-  ColumnFiltersState,
-  flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -18,20 +9,26 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { useWindowSize } from "@/hooks/use-window-size";
+import {
+  ColumnDef,
+  ColumnFiltersState,
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
+import { useState } from "react";
 
 interface Props<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
-export function UsersTable<TData, TValue>({
+export function BooksTable<TData, TValue>({
   columns,
   data,
 }: Props<TData, TValue>) {
-  const windowSize = useWindowSize();
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const table = useReactTable({
     data,
@@ -40,12 +37,7 @@ export function UsersTable<TData, TValue>({
     getPaginationRowModel: getPaginationRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
-    state: {
-      columnVisibility: {
-        email: windowSize.width > 768,
-      },
-      columnFilters,
-    },
+    state: { columnFilters },
     initialState: {
       pagination: {
         pageSize: 5,
@@ -55,15 +47,6 @@ export function UsersTable<TData, TValue>({
 
   return (
     <>
-      <Input
-        className="max-w-sm"
-        placeholder="Аты-жөні бойынша іздеу..."
-        value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-        onChange={(event) =>
-          table.getColumn("name")?.setFilterValue(event.target.value)
-        }
-      />
-
       <div className="mt-4 rounded-md border">
         <Table>
           <TableHeader>
@@ -107,15 +90,15 @@ export function UsersTable<TData, TValue>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  Қолданушылар жоқ.
+                  Шығарма жоқ.
                 </TableCell>
               </TableRow>
             )}
           </TableBody>
           <TableFooter>
             <TableRow>
-              <TableCell colSpan={4} className="text-center">
-                жалпы {data.length} қолданушы.
+              <TableCell colSpan={3} className="text-center">
+                жалпы {data.length} шығарма.
               </TableCell>
             </TableRow>
           </TableFooter>

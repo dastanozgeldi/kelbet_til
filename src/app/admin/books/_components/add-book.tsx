@@ -20,9 +20,12 @@ export const AddBook = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="gap-2 bg-[#6C63FF] text-sm hover:bg-[#6C63FF]/90">
+        <Button
+          size="sm"
+          className="gap-2 bg-[#6C63FF] text-sm hover:bg-[#6C63FF]/90"
+        >
           <Icons.plus className="h-5 w-5" />
-          Жаңа шығарма
+          Жаңа
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">

@@ -1,4 +1,4 @@
-import { Book } from "@prisma/client";
+import type { Book, BookStatus, UserRole } from "@prisma/client";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -19,4 +19,12 @@ export function generateSystemPrompt(book: Book) {
       `Тақырыптан тыс сұрақтарға "Мен әдеби чатботпын, әдебиеттен тыс сұрақтарға жауап бере алмаймын" деп жауап бересің.\n` +
       `Шығарманың тақырыбы: ${book.title}`,
   };
+}
+
+export function isAdmin(role: UserRole) {
+  return role === "ADMIN";
+}
+
+export function isActive(status: BookStatus) {
+  return status === "ACTIVE";
 }
