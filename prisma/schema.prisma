@@ -80,6 +80,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   books         Book[]
+  canUseAI      Boolean   @default(false)
 }
 
 model VerificationToken {

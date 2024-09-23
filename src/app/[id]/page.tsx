@@ -11,7 +11,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 ).toString();
 
 export default function Page({ params }: { params: { id: string } }) {
-  const { loading, book } = useBook(params.id);
+  const { loading, book, canUseAI } = useBook(params.id);
 
   if (loading) {
     return (
@@ -31,7 +31,7 @@ export default function Page({ params }: { params: { id: string } }) {
           <h1 className="my-2 text-3xl font-bold md:text-4xl">{book.title}</h1>
           <hr className="h-[6px] max-w-[36px] border-0 bg-[#6C63FF]" />
         </div>
-        <PDFBook book={book} />
+        <PDFBook book={book} canUseAI={canUseAI} />
       </div>
     )
   );

@@ -8,6 +8,15 @@ export const useBook = (bookId: string) => {
   const [loading, setLoading] = useState(false);
   const [book, setBook] = useState<Book | null>(null);
 
+  const [canUseAI, setCanUseAI] = useState(false);
+
+  const loadUser = useCallback(async () => {
+    const res = await fetch("/api/can-use-ai");
+    const { canUseAI } = await res.json();
+
+    setCanUseAI(canUseAI);
+  }, []);
+
   const loadBook = useCallback(
     async (bookId: string) => {
       try {
@@ -19,22 +28,23 @@ export const useBook = (bookId: string) => {
         setBook(book);
       } catch {
         toast({
-          title: "Қате",
-          description: "Кітап жүктелмеді",
+          title: "Шығарманы ашуда ақаулық туындады",
         });
       } finally {
         setLoading(false);
       }
     },
-    [toast]
+    [toast],
   );
 
   useEffect(() => {
     loadBook(bookId);
-  }, [bookId, loadBook]);
+    loadUser();
+  }, [bookId, loadBook, loadUser]);
 
   return {
     loading,
     book,
+    canUseAI,
   };
 };
