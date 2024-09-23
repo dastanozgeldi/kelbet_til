@@ -1,7 +1,4 @@
 "use client";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-
 import { Icons } from "@/components/icons";
 import {
   Dialog,
@@ -14,55 +11,21 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Upload } from "@/components/upload";
-import { useToast } from "@/components/ui/use-toast";
+import { useAddBook } from "../hooks/use-add-book";
+import { filters } from "@/config";
 
-export const NewBook = () => {
-  const router = useRouter();
-  const { toast } = useToast();
-
-  const grades = ["7", "8", "9", "10", "11", "12"];
-  const languages = ["T1", "T2"];
-  const terms = ["1", "2", "3", "4"];
-
-  const [data, setData] = useState({
-    title: "",
-    fileUrl: "",
-    grade: grades[0],
-    language: languages[0],
-    term: terms[0],
-  });
-
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    // prisma call
-    const res = await fetch("/api/book", {
-      method: "POST",
-      body: JSON.stringify(data),
-    });
-
-    if (res.ok) {
-      const data = await res.json();
-
-      toast({
-        title: "Шығарма сәтті жүктелді",
-        description: `Жүктелген шығарма: ${data.book.title}`,
-      });
-      return router.push("/admin/books");
-    }
-
-    toast({
-      title: "Қате",
-      description: res.statusText,
-    });
-  };
+export const AddBook = () => {
+  const { data, setData, handleSubmit } = useAddBook();
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="bg-[#6C63FF] hover:bg-[#6C63FF]/90 text-sm gap-2">
-          <Icons.plus width={20} height={20} />
-          Жаңа шығарма
+        <Button
+          size="sm"
+          className="gap-2 bg-[#6C63FF] text-sm hover:bg-[#6C63FF]/90"
+        >
+          <Icons.plus className="h-5 w-5" />
+          Жаңа
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
@@ -82,7 +45,7 @@ export const NewBook = () => {
           <div>
             <Upload data={data} setData={setData} />
             {data.fileUrl && (
-              <div className="flex items-center space-x-3 my-3">
+              <div className="my-3 flex items-center space-x-3">
                 <a
                   href={data.fileUrl}
                   target="_blank"
@@ -99,11 +62,11 @@ export const NewBook = () => {
             <Label htmlFor="grade">Сынып</Label>
             <select
               id="grade"
-              className="w-full px-3 py-2 rounded-md bg-transparent border"
-              defaultValue={grades[0]}
+              className="w-full rounded-md border bg-transparent px-3 py-2"
+              defaultValue={filters.grades[0]}
               onChange={(e) => setData({ ...data, grade: e.target.value })}
             >
-              {grades.map((grade) => (
+              {filters.grades.map((grade) => (
                 <option key={grade} value={grade}>
                   {grade}
                 </option>
@@ -114,11 +77,11 @@ export const NewBook = () => {
             <label htmlFor="language">Тіл</label>
             <select
               id="language"
-              className="w-full px-3 py-2 rounded-md bg-transparent border"
+              className="w-full rounded-md border bg-transparent px-3 py-2"
               defaultValue="T1"
               onChange={(e) => setData({ ...data, language: e.target.value })}
             >
-              {languages.map((language) => (
+              {filters.languages.map((language) => (
                 <option key={language} value={language}>
                   {language}
                 </option>
@@ -129,11 +92,11 @@ export const NewBook = () => {
             <Label htmlFor="term">Тоқсан</Label>
             <select
               id="term"
-              className="w-full px-3 py-2 rounded-md bg-transparent border"
+              className="w-full rounded-md border bg-transparent px-3 py-2"
               defaultValue="1"
               onChange={(e) => setData({ ...data, term: e.target.value })}
             >
-              {terms.map((term) => (
+              {filters.terms.map((term) => (
                 <option key={term} value={term}>
                   {term}
                 </option>

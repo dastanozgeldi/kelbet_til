@@ -9,27 +9,29 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-
 import {
   Table,
   TableBody,
   TableCell,
+  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useWindowSize } from "@/hooks/use-window-size";
 
-interface DataTableProps<TData, TValue> {
+interface Props<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
-export function DataTable<TData, TValue>({
+export function UsersTable<TData, TValue>({
   columns,
   data,
-}: DataTableProps<TData, TValue>) {
+}: Props<TData, TValue>) {
+  const windowSize = useWindowSize();
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const table = useReactTable({
     data,
@@ -38,7 +40,12 @@ export function DataTable<TData, TValue>({
     getPaginationRowModel: getPaginationRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
-    state: { columnFilters },
+    state: {
+      columnVisibility: {
+        email: windowSize.width > 768,
+      },
+      columnFilters,
+    },
     initialState: {
       pagination: {
         pageSize: 5,
@@ -48,19 +55,16 @@ export function DataTable<TData, TValue>({
 
   return (
     <>
-      <div className="flex items-center justify-between">
-        <Input
-          placeholder="Аты-жөні бойынша іздеу..."
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
+      <Input
+        className="max-w-sm"
+        placeholder="Аты-жөні бойынша іздеу..."
+        value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+        onChange={(event) =>
+          table.getColumn("name")?.setFilterValue(event.target.value)
+        }
+      />
 
-        <div className="font-semibold">{data.length} қолданушы</div>
-      </div>
-      <div className="rounded-md border mt-4">
+      <div className="mt-4 rounded-md border">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -72,7 +76,7 @@ export function DataTable<TData, TValue>({
                         ? null
                         : flexRender(
                             header.column.columnDef.header,
-                            header.getContext()
+                            header.getContext(),
                           )}
                     </TableHead>
                   );
@@ -91,7 +95,7 @@ export function DataTable<TData, TValue>({
                     <TableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext()
+                        cell.getContext(),
                       )}
                     </TableCell>
                   ))}
@@ -108,6 +112,13 @@ export function DataTable<TData, TValue>({
               </TableRow>
             )}
           </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TableCell colSpan={4} className="text-center">
+                жалпы {data.length} қолданушы.
+              </TableCell>
+            </TableRow>
+          </TableFooter>
         </Table>
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">

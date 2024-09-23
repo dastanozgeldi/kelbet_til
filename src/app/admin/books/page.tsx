@@ -1,19 +1,35 @@
 import { Metadata } from "next";
-
 import { db } from "@/server/db";
-
-import { Books } from "./books";
+import { BooksTable } from "./_components/books-table";
+import { columns } from "./_components/columns";
+import { AddBook } from "./_components/add-book";
+import Search from "./_components/search";
 
 export const metadata: Metadata = {
   title: "Шығармалар",
 };
 
-export default async function Page() {
-  const data = await db.book.findMany({
-    orderBy: {
-      createdAt: "desc",
+export default async function Page({
+  searchParams,
+}: {
+  searchParams?: { query?: string };
+}) {
+  const query = searchParams?.query;
+
+  const books = await db.book.findMany({
+    where: {
+      title: { search: query?.trim().replace(/\s+/g, " & ") },
     },
   });
 
-  return <Books data={data} />;
+  return (
+    <>
+      <div className="flex items-center justify-between gap-3">
+        <Search placeholder="Атауы бойынша іздеу..." />
+        <AddBook />
+      </div>
+
+      <BooksTable columns={columns} data={books} />
+    </>
+  );
 }

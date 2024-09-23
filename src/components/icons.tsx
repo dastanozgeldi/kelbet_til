@@ -13,6 +13,8 @@ import {
   LogOut,
   Book,
   Users,
+  Sparkles,
+  Shield,
 } from "lucide-react";
 
 export type Icon = LucideIcon;
@@ -31,4 +33,6 @@ export const Icons = {
   logout: LogOut,
   book: Book,
   users: Users,
+  ai: Sparkles,
+  admin: Shield,
 };
