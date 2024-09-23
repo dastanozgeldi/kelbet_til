@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "User" ADD COLUMN     "canUseAI" BOOLEAN NOT NULL DEFAULT false;

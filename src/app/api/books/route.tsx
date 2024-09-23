@@ -1,6 +1,16 @@
 import { Language } from "@prisma/client";
 import { db } from "@/server/db";
 
+export async function GET() {
+  const books = await db.book.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  return Response.json({ books });
+}
+
 export async function POST(request: Request) {
   const data = await request.json();
 

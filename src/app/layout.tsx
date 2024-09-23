@@ -28,7 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <GoogleAnalytics GA_TRACKING_ID={process.env.GA_TRACKING_ID!} />
-      <body className={cn(inter.className, "min-h-screen px-8 lg:px-24 py-4")}>
+      <body className={cn(inter.className, "min-h-screen px-6 py-4 lg:px-24")}>
         <Nav />
         <EdgeStoreProvider>{children}</EdgeStoreProvider>
         <Toaster />

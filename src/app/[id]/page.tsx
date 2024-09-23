@@ -1,38 +1,37 @@
 "use client";
-import { useEffect, useState } from "react";
 import { pdfjs } from "react-pdf";
-import { type Book } from "@prisma/client";
 
-import { PDFBook } from "@/components/pdf-book";
+import { Skeleton } from "@/components/ui/skeleton";
+import { PDFBook } from "./pdf-book";
+import { useBook } from "./use-book";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.js",
-  import.meta.url
+  import.meta.url,
 ).toString();
 
 export default function Page({ params }: { params: { id: string } }) {
-  const id = params.id;
-  const [book, setBook] = useState<Book | null>(null);
+  const { loading, book, canUseAI } = useBook(params.id);
 
-  useEffect(() => {
-    const getBook = async () => {
-      const res = await fetch(`/api/book/${id}`);
-      const { book } = await res.json();
-
-      setBook(book);
-    };
-
-    getBook();
-  }, [id]);
-
+  if (loading) {
+    return (
+      <div className="my-6 overflow-hidden">
+        <div className="mb-6">
+          <Skeleton className="my-2 h-10 w-full" />
+          <hr className="h-[6px] max-w-[36px] border-0 bg-[#6C63FF]" />
+        </div>
+        <Skeleton className="h-[600px]" />
+      </div>
+    );
+  }
   return (
     book && (
       <div className="my-6 overflow-hidden">
         <div className="mb-6">
-          <h1 className="text-3xl my-2 md:text-4xl font-bold">{book.title}</h1>
-          <hr className="border-0 max-w-[36px] h-[6px] bg-[#6C63FF]" />
+          <h1 className="my-2 text-3xl font-bold md:text-4xl">{book.title}</h1>
+          <hr className="h-[6px] max-w-[36px] border-0 bg-[#6C63FF]" />
         </div>
-        <PDFBook bookId={id} file={book.fileUrl} />
+        <PDFBook book={book} canUseAI={canUseAI} />
       </div>
     )
   );

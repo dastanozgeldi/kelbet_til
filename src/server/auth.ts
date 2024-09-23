@@ -20,11 +20,13 @@ declare module "next-auth" {
     user: {
       id: string;
       role: UserRole;
+      canUseAI: boolean;
     } & DefaultSession["user"];
   }
 
   interface User {
     role: UserRole;
+    canUseAI: boolean;
   }
 }
 
@@ -41,6 +43,7 @@ export const authOptions: NextAuthOptions = {
         ...session.user,
         id: user.id,
         role: user.role,
+        canUseAI: user.canUseAI,
       },
     }),
   },

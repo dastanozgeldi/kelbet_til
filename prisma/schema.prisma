@@ -2,7 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
 }
 
 datasource db {
@@ -15,10 +16,16 @@ enum Language {
   T2
 }
 
+enum BookStatus {
+  ACTIVE
+  ARCHIVED
+}
+
 model Book {
-  id      String @id @default(cuid())
+  id      String     @id @default(cuid())
   title   String
   fileUrl String // set from uploadthing
+  status  BookStatus @default(ACTIVE)
 
   grade    String // [7, 8, 9, 10, 11, 12]
   language Language
@@ -73,6 +80,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   books         Book[]
+  canUseAI      Boolean   @default(false)
 }
 
 model VerificationToken {
