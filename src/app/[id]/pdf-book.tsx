@@ -17,7 +17,13 @@ import { cn } from "@/lib/utils";
 import { Chat } from "./chat";
 import { Book } from "@prisma/client";
 
-export const PDFBook = ({ book }: { book: Book }) => {
+export const PDFBook = ({
+  book,
+  canUseAI,
+}: {
+  book: Book;
+  canUseAI: boolean;
+}) => {
   const {
     numPages,
     currentPage,
@@ -61,24 +67,26 @@ export const PDFBook = ({ book }: { book: Book }) => {
           </span>
         )}
 
-        <Dialog>
-          <DialogTrigger
-            className={cn(buttonVariants(), "flex items-center gap-3")}
-          >
-            <Icons.ai className="h-4 w-4" />
-            AI
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>{book.title}</DialogTitle>
-              <DialogDescription>
-                Жасанды интеллект кейде шындыққа жанаспайтын жауаптар беруі
-                мүмкін.
-              </DialogDescription>
-            </DialogHeader>
-            <Chat book={book} />
-          </DialogContent>
-        </Dialog>
+        {canUseAI && (
+          <Dialog>
+            <DialogTrigger
+              className={cn(buttonVariants(), "flex items-center gap-3")}
+            >
+              <Icons.ai className="h-4 w-4" />
+              AI
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>{book.title}</DialogTitle>
+                <DialogDescription>
+                  Жасанды интеллект кейде шындыққа жанаспайтын жауаптар беруі
+                  мүмкін.
+                </DialogDescription>
+              </DialogHeader>
+              <Chat book={book} />
+            </DialogContent>
+          </Dialog>
+        )}
       </div>
 
       <button
