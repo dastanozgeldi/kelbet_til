@@ -18,7 +18,7 @@ export const UserDropdown = ({ user }: { user: User }) => {
   // Reverse the role of the user
   const isAdmin = user.role === "ADMIN";
 
-  const handleClick = async () => {
+  const toggleAdmin = async () => {
     const res = await fetch("/api/assign-admin", {
       method: "POST",
       body: JSON.stringify({ id: user.id, role: isAdmin ? "USER" : "ADMIN" }),
@@ -27,7 +27,24 @@ export const UserDropdown = ({ user }: { user: User }) => {
     if (res.ok) {
       return toast({
         title: `Админ сәтті ${isAdmin ? "тәркіленді" : "тағайындалды"}`,
-        description: `Ендігі ${user.name} шығармаларды қосып, жоя алады.`,
+      });
+    }
+
+    toast({
+      title: "Қате",
+      description: res.statusText,
+    });
+  };
+
+  const toggleAI = async () => {
+    const res = await fetch("/api/ai", {
+      method: "PATCH",
+      body: JSON.stringify({ id: user.id, canUseAI: user.canUseAI }),
+    });
+
+    if (res.ok) {
+      return toast({
+        title: `ЖИ сәтті ${user.canUseAI ? "тәркіленді" : "берілді"}`,
       });
     }
 
@@ -47,8 +64,11 @@ export const UserDropdown = ({ user }: { user: User }) => {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Әрекеттер</DropdownMenuLabel>
-        <DropdownMenuItem onClick={handleClick}>
+        <DropdownMenuItem onClick={toggleAdmin}>
           {isAdmin ? "Қолданушы" : "Админ"} қылу
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={toggleAI}>
+          {user.canUseAI ? "ЖИ тәркілеу" : "ЖИ беру"}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
