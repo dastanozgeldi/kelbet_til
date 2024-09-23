@@ -11,7 +11,7 @@ export const useBook = (bookId: string) => {
   const [canUseAI, setCanUseAI] = useState(false);
 
   const loadUser = useCallback(async () => {
-    const res = await fetch("/api/can-use-ai");
+    const res = await fetch("/api/ai");
     const { canUseAI } = await res.json();
 
     setCanUseAI(canUseAI);
