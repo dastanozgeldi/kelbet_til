@@ -22,9 +22,10 @@ interface Props {
   book: Book;
   user: User | null;
   history: Message[];
+  loadHistory: () => void;
 }
 
-export const PDFBook = ({ book, user, history }: Props) => {
+export const PDFBook = ({ book, user, history, loadHistory }: Props) => {
   const {
     numPages,
     currentPage,
@@ -69,7 +70,7 @@ export const PDFBook = ({ book, user, history }: Props) => {
         )}
 
         {user?.canUseAI && (
-          <Dialog>
+          <Dialog onOpenChange={loadHistory}>
             <DialogTrigger
               className={cn(buttonVariants(), "flex items-center gap-3")}
             >
