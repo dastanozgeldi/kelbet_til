@@ -1,3 +1,5 @@
+import { generateSystemPrompt } from "@/lib/utils";
+import { db } from "@/server/db";
 import { openai } from "@ai-sdk/openai";
 import { streamText, convertToCoreMessages } from "ai";
 
@@ -6,10 +8,34 @@ export const maxDuration = 30;
 
 export async function POST(req: Request) {
   const { data, messages } = await req.json();
+  const { userId, bookId, bookTitle } = data;
+
+  const lastUserMessage = messages[messages.length - 1];
+
+  await db.message.create({
+    data: {
+      content: lastUserMessage.content,
+      userId,
+      bookId,
+    },
+  });
 
   const result = await streamText({
     model: openai("gpt-4o"),
-    messages: convertToCoreMessages([data.systemPrompt, ...messages]),
+    messages: convertToCoreMessages([
+      generateSystemPrompt(bookTitle),
+      ...messages,
+    ]),
+    onFinish: async ({ text }) => {
+      await db.message.create({
+        data: {
+          content: text,
+          isAI: true,
+          userId,
+          bookId,
+        },
+      });
+    },
   });
 
   return result.toDataStreamResponse();

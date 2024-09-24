@@ -15,15 +15,17 @@ import {
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import { Chat } from "./chat";
-import { Book } from "@prisma/client";
+import type { Book, Message } from "@prisma/client";
+import type { User } from "next-auth";
 
-export const PDFBook = ({
-  book,
-  canUseAI,
-}: {
+interface Props {
   book: Book;
-  canUseAI: boolean;
-}) => {
+  user: User | null;
+  history: Message[];
+  loadHistory: () => void;
+}
+
+export const PDFBook = ({ book, user, history, loadHistory }: Props) => {
   const {
     numPages,
     currentPage,
@@ -67,26 +69,34 @@ export const PDFBook = ({
           </span>
         )}
 
-        {/* {canUseAI && ( */}
-        <Dialog>
-          <DialogTrigger
-            className={cn(buttonVariants(), "flex items-center gap-3")}
-          >
-            <Icons.ai className="h-4 w-4" />
-            AI
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>{book.title}</DialogTitle>
-              <DialogDescription>
-                Жасанды интеллект кейде шындыққа жанаспайтын жауаптар беруі
-                мүмкін.
-              </DialogDescription>
-            </DialogHeader>
-            <Chat book={book} />
-          </DialogContent>
-        </Dialog>
-        {/* )} */}
+        {user?.canUseAI && (
+          <Dialog onOpenChange={loadHistory}>
+            <DialogTrigger
+              className={cn(buttonVariants(), "flex items-center gap-3")}
+            >
+              <Icons.ai className="h-4 w-4" />
+              AI
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>{book.title}</DialogTitle>
+                <DialogDescription>
+                  Жасанды интеллект кейде шындыққа жанаспайтын жауаптар беруі
+                  мүмкін.
+                </DialogDescription>
+              </DialogHeader>
+              <Chat
+                book={book}
+                user={user}
+                initialMessages={history.map((message) => ({
+                  id: message.id,
+                  content: message.content,
+                  role: message.isAI ? "assistant" : "user",
+                }))}
+              />
+            </DialogContent>
+          </Dialog>
+        )}
       </div>
 
       <button
