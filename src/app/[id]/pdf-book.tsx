@@ -69,7 +69,8 @@ export const PDFBook = ({ book, user, history, loadHistory }: Props) => {
           </span>
         )}
 
-        {user?.canUseAI && (
+        {/* {user?.canUseAI && ( */}
+        {user && (
           <Dialog onOpenChange={loadHistory}>
             <DialogTrigger
               className={cn(buttonVariants(), "flex items-center gap-3")}
