@@ -4,6 +4,7 @@ import { type Message, useChat } from "ai/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { User } from "next-auth";
+import { useState } from "react";
 
 interface Props {
   book: Book;
@@ -12,9 +13,31 @@ interface Props {
 }
 
 export function Chat({ book, user, initialMessages }: Props) {
-  const { messages, input, handleInputChange, handleSubmit } = useChat({
-    initialMessages,
+  const { messages, input, isLoading, handleInputChange, handleSubmit } =
+    useChat({
+      initialMessages,
+    });
+
+  const [status, setStatus] = useState({
+    success: true,
+    limit: 2,
+    remaining: 2,
   });
+
+  const handleRatelimit = async () => {
+    try {
+      const response = await fetch(`/api/ratelimit/${user.id}`);
+      const data = await response.text();
+      setStatus(JSON.parse(data));
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setStatus({
+        success: false,
+        limit: -1,
+        remaining: -1,
+      });
+    }
+  };
 
   return (
     <div className="flex h-[400px] flex-col">
@@ -41,11 +64,7 @@ export function Chat({ book, user, initialMessages }: Props) {
         className="sticky bottom-0 flex items-center gap-3 bg-white"
         onSubmit={(e) =>
           handleSubmit(e, {
-            data: {
-              userId: user.id,
-              bookId: book.id,
-              bookTitle: book.title,
-            },
+            data: { userId: user.id, bookId: book.id, bookTitle: book.title },
           })
         }
       >
@@ -54,8 +73,19 @@ export function Chat({ book, user, initialMessages }: Props) {
           placeholder="Сұрақ қойыңыз..."
           onChange={handleInputChange}
         />
-        <Button>сұрау</Button>
+        <Button
+          disabled={isLoading || !(status.remaining > 0)}
+          onClick={handleRatelimit}
+        >
+          сұрау
+        </Button>
       </form>
+
+      {!(status.remaining > 0) && (
+        <div className="mt-4 text-center text-sm text-muted-foreground">
+          Хабарлама шегіне жеттіңіз, сәлден соң қайтып келіңіз.
+        </div>
+      )}
     </div>
   );
 }
