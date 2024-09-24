@@ -4,6 +4,7 @@ import { type Message, useChat } from "ai/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { User } from "next-auth";
+import { useEffect, useRef } from "react";
 
 interface Props {
   book: Book;
@@ -12,9 +13,20 @@ interface Props {
 }
 
 export function Chat({ book, user, initialMessages }: Props) {
-  const { messages, input, handleInputChange, handleSubmit } = useChat({
-    initialMessages,
-  });
+  const { messages, input, isLoading, handleInputChange, handleSubmit } =
+    useChat({
+      initialMessages,
+    });
+
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   return (
     <div className="flex h-[400px] flex-col">
@@ -36,6 +48,7 @@ export function Chat({ book, user, initialMessages }: Props) {
             </div>
           ),
         )}
+        <div ref={messagesEndRef} />
       </div>
       <form
         className="sticky bottom-0 flex items-center gap-3 bg-white"
@@ -54,7 +67,7 @@ export function Chat({ book, user, initialMessages }: Props) {
           placeholder="Сұрақ қойыңыз..."
           onChange={handleInputChange}
         />
-        <Button>сұрау</Button>
+        <Button disabled={isLoading}>сұрау</Button>
       </form>
     </div>
   );
