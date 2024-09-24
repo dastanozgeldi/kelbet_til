@@ -67,26 +67,26 @@ export const PDFBook = ({
           </span>
         )}
 
-        {canUseAI && (
-          <Dialog>
-            <DialogTrigger
-              className={cn(buttonVariants(), "flex items-center gap-3")}
-            >
-              <Icons.ai className="h-4 w-4" />
-              AI
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>{book.title}</DialogTitle>
-                <DialogDescription>
-                  Жасанды интеллект кейде шындыққа жанаспайтын жауаптар беруі
-                  мүмкін.
-                </DialogDescription>
-              </DialogHeader>
-              <Chat book={book} />
-            </DialogContent>
-          </Dialog>
-        )}
+        {/* {canUseAI && ( */}
+        <Dialog>
+          <DialogTrigger
+            className={cn(buttonVariants(), "flex items-center gap-3")}
+          >
+            <Icons.ai className="h-4 w-4" />
+            AI
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>{book.title}</DialogTitle>
+              <DialogDescription>
+                Жасанды интеллект кейде шындыққа жанаспайтын жауаптар беруі
+                мүмкін.
+              </DialogDescription>
+            </DialogHeader>
+            <Chat book={book} />
+          </DialogContent>
+        </Dialog>
+        {/* )} */}
       </div>
 
       <button
