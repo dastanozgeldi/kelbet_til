@@ -1,12 +1,20 @@
 "use client";
 import { Book } from "@prisma/client";
-import { useChat } from "ai/react";
-import { generateSystemPrompt } from "@/lib/utils";
+import { type Message, useChat } from "ai/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { User } from "next-auth";
 
-export function Chat({ book }: { book: Book }) {
-  const { messages, input, handleInputChange, handleSubmit } = useChat();
+interface Props {
+  book: Book;
+  user: User;
+  initialMessages: Message[];
+}
+
+export function Chat({ book, user, initialMessages }: Props) {
+  const { messages, input, handleInputChange, handleSubmit } = useChat({
+    initialMessages,
+  });
 
   return (
     <div className="flex h-[400px] flex-col">
@@ -33,7 +41,11 @@ export function Chat({ book }: { book: Book }) {
         className="sticky bottom-0 flex items-center gap-3 bg-white"
         onSubmit={(e) =>
           handleSubmit(e, {
-            data: { systemPrompt: generateSystemPrompt(book) },
+            data: {
+              userId: user.id,
+              bookId: book.id,
+              bookTitle: book.title,
+            },
           })
         }
       >

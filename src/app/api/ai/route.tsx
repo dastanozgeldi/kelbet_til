@@ -1,10 +1,13 @@
-import { getServerAuthSession } from "@/server/auth";
 import { db } from "@/server/db";
 
-export async function GET() {
-  const session = await getServerAuthSession();
+export async function POST(request: Request) {
+  const { userId, bookId } = await request.json();
 
-  return Response.json({ canUseAI: session?.user.canUseAI ?? false });
+  const messages = await db.message.findMany({
+    where: { userId, bookId },
+  });
+
+  return Response.json({ messages });
 }
 
 export async function PATCH(request: Request) {
