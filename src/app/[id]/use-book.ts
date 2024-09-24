@@ -61,5 +61,6 @@ export const useBook = (bookId: string) => {
     book,
     user,
     history,
+    loadHistory,
   };
 };
