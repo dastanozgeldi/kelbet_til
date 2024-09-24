@@ -4,7 +4,7 @@ import { type Message, useChat } from "ai/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { User } from "next-auth";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface Props {
   book: Book;
@@ -23,6 +23,16 @@ export function Chat({ book, user, initialMessages }: Props) {
     limit: 2,
     remaining: 2,
   });
+
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   const handleRatelimit = async () => {
     try {
@@ -59,6 +69,7 @@ export function Chat({ book, user, initialMessages }: Props) {
             </div>
           ),
         )}
+        <div ref={messagesEndRef} />
       </div>
       <form
         className="sticky bottom-0 flex items-center gap-3 bg-white"
