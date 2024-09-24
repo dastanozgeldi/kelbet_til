@@ -6,7 +6,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function generateSystemPrompt(book: Book) {
+export function generateSystemPrompt(bookTitle: string) {
   return {
     role: "system",
     content:
@@ -17,7 +17,7 @@ export function generateSystemPrompt(book: Book) {
       `Мысалы, сен "Ақбілек" романына енгізілген жасанды интеллектсің.\n` +
       `Тек "Ақбілек" романы бойынша сұраққа жауап бересің.\n` +
       `Тақырыптан тыс сұрақтарға "Мен әдеби чатботпын, әдебиеттен тыс сұрақтарға жауап бере алмаймын" деп жауап бересің.\n` +
-      `Шығарманың тақырыбы: ${book.title}`,
+      `Шығарманың тақырыбы: ${bookTitle}`,
   };
 }
 
