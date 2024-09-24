@@ -11,6 +11,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Message {
+  id      String  @id @default(cuid())
+  content String
+  isAI    Boolean @default(false)
+
+  bookId String
+  book   Book   @relation(fields: [bookId], references: [id])
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 enum Language {
   T1
   T2
@@ -33,6 +47,7 @@ model Book {
 
   user   User?   @relation(fields: [userId], references: [id])
   userId String?
+  messages  Message[]
 
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
@@ -81,6 +96,7 @@ model User {
   sessions      Session[]
   books         Book[]
   canUseAI      Boolean   @default(false)
+  messages      Message[]
 }
 
 model VerificationToken {
