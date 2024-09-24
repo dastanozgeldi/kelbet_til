@@ -13,9 +13,10 @@ interface Props {
 }
 
 export function Chat({ book, user, initialMessages }: Props) {
-  const { messages, input, handleInputChange, handleSubmit } = useChat({
-    initialMessages,
-  });
+  const { messages, input, isLoading, handleInputChange, handleSubmit } =
+    useChat({
+      initialMessages,
+    });
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -66,7 +67,7 @@ export function Chat({ book, user, initialMessages }: Props) {
           placeholder="Сұрақ қойыңыз..."
           onChange={handleInputChange}
         />
-        <Button>сұрау</Button>
+        <Button disabled={isLoading}>сұрау</Button>
       </form>
     </div>
   );
