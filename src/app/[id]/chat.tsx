@@ -71,6 +71,13 @@ export function Chat({ book, user, initialMessages }: Props) {
         )}
         <div ref={messagesEndRef} />
       </div>
+
+      {!(status.remaining > 0) && (
+        <div className="mb-4 text-center text-sm text-muted-foreground">
+          Хабарлама шегіне жеттіңіз, сәлден соң қайтып келіңіз.
+        </div>
+      )}
+
       <form
         className="sticky bottom-0 flex items-center gap-3 bg-white"
         onSubmit={(e) =>
@@ -91,12 +98,6 @@ export function Chat({ book, user, initialMessages }: Props) {
           сұрау
         </Button>
       </form>
-
-      {!(status.remaining > 0) && (
-        <div className="mt-4 text-center text-sm text-muted-foreground">
-          Хабарлама шегіне жеттіңіз, сәлден соң қайтып келіңіз.
-        </div>
-      )}
     </div>
   );
 }
