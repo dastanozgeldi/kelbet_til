@@ -1,10 +1,8 @@
-import { useToast } from "@/components/ui/use-toast";
 import { isActive } from "@/lib/utils";
 import { Book } from "@prisma/client";
+import { toast } from "sonner";
 
 export const useToggleBook = (book: Book) => {
-  const { toast } = useToast();
-
   const handleToggle = async () => {
     const res = await fetch("/api/books/toggle", {
       method: "PATCH",
@@ -12,14 +10,12 @@ export const useToggleBook = (book: Book) => {
     });
 
     if (res.ok) {
-      return toast({
-        title: `Шығарма сәтті ${isActive(book.status) ? "архивке салынды" : "архивтен шығарылды"}`,
-      });
+      return toast.success(
+        `Шығарма сәтті ${isActive(book.status) ? "архивке салынды" : "архивтен шығарылды"}`,
+      );
     }
 
-    toast({
-      title: "Шығарманы өзгертуде ақаулық туындады",
-    });
+    toast.error("Шығарманы өзгертуде ақаулық туындады");
   };
 
   return { handleToggle };

@@ -1,11 +1,10 @@
-import { useToast } from "@/components/ui/use-toast";
 import { filters } from "@/config";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export const useAddBook = () => {
   const router = useRouter();
-  const { toast } = useToast();
   const [data, setData] = useState({
     title: "",
     fileUrl: "",
@@ -26,17 +25,11 @@ export const useAddBook = () => {
     if (res.ok) {
       const data = await res.json();
 
-      toast({
-        title: "Шығарма сәтті жүктелді",
-        description: `Жүктелген шығарма: ${data.book.title}`,
-      });
+      toast.success("Шығарма сәтті жүктелді");
       return router.refresh();
     }
 
-    toast({
-      title: "Қате",
-      description: res.statusText,
-    });
+    toast.error("Шығарманы салуда ақаулық туындады");
   };
 
   return { data, setData, handleSubmit };
