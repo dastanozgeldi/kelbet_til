@@ -1,6 +1,6 @@
 import { generateSystemPrompt } from "@/lib/utils";
 import { db } from "@/server/db";
-import { openai } from "@ai-sdk/openai";
+import { azure } from "@ai-sdk/azure";
 import { streamText, convertToCoreMessages } from "ai";
 
 // Allow streaming responses up to 30 seconds
@@ -21,7 +21,7 @@ export async function POST(req: Request) {
   });
 
   const result = await streamText({
-    model: openai("gpt-4o"),
+    model: azure("gpt-4o"),
     messages: convertToCoreMessages([
       generateSystemPrompt(bookTitle),
       ...messages,
