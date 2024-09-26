@@ -1,11 +1,9 @@
-import { useToast } from "@/components/ui/use-toast";
 import type { Message, Book } from "@prisma/client";
 import type { User } from "next-auth";
 import { useCallback, useEffect, useState } from "react";
+import { toast } from "sonner";
 
 export const useBook = (bookId: string) => {
-  const { toast } = useToast();
-
   const [loading, setLoading] = useState(false);
   const [book, setBook] = useState<Book | null>(null);
   const [user, setUser] = useState<User | null>(null);
@@ -18,25 +16,20 @@ export const useBook = (bookId: string) => {
     setUser(user);
   }, []);
 
-  const loadBook = useCallback(
-    async (bookId: string) => {
-      try {
-        setLoading(true);
+  const loadBook = useCallback(async (bookId: string) => {
+    try {
+      setLoading(true);
 
-        const res = await fetch(`/api/books/${bookId}`);
-        const { book } = await res.json();
+      const res = await fetch(`/api/books/${bookId}`);
+      const { book } = await res.json();
 
-        setBook(book);
-      } catch {
-        toast({
-          title: "Шығарманы ашуда ақаулық туындады",
-        });
-      } finally {
-        setLoading(false);
-      }
-    },
-    [toast],
-  );
+      setBook(book);
+    } catch {
+      toast.error("Шығарманы ашуда ақаулық туындады");
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   const loadHistory = useCallback(async () => {
     if (!user?.id || !book?.id) return;

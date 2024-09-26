@@ -1,25 +1,17 @@
-import { useToast } from "@/components/ui/use-toast";
 import type { Book } from "@prisma/client";
+import { toast } from "sonner";
 
 export const useDeleteBook = (book: Book) => {
-  const { toast } = useToast();
-
   const handleDelete = async () => {
     const res = await fetch(`/api/books/${book.id}`, {
       method: "DELETE",
     });
 
     if (res.ok) {
-      return toast({
-        title: "Шығарма сәтті жойылды",
-        description: "Осы бетті қайта ашқанда шығарма жоқ болады.",
-      });
+      return toast.success("Шығарма сәтті жойылды");
     }
 
-    toast({
-      title: "Қате",
-      description: res.statusText,
-    });
+    toast.error("Шығарма жоюда ақаулық туындады");
   };
 
   return { handleDelete };

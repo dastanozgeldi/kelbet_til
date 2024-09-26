@@ -1,7 +1,7 @@
-import { useToast } from "@/components/ui/use-toast";
 import type { Language, Book } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "sonner";
 
 interface EditBookFormValues {
   title: string;
@@ -12,7 +12,6 @@ interface EditBookFormValues {
 
 export const useEditBook = (book: Book) => {
   const router = useRouter();
-  const { toast } = useToast();
 
   const [data, setData] = useState<EditBookFormValues>({
     title: book.title,
@@ -31,19 +30,11 @@ export const useEditBook = (book: Book) => {
     });
 
     if (res.ok) {
-      const data = await res.json();
-
-      toast({
-        title: "Шығарма сәтті өзгертілді",
-        description: `Өзгертілген шығарма: ${data.book.title}`,
-      });
+      toast.success("Шығарма сәтті өзгертілді");
       return router.refresh();
     }
 
-    toast({
-      title: "Қате",
-      description: res.statusText,
-    });
+    toast.error("Шығарманы өзгертуде ақаулық туындады");
   };
 
   return { data, setData, handleEdit };

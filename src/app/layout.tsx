@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
 import { Nav } from "@/components/nav";
-import { Toaster } from "@/components/ui/toaster";
+import { Toaster } from "@/components/ui/sonner";
 import { EdgeStoreProvider } from "@/lib/edgestore";
 import { cn } from "@/lib/utils";
 
@@ -29,8 +29,13 @@ export default function RootLayout({
     <html lang="en">
       <GoogleAnalytics GA_TRACKING_ID={process.env.GA_TRACKING_ID!} />
       <body className={cn(inter.className, "min-h-screen px-6 py-4 lg:px-24")}>
-        <Nav />
-        <EdgeStoreProvider>{children}</EdgeStoreProvider>
+        <EdgeStoreProvider>
+          <main>
+            <Nav />
+            {children}
+          </main>
+        </EdgeStoreProvider>
+
         <Toaster />
       </body>
     </html>

@@ -9,12 +9,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/components/ui/use-toast";
 import { Icons } from "@/components/icons";
+import { toast } from "sonner";
 
 export const UserDropdown = ({ user }: { user: User }) => {
-  const { toast } = useToast();
-
   // Reverse the role of the user
   const isAdmin = user.role === "ADMIN";
 
@@ -25,15 +23,12 @@ export const UserDropdown = ({ user }: { user: User }) => {
     });
 
     if (res.ok) {
-      return toast({
-        title: `Админ сәтті ${isAdmin ? "тәркіленді" : "тағайындалды"}`,
-      });
+      return toast.success(
+        `Админ сәтті ${isAdmin ? "тәркіленді" : "тағайындалды"}`,
+      );
     }
 
-    toast({
-      title: "Қате",
-      description: res.statusText,
-    });
+    toast.success("Админді өзгертуде ақаулық туындады");
   };
 
   const toggleAI = async () => {
@@ -43,15 +38,12 @@ export const UserDropdown = ({ user }: { user: User }) => {
     });
 
     if (res.ok) {
-      return toast({
-        title: `ЖИ сәтті ${user.canUseAI ? "тәркіленді" : "берілді"}`,
-      });
+      return toast.success(
+        `ЖИ сәтті ${user.canUseAI ? "тәркіленді" : "берілді"}`,
+      );
     }
 
-    toast({
-      title: "Қате",
-      description: res.statusText,
-    });
+    toast.success("Құқықтарды өзгертуде ақаулық туындады");
   };
 
   return (
