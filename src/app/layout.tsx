@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
 import { Nav } from "@/components/nav";
+import { Footer } from "@/components/footer";
 import { Toaster } from "@/components/ui/sonner";
 import { EdgeStoreProvider } from "@/lib/edgestore";
 import { cn } from "@/lib/utils";
@@ -33,9 +34,9 @@ export default function RootLayout({
           <main>
             <Nav />
             {children}
+            <Footer />
           </main>
         </EdgeStoreProvider>
-
         <Toaster />
       </body>
     </html>
