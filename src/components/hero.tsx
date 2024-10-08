@@ -6,10 +6,10 @@ import { Button } from "./ui/button";
 
 export const Hero = () => {
   return (
-    <section className="min-h-[94vh] flex items-center">
-      <div className="w-full flex flex-col items-center lg:flex-row lg:justify-between lg:gap-8">
-        <div className="lg:w-1/2 space-y-8">
-          <h1 className="text-3xl lg:text-4xl font-bold">
+    <section className="flex min-h-[94vh] items-center">
+      <div className="flex w-full flex-col items-center lg:flex-row lg:justify-between lg:gap-8">
+        <div className="space-y-8 lg:w-1/2">
+          <h1 className="text-3xl font-bold lg:text-4xl">
             НЗМ әдеби шығармалары бір жерде
           </h1>
 
@@ -18,7 +18,7 @@ export const Hero = () => {
               <Button
                 variant="default"
                 size="lg"
-                className="text-xl bg-[#6C63FF] hover:bg-[#6C63FF]/90"
+                className="bg-[#6C63FF] text-xl hover:bg-[#6C63FF]/90"
               >
                 Бастау
               </Button>
