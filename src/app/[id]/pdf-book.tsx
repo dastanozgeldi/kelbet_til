@@ -1,3 +1,4 @@
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import Image from "next/image";
 import { Document, Page } from "react-pdf";
@@ -17,6 +18,13 @@ import { cn } from "@/lib/utils";
 import { Chat } from "./chat";
 import type { Book, Message } from "@prisma/client";
 import type { User } from "next-auth";
+
+interface Rectangle {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
 
 interface Props {
   book: Book;
@@ -38,6 +46,94 @@ export const PDFBook = ({ book, user, history, loadHistory }: Props) => {
     handleNextPage,
     handleDocumentLoadSuccess,
   } = usePDFBook(book.id);
+
+  const [rectangles, setRectangles] = useState<Rectangle[]>([]);
+  const [isDrawing, setIsDrawing] = useState(false);
+  const [startPoint, setStartPoint] = useState<{ x: number; y: number } | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  const drawRectangles = useCallback(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    ctx.strokeStyle = 'red';
+    ctx.lineWidth = 2;
+    rectangles.forEach((rect) => {
+      ctx.strokeRect(rect.x, rect.y, rect.width, rect.height);
+    });
+  }, [rectangles]);
+
+  useEffect(() => {
+    drawRectangles();
+  }, [drawRectangles]);
+
+  const handleMouseDown = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    if (!canvasRef.current) return;
+    const canvas = canvasRef.current;
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    setIsDrawing(true);
+    setStartPoint({ x, y });
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    if (!isDrawing || !startPoint || !canvasRef.current) return;
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawRectangles();
+    ctx.strokeStyle = 'red';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(
+      startPoint.x,
+      startPoint.y,
+      x - startPoint.x,
+      y - startPoint.y
+    );
+  };
+
+  const handleMouseUp = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    if (!isDrawing || !startPoint || !canvasRef.current) return;
+    const canvas = canvasRef.current;
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const newRectangle: Rectangle = {
+      x: Math.min(startPoint.x, x),
+      y: Math.min(startPoint.y, y),
+      width: Math.abs(x - startPoint.x),
+      height: Math.abs(y - startPoint.y),
+    };
+
+    setRectangles([...rectangles, newRectangle]);
+    setIsDrawing(false);
+    setStartPoint(null);
+  };
+
+  const handlePageRender = useCallback(() => {
+    if (canvasRef.current) {
+      const canvas = canvasRef.current;
+      const page = canvas.parentElement?.querySelector('.react-pdf__Page') as HTMLElement;
+      if (page) {
+        canvas.width = page.offsetWidth;
+        canvas.height = page.offsetHeight;
+        drawRectangles();
+      }
+    }
+  }, [drawRectangles]);
 
   return (
     <>
@@ -134,16 +230,31 @@ export const PDFBook = ({ book, user, history, loadHistory }: Props) => {
         onLoadSuccess={handleDocumentLoadSuccess}
         onLoadError={console.error}
       >
-        <Page
-          noData={`Бұндай бет (${currentPage}-бет) жоқ`}
-          error="Бетті жүктеуде қате туындады"
-          loading="Бет жүктелуде..."
-          renderTextLayer={false}
-          pageNumber={currentPage}
-        />
-        {currentPage + 1 <= numPages && (
+        <div style={{ position: 'relative' }}>
           <Page
             noData={`Бұндай бет (${currentPage}-бет) жоқ`}
+            error="Бетті жүктеуде қате туындады"
+            loading="Бет жүктелуде..."
+            renderTextLayer={false}
+            pageNumber={currentPage}
+            onRenderSuccess={handlePageRender}
+          />
+          <canvas
+            ref={canvasRef}
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              pointerEvents: 'all',
+            }}
+          />
+        </div>
+        {currentPage + 1 <= numPages && (
+          <Page
+            noData={`Бұндай бет (${currentPage + 1}-бет) жоқ`}
             error="Бетті жүктеуде қате туындады"
             loading="Бет жүктелуде..."
             renderTextLayer={false}
