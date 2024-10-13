@@ -1,7 +1,8 @@
 import "react-pdf/dist/Page/AnnotationLayer.css";
+import type { Book, Message } from "@prisma/client";
+import type { User } from "next-auth";
 import Image from "next/image";
 import { Document, Page } from "react-pdf";
-import { usePDFBook } from "@/hooks/use-pdf-book";
 import { Icons } from "@/components/icons";
 import { Input } from "@/components/ui/input";
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -13,10 +14,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { cn } from "@/lib/utils";
+import { cn, isValidRectangle } from "@/lib/utils";
 import { Chat } from "./chat";
-import type { Book, Message } from "@prisma/client";
-import type { User } from "next-auth";
+import { usePDFBook } from "./hooks/use-pdf-book";
+import { useExplanation } from "./hooks/use-explanation";
+import { useRectangle } from "./hooks/use-rectangle";
 
 interface Props {
   book: Book;
@@ -26,6 +28,18 @@ interface Props {
 }
 
 export const PDFBook = ({ book, user, history, loadHistory }: Props) => {
+  const {
+    croppedImage,
+    rectangle,
+    pdfDocumentRef,
+    canvasRef,
+    handlePageRender,
+    handleMouseDown,
+    handleMouseMove,
+    handleMouseUp,
+    resetRectangle,
+  } = useRectangle();
+
   const {
     numPages,
     currentPage,
@@ -37,7 +51,10 @@ export const PDFBook = ({ book, user, history, loadHistory }: Props) => {
     handlePrevPage,
     handleNextPage,
     handleDocumentLoadSuccess,
-  } = usePDFBook(book.id);
+  } = usePDFBook(book.id, resetRectangle);
+
+  const { isExplanationLoading, explanation, handleExplanation } =
+    useExplanation();
 
   return (
     <>
@@ -131,26 +148,71 @@ export const PDFBook = ({ book, user, history, loadHistory }: Props) => {
           </div>
         }
         file={book.fileUrl}
-        onLoadSuccess={handleDocumentLoadSuccess}
+        onLoadSuccess={(pdf) => {
+          pdfDocumentRef.current = pdf;
+          handleDocumentLoadSuccess(pdf);
+        }}
         onLoadError={console.error}
       >
-        <Page
-          noData={`Бұндай бет (${currentPage}-бет) жоқ`}
-          error="Бетті жүктеуде қате туындады"
-          loading="Бет жүктелуде..."
-          renderTextLayer={false}
-          pageNumber={currentPage}
-        />
-        {currentPage + 1 <= numPages && (
+        <div className="relative mt-3 flex flex-col items-center justify-center border-t xl:flex-row">
           <Page
             noData={`Бұндай бет (${currentPage}-бет) жоқ`}
             error="Бетті жүктеуде қате туындады"
             loading="Бет жүктелуде..."
             renderTextLayer={false}
-            pageNumber={currentPage + 1}
+            pageNumber={currentPage}
+            onRenderSuccess={handlePageRender}
           />
-        )}
+          <canvas
+            ref={canvasRef}
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              pointerEvents: "all",
+            }}
+          />
+          {rectangle && isValidRectangle(rectangle) && croppedImage && (
+            <Button
+              className="flex items-center gap-2"
+              disabled={isExplanationLoading}
+              size="sm"
+              style={{
+                position: "absolute",
+                top: `${rectangle.y + rectangle.height}px`,
+                left: `${rectangle.x}px`,
+                zIndex: 10,
+              }}
+              onClick={() => handleExplanation(book.title, croppedImage)}
+            >
+              {isExplanationLoading ? (
+                <Icons.spinner className="h-4 w-4 animate-spin" />
+              ) : (
+                <Icons.explain className="h-4 w-4" />
+              )}
+              Мағынасы
+            </Button>
+          )}
+        </div>
       </Document>
+
+      {explanation && (
+        <Dialog defaultOpen>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Мағынасы</DialogTitle>
+              <DialogDescription>
+                Жасанды интеллект кейде шындыққа жанаспайтын жауаптар беруі
+                мүмкін.
+              </DialogDescription>
+            </DialogHeader>
+            {explanation}
+          </DialogContent>
+        </Dialog>
+      )}
     </>
   );
 };

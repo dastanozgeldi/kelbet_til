@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export const usePDFBook = (bookId: string) => {
+export const usePDFBook = (bookId: string, resetRectangle: () => void) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [numPages, setNumPages] = useState(1);
   const [isEditing, setIsEditing] = useState(false);
@@ -19,15 +19,17 @@ export const usePDFBook = (bookId: string) => {
 
   const handleNextPage = () => {
     if (currentPage < numPages) {
-      const newPage = currentPage + 2;
+      const newPage = currentPage + 1;
       setCurrentPage(newPage);
+      resetRectangle();
     }
   };
 
   const handlePrevPage = () => {
     if (currentPage > 1) {
-      const newPage = currentPage - 2;
+      const newPage = currentPage - 1;
       setCurrentPage(newPage);
+      resetRectangle();
     }
   };
 
