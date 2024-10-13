@@ -16,6 +16,7 @@ import {
   Sparkles,
   Shield,
   BookOpenCheck,
+  Send,
 } from "lucide-react";
 
 export type Icon = LucideIcon;
@@ -37,4 +38,5 @@ export const Icons = {
   ai: Sparkles,
   admin: Shield,
   explain: BookOpenCheck,
+  send: Send,
 };

@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { User } from "next-auth";
 import { useEffect, useRef, useState } from "react";
 import { cn, renderMarkdown } from "@/lib/utils";
+import { Icons } from "@/components/icons";
 
 interface Props {
   book: Book;
@@ -75,7 +76,7 @@ export function Chat({ book, user, initialMessages }: Props) {
       )}
 
       <form
-        className="sticky bottom-0 flex items-center gap-3 bg-white"
+        className="flex items-center gap-3 bg-white"
         onSubmit={(e) =>
           handleSubmit(e, {
             data: { userId: user.id, bookId: book.id, bookTitle: book.title },
@@ -91,7 +92,8 @@ export function Chat({ book, user, initialMessages }: Props) {
           disabled={isLoading || !(status.remaining > 0)}
           onClick={handleRatelimit}
         >
-          сұрау
+          <Icons.send className="mr-2 h-4 w-4" />
+          Сұрау
         </Button>
       </form>
     </div>
