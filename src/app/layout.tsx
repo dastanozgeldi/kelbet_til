@@ -33,21 +33,6 @@ export default function RootLayout({
       <body className={cn(inter.className, "min-h-screen px-6 py-4 lg:px-24")}>
         <EdgeStoreProvider>
           <main>
-            <div className="-mt-2 mb-4 flex w-full flex-col items-center justify-between sm:flex-row border-b pb-2">
-              платформа бойынша пікір қалдырыңыз!
-              <a
-                href="https://forms.gle/RyySDQM5GwqXoLUV7"
-                target="_blank"
-                rel="noreferrer"
-                className={cn(
-                  buttonVariants({ variant: "outline" }),
-                  "w-full sm:w-auto",
-                )}
-              >
-                сауалнаманы өту
-              </a>
-            </div>
-
             <Nav />
             {children}
             <Footer />
