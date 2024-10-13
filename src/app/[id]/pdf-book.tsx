@@ -34,9 +34,9 @@ export const PDFBook = ({ book, user, history, loadHistory }: Props) => {
     pdfDocumentRef,
     canvasRef,
     handlePageRender,
-    handleMouseDown,
-    handleMouseMove,
-    handleMouseUp,
+    handleStart,
+    handleMove,
+    handleEnd,
     resetRectangle,
   } = useRectangle();
 
@@ -165,9 +165,12 @@ export const PDFBook = ({ book, user, history, loadHistory }: Props) => {
           />
           <canvas
             ref={canvasRef}
-            onMouseDown={handleMouseDown}
-            onMouseMove={handleMouseMove}
-            onMouseUp={handleMouseUp}
+            onMouseDown={handleStart}
+            onMouseMove={handleMove}
+            onMouseUp={handleEnd}
+            onTouchStart={handleStart}
+            onTouchMove={handleMove}
+            onTouchEnd={handleEnd}
             style={{
               position: "absolute",
               top: 0,

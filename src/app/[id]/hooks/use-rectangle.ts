@@ -9,12 +9,15 @@ interface Rectangle {
   height: number;
 }
 
+interface Point {
+  x: number;
+  y: number;
+}
+
 export const useRectangle = () => {
   const [rectangle, setRectangle] = useState<Rectangle | null>(null);
   const [isDrawing, setIsDrawing] = useState(false);
-  const [startPoint, setStartPoint] = useState<{ x: number; y: number } | null>(
-    null,
-  );
+  const [startPoint, setStartPoint] = useState<Point | null>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const pdfDocumentRef = useRef<PDFDocumentProxy | null>(null);
   const pdfPageRef = useRef<PDFPageProxy | null>(null);
@@ -38,25 +41,57 @@ export const useRectangle = () => {
     drawRectangle();
   }, [drawRectangle]);
 
-  const handleMouseDown = (e: React.MouseEvent<HTMLCanvasElement>) => {
-    if (!canvasRef.current) return;
+  const getPointFromEvent = (
+    e: React.MouseEvent | React.TouchEvent,
+  ): Point | null => {
     const canvas = canvasRef.current;
+    if (!canvas) return null;
+
     const rect = canvas.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    setIsDrawing(true);
-    setStartPoint({ x, y });
+    let clientX, clientY;
+
+    if ("touches" in e) {
+      // Touch event
+      if (e.touches.length === 0) {
+        // If no touches, try using changedTouches (for touchend event)
+        if (e.changedTouches.length === 0) return null;
+        clientX = e.changedTouches[0].clientX;
+        clientY = e.changedTouches[0].clientY;
+      } else {
+        clientX = e.touches[0].clientX;
+        clientY = e.touches[0].clientY;
+      }
+    } else {
+      // Mouse event
+      clientX = e.clientX;
+      clientY = e.clientY;
+    }
+
+    return {
+      x: clientX - rect.left,
+      y: clientY - rect.top,
+    };
   };
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
+  const handleStart = (e: React.MouseEvent | React.TouchEvent) => {
+    e.preventDefault();
+    const point = getPointFromEvent(e);
+    if (point) {
+      setIsDrawing(true);
+      setStartPoint(point);
+    }
+  };
+
+  const handleMove = (e: React.MouseEvent | React.TouchEvent) => {
+    e.preventDefault();
     if (!isDrawing || !startPoint || !canvasRef.current) return;
+
+    const point = getPointFromEvent(e);
+    if (!point) return;
+
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-
-    const rect = canvas.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.strokeStyle = "#6C63FF";
@@ -64,9 +99,32 @@ export const useRectangle = () => {
     ctx.strokeRect(
       startPoint.x,
       startPoint.y,
-      x - startPoint.x,
-      y - startPoint.y,
+      point.x - startPoint.x,
+      point.y - startPoint.y,
     );
+  };
+
+  const handleEnd = (e: React.MouseEvent | React.TouchEvent) => {
+    e.preventDefault();
+    if (!isDrawing || !startPoint || !canvasRef.current) return;
+
+    const point = getPointFromEvent(e);
+    if (!point) return;
+
+    const newRectangle: Rectangle = {
+      x: Math.min(startPoint.x, point.x),
+      y: Math.min(startPoint.y, point.y),
+      width: Math.abs(point.x - startPoint.x),
+      height: Math.abs(point.y - startPoint.y),
+    };
+
+    setRectangle(newRectangle);
+    setIsDrawing(false);
+    setStartPoint(null);
+
+    if (isValidRectangle(newRectangle)) {
+      cropAndConvertImage(newRectangle);
+    }
   };
 
   const resetRectangle = () => {
@@ -74,30 +132,6 @@ export const useRectangle = () => {
     setRectangle(null);
     setStartPoint(null);
     setCroppedImage(null);
-  };
-
-  const handleMouseUp = (e: React.MouseEvent<HTMLCanvasElement>) => {
-    if (!isDrawing || !startPoint || !canvasRef.current) return;
-
-    const canvas = canvasRef.current;
-    const rect = canvas.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    const newRectangle: Rectangle = {
-      x: Math.min(startPoint.x, x),
-      y: Math.min(startPoint.y, y),
-      width: Math.abs(x - startPoint.x),
-      height: Math.abs(y - startPoint.y),
-    };
-
-    setRectangle(newRectangle);
-    setIsDrawing(false);
-    setStartPoint(null);
-
-    if (!isValidRectangle(newRectangle)) return;
-
-    cropAndConvertImage(newRectangle);
   };
 
   const cropAndConvertImage = async (rect: Rectangle) => {
@@ -158,9 +192,9 @@ export const useRectangle = () => {
     pdfDocumentRef,
     canvasRef,
     handlePageRender,
-    handleMouseDown,
-    handleMouseMove,
-    handleMouseUp,
+    handleStart,
+    handleMove,
+    handleEnd,
     resetRectangle,
   };
 };
