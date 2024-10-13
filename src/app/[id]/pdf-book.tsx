@@ -163,16 +163,6 @@ export const PDFBook = ({ book, user, history, loadHistory }: Props) => {
             pageNumber={currentPage}
             onRenderSuccess={handlePageRender}
           />
-          {currentPage + 1 <= numPages && (
-            <Page
-              noData={`Бұндай бет (${currentPage + 1}-бет) жоқ`}
-              error="Бетті жүктеуде қате туындады"
-              loading="Бет жүктелуде..."
-              renderTextLayer={false}
-              pageNumber={currentPage + 1}
-              onRenderSuccess={handlePageRender}
-            />
-          )}
           <canvas
             ref={canvasRef}
             onMouseDown={handleMouseDown}
