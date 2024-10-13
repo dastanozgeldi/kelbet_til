@@ -14,7 +14,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { cn, isValidRectangle } from "@/lib/utils";
+import { cn, isValidRectangle, renderMarkdown } from "@/lib/utils";
 import { Chat } from "./chat";
 import { usePDFBook } from "./hooks/use-pdf-book";
 import { useExplanation } from "./hooks/use-explanation";
@@ -209,7 +209,9 @@ export const PDFBook = ({ book, user, history, loadHistory }: Props) => {
                 мүмкін.
               </DialogDescription>
             </DialogHeader>
-            {explanation}
+            <div
+              dangerouslySetInnerHTML={{ __html: renderMarkdown(explanation) }}
+            />
           </DialogContent>
         </Dialog>
       )}

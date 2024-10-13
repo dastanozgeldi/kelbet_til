@@ -4,7 +4,7 @@
     - [x] crop that image
     - [x] send to gpt-4o (if he can read images directly, research that)
 - [ ] fix ai chat input behavior
-- [ ] render markdown given by chatgpt responses correctly (bold text, italic text and other stuff)
+- [x] render markdown given by chatgpt responses correctly (bold text, italic text and other stuff)
     - [ ] in explain dialog
     - [ ] in ai chat
 
