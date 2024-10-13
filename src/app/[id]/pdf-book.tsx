@@ -3,7 +3,6 @@ import type { Book, Message } from "@prisma/client";
 import type { User } from "next-auth";
 import Image from "next/image";
 import { Document, Page } from "react-pdf";
-import { usePDFBook } from "@/hooks/use-pdf-book";
 import { Icons } from "@/components/icons";
 import { Input } from "@/components/ui/input";
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -17,7 +16,9 @@ import {
 } from "@/components/ui/dialog";
 import { cn, isValidRectangle } from "@/lib/utils";
 import { Chat } from "./chat";
-import { useExplanation } from "./use-explanation";
+import { usePDFBook } from "./hooks/use-pdf-book";
+import { useExplanation } from "./hooks/use-explanation";
+import { useRectangle } from "./hooks/use-rectangle";
 
 interface Props {
   book: Book;
@@ -27,6 +28,18 @@ interface Props {
 }
 
 export const PDFBook = ({ book, user, history, loadHistory }: Props) => {
+  const {
+    croppedImage,
+    rectangle,
+    pdfDocumentRef,
+    canvasRef,
+    handlePageRender,
+    handleMouseDown,
+    handleMouseMove,
+    handleMouseUp,
+    resetRectangle,
+  } = useRectangle();
+
   const {
     numPages,
     currentPage,
@@ -38,16 +51,7 @@ export const PDFBook = ({ book, user, history, loadHistory }: Props) => {
     handlePrevPage,
     handleNextPage,
     handleDocumentLoadSuccess,
-    // For translation
-    croppedImage,
-    rectangle,
-    pdfDocumentRef,
-    canvasRef,
-    handlePageRender,
-    handleMouseDown,
-    handleMouseMove,
-    handleMouseUp,
-  } = usePDFBook(book.id);
+  } = usePDFBook(book.id, resetRectangle);
 
   const { isExplanationLoading, explanation, handleExplanation } =
     useExplanation();
@@ -150,10 +154,7 @@ export const PDFBook = ({ book, user, history, loadHistory }: Props) => {
         }}
         onLoadError={console.error}
       >
-        <div
-          style={{ position: "relative" }}
-          className="mt-3 flex flex-col items-center justify-center border-t xl:flex-row"
-        >
+        <div className="relative mt-3 flex flex-col items-center justify-center border-t xl:flex-row">
           <Page
             noData={`Бұндай бет (${currentPage}-бет) жоқ`}
             error="Бетті жүктеуде қате туындады"

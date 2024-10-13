@@ -3,7 +3,7 @@ import { pdfjs } from "react-pdf";
 
 import { Skeleton } from "@/components/ui/skeleton";
 import { PDFBook } from "./pdf-book";
-import { useBook } from "./use-book";
+import { useBook } from "./hooks/use-book";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.js",
