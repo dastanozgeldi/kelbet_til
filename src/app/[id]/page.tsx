@@ -2,8 +2,8 @@
 import { pdfjs } from "react-pdf";
 
 import { Skeleton } from "@/components/ui/skeleton";
-import { PDFBook } from "./pdf-book";
-import { useBook } from "./hooks/use-book";
+import { PDFBook } from "./_components/pdf-book";
+import { useBook } from "./_hooks/use-book";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.js",
