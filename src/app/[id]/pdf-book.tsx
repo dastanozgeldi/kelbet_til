@@ -222,9 +222,6 @@ export const PDFBook = ({ book, user, history, loadHistory }: Props) => {
 
         {croppedImage && (
           <div className="mb-4">
-            <h3 className="mb-2 text-lg font-semibold">
-              Cropped Image Preview:
-            </h3>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={croppedImage}
