@@ -1,5 +1,5 @@
 # TODO
-- [ ] translate circled text feature
+- [x] translate circled text feature
     - [x] drawing feature to be able to draw rectangle on certain text
     - [x] crop that image
     - [x] send to gpt-4o (if he can read images directly, research that)
