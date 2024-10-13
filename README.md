@@ -3,10 +3,10 @@
     - [x] drawing feature to be able to draw rectangle on certain text
     - [x] crop that image
     - [x] send to gpt-4o (if he can read images directly, research that)
-- [ ] fix ai chat input behavior
+- [x] fix ai chat input behavior
 - [x] render markdown given by chatgpt responses correctly (bold text, italic text and other stuff)
-    - [ ] in explain dialog
-    - [ ] in ai chat
+    - [x] in explain dialog
+    - [x] in ai chat
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
