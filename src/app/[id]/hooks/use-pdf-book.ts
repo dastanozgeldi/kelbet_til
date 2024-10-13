@@ -19,7 +19,7 @@ export const usePDFBook = (bookId: string, resetRectangle: () => void) => {
 
   const handleNextPage = () => {
     if (currentPage < numPages) {
-      const newPage = currentPage + 2;
+      const newPage = currentPage + 1;
       setCurrentPage(newPage);
       resetRectangle();
     }
@@ -27,7 +27,7 @@ export const usePDFBook = (bookId: string, resetRectangle: () => void) => {
 
   const handlePrevPage = () => {
     if (currentPage > 1) {
-      const newPage = currentPage - 2;
+      const newPage = currentPage - 1;
       setCurrentPage(newPage);
       resetRectangle();
     }
