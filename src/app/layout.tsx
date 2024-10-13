@@ -1,13 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-
 import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
 import { Toaster } from "@/components/ui/sonner";
-import { buttonVariants } from "@/components/ui/button";
 import { EdgeStoreProvider } from "@/lib/edgestore";
 import { cn } from "@/lib/utils";
-
 import { GoogleAnalytics } from "./google-analytics";
 import "./globals.css";
 
