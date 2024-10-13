@@ -29,7 +29,7 @@ export const useRectangle = () => {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    ctx.strokeStyle = "red";
+    ctx.strokeStyle = "#6C63FF";
     ctx.lineWidth = 2;
     ctx.strokeRect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
   }, [rectangle]);
@@ -59,7 +59,7 @@ export const useRectangle = () => {
     const y = e.clientY - rect.top;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.strokeStyle = "red";
+    ctx.strokeStyle = "#6C63FF";
     ctx.lineWidth = 2;
     ctx.strokeRect(
       startPoint.x,
