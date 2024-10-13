@@ -163,17 +163,8 @@ export const PDFBook = ({ book, user, history, loadHistory }: Props) => {
 
     // Convert to base64
     const base64Image = canvas.toDataURL("image/png");
+    console.log(base64Image);
     setCroppedImage(base64Image);
-
-    // Convert base64 to bytes
-    const byteCharacters = atob(base64Image.split(",")[1]);
-    const byteNumbers = new Array(byteCharacters.length);
-    for (let i = 0; i < byteCharacters.length; i++) {
-      byteNumbers[i] = byteCharacters.charCodeAt(i);
-    }
-    const byteArray = new Uint8Array(byteNumbers);
-
-    console.log("Cropped image as bytes:", byteArray);
   };
 
   const handlePageRender = useCallback(
@@ -218,17 +209,6 @@ export const PDFBook = ({ book, user, history, loadHistory }: Props) => {
           >
             {currentPage}-бет (жалпы {numPages})
           </span>
-        )}
-
-        {croppedImage && (
-          <div className="mb-4">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={croppedImage}
-              alt="Cropped area"
-              className="border border-gray-300"
-            />
-          </div>
         )}
 
         {/* {user?.canUseAI && ( */}
@@ -320,6 +300,19 @@ export const PDFBook = ({ book, user, history, loadHistory }: Props) => {
               pointerEvents: "all",
             }}
           />
+          {rectangle && (
+            <Button
+              style={{
+                position: "absolute",
+                top: `${rectangle.y + rectangle.height}px`,
+                left: `${rectangle.x}px`,
+                zIndex: 10,
+              }}
+              onClick={() => console.log("yo wassup broski")}
+            >
+              Мағынасы
+            </Button>
+          )}
         </div>
       </Document>
     </>
