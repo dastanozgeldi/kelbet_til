@@ -1,7 +1,8 @@
 import "react-pdf/dist/Page/AnnotationLayer.css";
+import type { Book, Message } from "@prisma/client";
+import type { User } from "next-auth";
 import Image from "next/image";
 import { Document, Page } from "react-pdf";
-
 import { usePDFBook } from "@/hooks/use-pdf-book";
 import { Icons } from "@/components/icons";
 import { Input } from "@/components/ui/input";
@@ -16,8 +17,6 @@ import {
 } from "@/components/ui/dialog";
 import { cn, isValidRectangle } from "@/lib/utils";
 import { Chat } from "./chat";
-import type { Book, Message } from "@prisma/client";
-import type { User } from "next-auth";
 import { useExplanation } from "./use-explanation";
 
 interface Props {
@@ -187,6 +186,7 @@ export const PDFBook = ({ book, user, history, loadHistory }: Props) => {
           />
           {rectangle && isValidRectangle(rectangle) && croppedImage && (
             <Button
+              className="flex items-center gap-2"
               disabled={isExplanationLoading}
               size="sm"
               style={{
@@ -197,6 +197,11 @@ export const PDFBook = ({ book, user, history, loadHistory }: Props) => {
               }}
               onClick={() => handleExplanation(book.title, croppedImage)}
             >
+              {isExplanationLoading ? (
+                <Icons.spinner className="h-4 w-4 animate-spin" />
+              ) : (
+                <Icons.explain className="h-4 w-4" />
+              )}
               Мағынасы
             </Button>
           )}
