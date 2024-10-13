@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { User } from "next-auth";
 import { useEffect, useRef, useState } from "react";
+import { cn, renderMarkdown } from "@/lib/utils";
 
 interface Props {
   book: Book;
@@ -52,23 +53,18 @@ export function Chat({ book, user, initialMessages }: Props) {
   return (
     <div className="flex h-[400px] flex-col">
       <div className="mb-4 flex-1 space-y-3 overflow-auto">
-        {messages.map((m) =>
-          m.role === "user" ? (
-            <div
-              key={m.id}
-              className="ml-auto max-w-max whitespace-pre-wrap rounded-lg bg-[#6C63FF] p-3 text-right text-white"
-            >
-              {m.content}
-            </div>
-          ) : (
-            <div
-              key={m.id}
-              className="max-w-max whitespace-pre-wrap rounded-lg bg-gray-300 p-3"
-            >
-              {m.content}
-            </div>
-          ),
-        )}
+        {messages.map((m) => (
+          <div
+            key={m.id}
+            className={cn(
+              "max-w-max whitespace-pre-wrap rounded-lg p-3",
+              m.role === "user"
+                ? "ml-auto bg-[#6C63FF] text-right text-white"
+                : "bg-gray-300",
+            )}
+            dangerouslySetInnerHTML={{ __html: renderMarkdown(m.content) }}
+          />
+        ))}
         <div ref={messagesEndRef} />
       </div>
 

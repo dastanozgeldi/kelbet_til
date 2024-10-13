@@ -1,6 +1,14 @@
 import type { BookStatus, UserRole } from "@prisma/client";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { marked } from "marked";
+
+export const renderMarkdown = (text: string) => {
+  return marked(text, {
+    gfm: true, // GitHub flavored markdown
+    breaks: true, // Convert line breaks to <br>
+  });
+};
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
