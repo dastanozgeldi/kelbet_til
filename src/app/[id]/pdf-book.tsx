@@ -1,8 +1,7 @@
-import React, { useState, useRef, useCallback, useEffect } from "react";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import Image from "next/image";
 import { Document, Page } from "react-pdf";
-import { PDFDocumentProxy, PDFPageProxy } from "pdfjs-dist";
+
 import { usePDFBook } from "@/hooks/use-pdf-book";
 import { Icons } from "@/components/icons";
 import { Input } from "@/components/ui/input";
@@ -15,17 +14,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { cn } from "@/lib/utils";
+import { cn, isValidRectangle } from "@/lib/utils";
 import { Chat } from "./chat";
 import type { Book, Message } from "@prisma/client";
 import type { User } from "next-auth";
-
-interface Rectangle {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-}
+import { useExplanation } from "./use-explanation";
 
 interface Props {
   book: Book;
@@ -46,140 +39,19 @@ export const PDFBook = ({ book, user, history, loadHistory }: Props) => {
     handlePrevPage,
     handleNextPage,
     handleDocumentLoadSuccess,
+    // For translation
+    croppedImage,
+    rectangle,
+    pdfDocumentRef,
+    canvasRef,
+    handlePageRender,
+    handleMouseDown,
+    handleMouseMove,
+    handleMouseUp,
   } = usePDFBook(book.id);
 
-  const [rectangle, setRectangle] = useState<Rectangle | null>(null);
-  const [isDrawing, setIsDrawing] = useState(false);
-  const [startPoint, setStartPoint] = useState<{ x: number; y: number } | null>(
-    null,
-  );
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const pdfDocumentRef = useRef<PDFDocumentProxy | null>(null);
-  const pdfPageRef = useRef<PDFPageProxy | null>(null);
-  const [croppedImage, setCroppedImage] = useState<string | null>(null);
-
-  const drawRectangle = useCallback(() => {
-    const canvas = canvasRef.current;
-    if (!canvas || !rectangle) return;
-
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    ctx.strokeStyle = "red";
-    ctx.lineWidth = 2;
-    ctx.strokeRect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
-  }, [rectangle]);
-
-  useEffect(() => {
-    drawRectangle();
-  }, [drawRectangle]);
-
-  const handleMouseDown = (e: React.MouseEvent<HTMLCanvasElement>) => {
-    if (!canvasRef.current) return;
-    const canvas = canvasRef.current;
-    const rect = canvas.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    setIsDrawing(true);
-    setStartPoint({ x, y });
-  };
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
-    if (!isDrawing || !startPoint || !canvasRef.current) return;
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    const rect = canvas.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.strokeStyle = "red";
-    ctx.lineWidth = 2;
-    ctx.strokeRect(
-      startPoint.x,
-      startPoint.y,
-      x - startPoint.x,
-      y - startPoint.y,
-    );
-  };
-
-  const handleMouseUp = (e: React.MouseEvent<HTMLCanvasElement>) => {
-    if (!isDrawing || !startPoint || !canvasRef.current) return;
-    const canvas = canvasRef.current;
-    const rect = canvas.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    const newRectangle: Rectangle = {
-      x: Math.min(startPoint.x, x),
-      y: Math.min(startPoint.y, y),
-      width: Math.abs(x - startPoint.x),
-      height: Math.abs(y - startPoint.y),
-    };
-
-    setRectangle(newRectangle);
-    setIsDrawing(false);
-    setStartPoint(null);
-
-    cropAndConvertImage(newRectangle);
-  };
-
-  const cropAndConvertImage = async (rect: Rectangle) => {
-    if (!pdfPageRef.current) return;
-
-    const page = pdfPageRef.current;
-    const viewport = page.getViewport({ scale: 1 });
-
-    // Create a new canvas for the cropped area
-    const canvas = document.createElement("canvas");
-    const context = canvas.getContext("2d");
-    if (!context) return;
-
-    // Set canvas size to the cropped area
-    canvas.width = rect.width;
-    canvas.height = rect.height;
-
-    // Calculate the portion of the PDF to render
-    const scaledRect = {
-      x: (rect.x * viewport.width) / canvasRef.current!.width,
-      y: (rect.y * viewport.height) / canvasRef.current!.height,
-      width: (rect.width * viewport.width) / canvasRef.current!.width,
-      height: (rect.height * viewport.height) / canvasRef.current!.height,
-    };
-
-    // Render the specific part of the page
-    await page.render({
-      canvasContext: context,
-      viewport: page.getViewport({
-        scale: canvasRef.current!.width / viewport.width,
-        offsetX: -scaledRect.x,
-        offsetY: -scaledRect.y,
-      }),
-    }).promise;
-
-    // Convert to base64
-    const base64Image = canvas.toDataURL("image/png");
-    console.log(base64Image);
-    setCroppedImage(base64Image);
-  };
-
-  const handlePageRender = useCallback(
-    (page: PDFPageProxy) => {
-      pdfPageRef.current = page;
-      if (canvasRef.current) {
-        const canvas = canvasRef.current;
-        const viewport = page.getViewport({ scale: 1 });
-        canvas.width = viewport.width;
-        canvas.height = viewport.height;
-        drawRectangle();
-      }
-    },
-    [drawRectangle],
-  );
+  const { isExplanationLoading, explanation, handleExplanation } =
+    useExplanation();
 
   return (
     <>
@@ -279,7 +151,10 @@ export const PDFBook = ({ book, user, history, loadHistory }: Props) => {
         }}
         onLoadError={console.error}
       >
-        <div style={{ position: "relative" }}>
+        <div
+          style={{ position: "relative" }}
+          className="mt-3 flex flex-col items-center justify-center border-t xl:flex-row"
+        >
           <Page
             noData={`Бұндай бет (${currentPage}-бет) жоқ`}
             error="Бетті жүктеуде қате туындады"
@@ -288,6 +163,16 @@ export const PDFBook = ({ book, user, history, loadHistory }: Props) => {
             pageNumber={currentPage}
             onRenderSuccess={handlePageRender}
           />
+          {currentPage + 1 <= numPages && (
+            <Page
+              noData={`Бұндай бет (${currentPage + 1}-бет) жоқ`}
+              error="Бетті жүктеуде қате туындады"
+              loading="Бет жүктелуде..."
+              renderTextLayer={false}
+              pageNumber={currentPage + 1}
+              onRenderSuccess={handlePageRender}
+            />
+          )}
           <canvas
             ref={canvasRef}
             onMouseDown={handleMouseDown}
@@ -300,21 +185,38 @@ export const PDFBook = ({ book, user, history, loadHistory }: Props) => {
               pointerEvents: "all",
             }}
           />
-          {rectangle && (
+          {rectangle && isValidRectangle(rectangle) && croppedImage && (
             <Button
+              disabled={isExplanationLoading}
+              size="sm"
               style={{
                 position: "absolute",
                 top: `${rectangle.y + rectangle.height}px`,
                 left: `${rectangle.x}px`,
                 zIndex: 10,
               }}
-              onClick={() => console.log("yo wassup broski")}
+              onClick={() => handleExplanation(book.title, croppedImage)}
             >
               Мағынасы
             </Button>
           )}
         </div>
       </Document>
+
+      {explanation && (
+        <Dialog defaultOpen>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Мағынасы</DialogTitle>
+              <DialogDescription>
+                Жасанды интеллект кейде шындыққа жанаспайтын жауаптар беруі
+                мүмкін.
+              </DialogDescription>
+            </DialogHeader>
+            {explanation}
+          </DialogContent>
+        </Dialog>
+      )}
     </>
   );
 };
