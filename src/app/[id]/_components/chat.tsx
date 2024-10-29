@@ -10,11 +10,15 @@ import { Icons } from "@/components/icons";
 
 interface Props {
   book: Book;
-  user: User;
+  // user: User;
   initialMessages: Message[];
 }
 
-export function Chat({ book, user, initialMessages }: Props) {
+export function Chat({
+  book,
+  // user,
+  initialMessages,
+}: Props) {
   const { messages, input, isLoading, handleInputChange, handleSubmit } =
     useChat({
       initialMessages,
@@ -36,20 +40,20 @@ export function Chat({ book, user, initialMessages }: Props) {
     scrollToBottom();
   }, [messages]);
 
-  const handleRatelimit = async () => {
-    try {
-      const response = await fetch(`/api/ratelimit/${user.id}`);
-      const data = await response.text();
-      setStatus(JSON.parse(data));
-    } catch (error) {
-      console.error("Error fetching data:", error);
-      setStatus({
-        success: false,
-        limit: -1,
-        remaining: -1,
-      });
-    }
-  };
+  // const handleRatelimit = async () => {
+  //   try {
+  //     const response = await fetch(`/api/ratelimit/${user.id}`);
+  //     const data = await response.text();
+  //     setStatus(JSON.parse(data));
+  //   } catch (error) {
+  //     console.error("Error fetching data:", error);
+  //     setStatus({
+  //       success: false,
+  //       limit: -1,
+  //       remaining: -1,
+  //     });
+  //   }
+  // };
 
   return (
     <div className="flex h-[400px] flex-col">
@@ -79,7 +83,11 @@ export function Chat({ book, user, initialMessages }: Props) {
         className="flex items-center gap-3 bg-white"
         onSubmit={(e) =>
           handleSubmit(e, {
-            data: { userId: user.id, bookId: book.id, bookTitle: book.title },
+            data: {
+              // userId: user.id,
+              bookId: book.id,
+              bookTitle: book.title,
+            },
           })
         }
       >
@@ -90,7 +98,7 @@ export function Chat({ book, user, initialMessages }: Props) {
         />
         <Button
           disabled={isLoading || !(status.remaining > 0)}
-          onClick={handleRatelimit}
+          // onClick={handleRatelimit}
         >
           <Icons.send className="mr-2 h-4 w-4" />
           Сұрау

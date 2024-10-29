@@ -8,7 +8,9 @@ export const maxDuration = 30;
 
 export async function POST(req: Request) {
   const { data, messages } = await req.json();
-  const { userId, bookId, bookTitle } = data;
+  const userId = "clrj7czjo000272dk2v1g44k5";
+  // const { userId, bookId, bookTitle } = data;
+  const { bookId, bookTitle } = data;
 
   const lastUserMessage = messages[messages.length - 1];
 
