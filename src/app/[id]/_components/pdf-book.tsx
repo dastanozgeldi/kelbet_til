@@ -87,14 +87,14 @@ export const PDFBook = ({ book, user, history, loadHistory }: Props) => {
           </span>
         )}
 
-        {user && (
-          <ChatDialog
-            book={book}
-            user={user}
-            history={history}
-            loadHistory={loadHistory}
-          />
-        )}
+        {/* {user && ( */}
+        <ChatDialog
+          book={book}
+          // user={user}
+          history={history}
+          loadHistory={loadHistory}
+        />
+        {/* )} */}
       </div>
 
       <Document
@@ -136,7 +136,7 @@ export const PDFBook = ({ book, user, history, loadHistory }: Props) => {
             pageNumber={currentPage}
             onRenderSuccess={handlePageRender}
           />
-          {user?.canUseAI && (
+          {/* {user?.canUseAI && ( */}
             <>
               <canvas
                 ref={canvasRef}
@@ -175,7 +175,7 @@ export const PDFBook = ({ book, user, history, loadHistory }: Props) => {
                 </Button>
               )}
             </>
-          )}
+          {/* )} */}
         </div>
       </Document>
 

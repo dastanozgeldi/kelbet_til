@@ -15,12 +15,17 @@ import { Chat } from "./chat";
 
 interface Props {
   book: Book;
-  user: User;
+  // user: User;
   history: Message[];
   loadHistory: () => void;
 }
 
-export const ChatDialog = ({ book, user, history, loadHistory }: Props) => {
+export const ChatDialog = ({
+  book,
+  // user,
+  history,
+  loadHistory,
+}: Props) => {
   return (
     <Dialog onOpenChange={loadHistory}>
       <DialogTrigger
@@ -38,7 +43,7 @@ export const ChatDialog = ({ book, user, history, loadHistory }: Props) => {
         </DialogHeader>
         <Chat
           book={book}
-          user={user}
+          // user={user}
           initialMessages={history.map((message) => ({
             id: message.id,
             content: message.content,
