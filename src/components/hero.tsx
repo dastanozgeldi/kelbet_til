@@ -10,7 +10,7 @@ export const Hero = () => {
       <div className="flex w-full flex-col items-center lg:flex-row lg:justify-between lg:gap-8">
         <div className="space-y-8 lg:w-1/2">
           <h1 className="text-3xl font-bold lg:text-4xl">
-            НЗМ әдеби шығармалары бір жерде
+            Республика мектептерінің әдеби шығармалары бір жерде
           </h1>
 
           <div>
