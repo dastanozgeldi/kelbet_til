@@ -5,6 +5,7 @@ import { db } from "@/server/db";
 export default async function Home() {
   const data = await db.book.findMany({
     where: {
+      program: "JBBM",
       status: "ACTIVE",
     },
     orderBy: {
