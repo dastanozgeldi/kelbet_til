@@ -25,6 +25,11 @@ model Message {
   updatedAt DateTime @updatedAt
 }
 
+enum Program {
+  JBBM
+  NIS
+}
+
 enum Language {
   T1
   T2
@@ -41,6 +46,7 @@ model Book {
   fileUrl String // set from uploadthing
   status  BookStatus @default(ACTIVE)
 
+  program  Program @default(NIS)
   grade    String // [7, 8, 9, 10, 11, 12]
   language Language
   term     String // [1, 2, 3, 4]

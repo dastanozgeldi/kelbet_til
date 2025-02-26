@@ -2,6 +2,37 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { filters } from "@/config";
 import { Label } from "./ui/label";
 
+export const ProgramFilter = ({
+  key,
+  program,
+  setProgram,
+}: {
+  key: string;
+  program: string;
+  setProgram: (program: string) => void;
+}) => {
+  return (
+    <div>
+      <Label>Бағдарлама</Label>
+      <Tabs
+        value={program}
+        onValueChange={(value) => {
+          setProgram(value);
+          localStorage.setItem(key, value);
+        }}
+      >
+        <TabsList>
+          {filters.programs.map((program) => (
+            <TabsTrigger key={program} value={program}>
+              {program === "JBBM" ? "ЖББМ" : "НЗМ"}
+            </TabsTrigger>
+          ))}
+        </TabsList>
+      </Tabs>
+    </div>
+  );
+};
+
 export const GradeFilter = ({
   key,
   grade,
