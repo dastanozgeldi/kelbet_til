@@ -14,7 +14,8 @@ const links = [
 ];
 
 const filters = {
-  grades: ["7", "8", "9", "10", "11", "12"],
+  programs: ["JBBM", "NIS"],
+  grades: ["5", "6", "7", "8", "9", "10", "11", "12"],
   languages: ["T1", "T2"],
   terms: ["1", "2", "3", "4"],
 };

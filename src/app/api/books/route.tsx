@@ -16,6 +16,7 @@ export async function POST(request: Request) {
 
   const book = await db.book.create({
     data: {
+      program: "JBBM",
       title: data.title,
       fileUrl: data.fileUrl,
       grade: data.grade,
