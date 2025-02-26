@@ -22,8 +22,11 @@ export const ProgramFilter = ({
         }}
       >
         <TabsList>
-          <TabsTrigger value="JBBM">ЖББМ</TabsTrigger>
-          <TabsTrigger value="NIS">НЗМ</TabsTrigger>
+          {filters.programs.map((program) => (
+            <TabsTrigger key={program} value={program}>
+              {program === "JBBM" ? "ЖББМ" : "НЗМ"}
+            </TabsTrigger>
+          ))}
         </TabsList>
       </Tabs>
     </div>
