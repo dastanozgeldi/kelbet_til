@@ -3,6 +3,7 @@ import { type Book } from "@prisma/client";
 import { useEffect, useState } from "react";
 
 export const useBooks = (data: Book[]) => {
+  const [program, setProgram] = useState(filters.programs[0]);
   const [grade, setGrade] = useState(filters.grades[0]);
   const [language, setLanguage] = useState(filters.languages[0]);
   const [term, setTerm] = useState(filters.terms[0]);
@@ -27,6 +28,9 @@ export const useBooks = (data: Book[]) => {
 
   useEffect(() => {
     const getStorageItems = () => {
+      const program = localStorage.getItem("program");
+      if (program) setProgram(program);
+
       const grade = localStorage.getItem("grade");
       if (grade) setGrade(grade);
 
@@ -41,11 +45,13 @@ export const useBooks = (data: Book[]) => {
   }, []);
 
   return {
+    program,
     grade,
     language,
     term,
     searchValue,
     filteredBooks,
+    setProgram,
     setGrade,
     setLanguage,
     setTerm,
