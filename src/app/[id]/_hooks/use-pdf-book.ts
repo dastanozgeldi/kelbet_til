@@ -5,13 +5,10 @@ export const usePDFBook = (bookId: string, resetRectangle: () => void) => {
   const [numPages, setNumPages] = useState(1);
   const [isEditing, setIsEditing] = useState(false);
 
-  const hasMultiplePages = numPages >= 3;
+  const hasMultiplePages = numPages >= 2;
 
   const noPrevPage = !hasMultiplePages || currentPage === 1;
-  const noNextPage =
-    !hasMultiplePages ||
-    currentPage === numPages ||
-    currentPage + 1 === numPages;
+  const noNextPage = !hasMultiplePages || currentPage === numPages;
 
   const handleDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
     setNumPages(numPages);
