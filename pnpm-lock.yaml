@@ -56,12 +56,6 @@ importers:
       '@tanstack/react-table':
         specifier: ^8.11.7
         version: 8.21.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@types/react':
-        specifier: 18.2.22
-        version: 18.2.22
-      '@types/react-dom':
-        specifier: 18.2.7
-        version: 18.2.7
       '@upstash/ratelimit':
         specifier: ^2.0.3
         version: 2.0.5(@upstash/redis@1.35.1)
@@ -144,6 +138,12 @@ importers:
       '@types/node':
         specifier: ^20.10.2
         version: 20.19.4
+      '@types/react':
+        specifier: 18.2.22
+        version: 18.2.22
+      '@types/react-dom':
+        specifier: 18.2.7
+        version: 18.2.7
       prettier:
         specifier: ^3.3.3
         version: 3.6.2
