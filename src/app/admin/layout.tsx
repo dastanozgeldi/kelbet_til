@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getServerAuthSession } from "@/server/auth";
+import { auth } from "@/server/auth";
 import { Header } from "./header";
 import { Sidebar } from "./sidebar";
 
@@ -16,7 +16,7 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerAuthSession();
+  const session = await auth();
 
   if (session?.user.role !== "ADMIN") return notFound();
   return (

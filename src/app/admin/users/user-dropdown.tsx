@@ -1,5 +1,4 @@
 import React from "react";
-import { type User } from "@prisma/client";
 
 import {
   DropdownMenu,
@@ -11,9 +10,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { Icons } from "@/components/icons";
 import { toast } from "sonner";
+import { User } from "next-auth";
 
 export const UserDropdown = ({ user }: { user: User }) => {
-  // Reverse the role of the user
   const isAdmin = user.role === "ADMIN";
 
   const toggleAdmin = async () => {
