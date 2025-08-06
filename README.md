@@ -1,5 +1,7 @@
 # TODO (August 2025 Sprint)
 
+- [x] update pdf reader packages
+- [ ] fix pdf reader
 - [ ] save progress button at /[id] that saves current book progress to my books table
 - [ ] separate books page to optimize home page
 - [ ] abandon saving user filters in local storage, implement url params instead
