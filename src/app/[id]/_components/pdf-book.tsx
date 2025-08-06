@@ -1,8 +1,10 @@
+"use client";
+
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import type { Book, Message } from "@prisma/client";
 import type { User } from "next-auth";
 import Image from "next/image";
-import { Document, Page } from "react-pdf";
+import { Document, Page, pdfjs } from "react-pdf";
 import { Icons } from "@/components/icons";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -12,6 +14,8 @@ import { useExplanation } from "../_hooks/use-explanation";
 import { useRectangle } from "../_hooks/use-rectangle";
 import { ExplanationDialog } from "./explanation-dialog";
 import { ChatDialog } from "./chat-dialog";
+
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
 interface Props {
   book: Book;
@@ -52,7 +56,7 @@ export const PDFBook = ({ book, user, history, loadHistory }: Props) => {
   return (
     <>
       <button
-        className="fixed left-3 top-1/2 z-10 disabled:text-gray-400"
+        className="fixed top-1/2 left-3 z-10 disabled:text-gray-400"
         disabled={noPrevPage}
         onClick={handlePrevPage}
       >
@@ -60,7 +64,7 @@ export const PDFBook = ({ book, user, history, loadHistory }: Props) => {
       </button>
 
       <button
-        className="fixed right-3 top-1/2 z-10 disabled:text-gray-400"
+        className="fixed top-1/2 right-3 z-10 disabled:text-gray-400"
         disabled={noNextPage}
         onClick={handleNextPage}
       >
@@ -137,44 +141,44 @@ export const PDFBook = ({ book, user, history, loadHistory }: Props) => {
             onRenderSuccess={handlePageRender}
           />
           {/* {user?.canUseAI && ( */}
-            <>
-              <canvas
-                ref={canvasRef}
-                onMouseDown={handleStart}
-                onMouseMove={handleMove}
-                onMouseUp={handleEnd}
-                onTouchStart={handleStart}
-                onTouchMove={handleMove}
-                onTouchEnd={handleEnd}
+          <>
+            <canvas
+              ref={canvasRef}
+              onMouseDown={handleStart}
+              onMouseMove={handleMove}
+              onMouseUp={handleEnd}
+              onTouchStart={handleStart}
+              onTouchMove={handleMove}
+              onTouchEnd={handleEnd}
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                pointerEvents: "all",
+              }}
+            />
+            {rectangle && isValidRectangle(rectangle) && croppedImage && (
+              <Button
+                className="flex items-center gap-2"
+                disabled={isExplanationLoading}
+                size="sm"
                 style={{
                   position: "absolute",
-                  top: 0,
-                  left: 0,
-                  pointerEvents: "all",
+                  top: `${rectangle.y + rectangle.height}px`,
+                  left: `${rectangle.x}px`,
+                  zIndex: 10,
                 }}
-              />
-              {rectangle && isValidRectangle(rectangle) && croppedImage && (
-                <Button
-                  className="flex items-center gap-2"
-                  disabled={isExplanationLoading}
-                  size="sm"
-                  style={{
-                    position: "absolute",
-                    top: `${rectangle.y + rectangle.height}px`,
-                    left: `${rectangle.x}px`,
-                    zIndex: 10,
-                  }}
-                  onClick={() => handleExplanation(book.title, croppedImage)}
-                >
-                  {isExplanationLoading ? (
-                    <Icons.spinner className="h-4 w-4 animate-spin" />
-                  ) : (
-                    <Icons.explain className="h-4 w-4" />
-                  )}
-                  Мағынасы
-                </Button>
-              )}
-            </>
+                onClick={() => handleExplanation(book.title, croppedImage)}
+              >
+                {isExplanationLoading ? (
+                  <Icons.spinner className="h-4 w-4 animate-spin" />
+                ) : (
+                  <Icons.explain className="h-4 w-4" />
+                )}
+                Мағынасы
+              </Button>
+            )}
+          </>
           {/* )} */}
         </div>
       </Document>
