@@ -1,5 +1,40 @@
-import { Hero } from "@/components/hero";
+import Link from "next/link";
+import Image from "next/image";
+import { ArrowRightIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default async function Home() {
-  return <Hero />;
+  return (
+    <section className="flex min-h-[94vh] items-center">
+      <div className="flex w-full flex-col items-center lg:flex-row lg:justify-between lg:gap-8">
+        <div className="space-y-8 lg:w-1/2">
+          <h1 className="text-3xl font-bold lg:text-4xl">
+            Республика мектептерінің әдеби шығармалары бір жерде
+          </h1>
+
+          <div>
+            <Link href="/books">
+              <Button
+                variant="default"
+                size="lg"
+                className="bg-[#6C63FF] text-xl hover:bg-[#6C63FF]/90"
+              >
+                Бастау
+                {/* <ArrowRightIcon className="size-8" /> */}
+              </Button>
+            </Link>
+          </div>
+        </div>
+        <div className="lg:w-1/2">
+          <Image
+            className="w-full"
+            src="/hero.png"
+            alt="hero"
+            width={500}
+            height={500}
+          />
+        </div>
+      </div>
+    </section>
+  );
 }
