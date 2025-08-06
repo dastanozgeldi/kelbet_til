@@ -8,8 +8,6 @@ export const useBooks = (data: Book[]) => {
   const [language, setLanguage] = useState(filters.languages[0]);
   const [term, setTerm] = useState(filters.terms[0]);
 
-  const [searchValue, setSearchValue] = useState("");
-
   // explanation: russian-speaking 12th graders don't have a T2.
   let books = null;
   if (grade === "12" && language === "T2") {
@@ -21,10 +19,6 @@ export const useBooks = (data: Book[]) => {
       (book) => book.grade === grade && book.language === language,
     );
   }
-
-  const filteredBooks = books.filter((book) =>
-    book.title.toLowerCase().includes(searchValue.toLowerCase()),
-  );
 
   useEffect(() => {
     const getStorageItems = () => {
@@ -45,16 +39,14 @@ export const useBooks = (data: Book[]) => {
   }, []);
 
   return {
+    books,
     program,
     grade,
     language,
     term,
-    searchValue,
-    filteredBooks,
     setProgram,
     setGrade,
     setLanguage,
     setTerm,
-    setSearchValue,
   };
 };
