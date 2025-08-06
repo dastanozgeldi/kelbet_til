@@ -35,7 +35,7 @@ export const Books = ({ data }: { data: Book[] }) => {
   } = useBooks(data);
 
   return (
-    <div id="books" className="py-6">
+    <>
       <div className="mb-6">
         <h1 className="my-2 text-3xl font-bold md:text-4xl">Шығармалар</h1>
         <hr className="bg-primary h-[6px] max-w-[36px] border-0" />
@@ -91,6 +91,6 @@ export const Books = ({ data }: { data: Book[] }) => {
             ),
         )}
       </div>
-    </div>
+    </>
   );
 };
