@@ -24,16 +24,15 @@ export default function RootLayout({
       <GoogleAnalytics GA_TRACKING_ID={process.env.GA_TRACKING_ID!} />
       <body className="container mx-auto antialiased">
         <EdgeStoreProvider>
-          <main>
-            <Nav />
-            {children}
-            <footer className="mt-6 border-t py-3 text-center">
-              made with 🥰 by{" "}
-              <a href="https://ozgeldi.tech" className="font-semibold">
-                @dastanozgeldi
-              </a>
-            </footer>
-          </main>
+          <Nav />
+          <main className="px-3">{children}</main>
+
+          <footer className="mt-6 border-t p-3 text-center">
+            made with 🥰 by{" "}
+            <a href="https://ozgeldi.tech" className="font-semibold">
+              @dastanozgeldi
+            </a>
+          </footer>
         </EdgeStoreProvider>
         <Toaster />
       </body>

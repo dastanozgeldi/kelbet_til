@@ -24,6 +24,8 @@ export default async function BooksPage(props: {
     orderBy: {
       createdAt: "desc",
     },
+    // TODO: implement infinite scroll or something similar
+    take: 10,
   });
 
   return (

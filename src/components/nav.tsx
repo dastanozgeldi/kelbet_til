@@ -7,7 +7,7 @@ export const Nav = async () => {
   const session = await auth();
 
   return (
-    <nav className="flex w-full items-center justify-between py-3">
+    <nav className="flex w-full items-center justify-between p-3">
       <Link href="/" className="flex items-center space-x-2.5">
         <Image src="/logo.png" width={32} height={32} alt="Logo" />
         <div className="text-xl font-bold">kelbet-til.kz</div>
