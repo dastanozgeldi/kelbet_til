@@ -5,10 +5,10 @@ import { Button } from "@/components/ui/button";
 
 export default async function Home() {
   return (
-    <section className="flex min-h-[94vh] items-center">
+    <section className="flex items-center">
       <div className="flex w-full flex-col items-center lg:flex-row lg:justify-between lg:gap-8">
         <div className="space-y-8 lg:w-1/2">
-          <h1 className="text-3xl font-bold lg:text-4xl">
+          <h1 className="text-3xl font-extrabold lg:text-4xl">
             Республика мектептерінің әдеби шығармалары бір жерде
           </h1>
 
