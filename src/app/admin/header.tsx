@@ -24,16 +24,16 @@ export const Header = ({ user }: { user: Session["user"] }) => {
           <h1 className="text-xl font-bold sm:text-2xl md:text-3xl">
             {getPageTitle()}
           </h1>
-          <hr className="h-[3px] sm:h-[6px] max-w-[36px] border-0 bg-[#6C63FF]" />
+          <hr className="bg-primary h-[3px] max-w-[36px] border-0 sm:h-[6px]" />
         </div>
         <div className="flex items-center space-x-2">
-          <Avatar className="h-8 w-8">
+          <Avatar className="size-8">
             <AvatarImage src={image!} alt="админ" />
             <AvatarFallback>{name ? name[0] : "KT"}</AvatarFallback>
           </Avatar>
           <div>
-            <span className="text-[11px] text-[#7d8385]">Администратор</span>
-            <h3 className="-mt-1 text-[15px] font-semibold">{user.name}</h3>
+            <span className="text-muted-foreground text-xs">Администратор</span>
+            <h3 className="-mt-2 font-semibold">{user.name}</h3>
           </div>
         </div>
       </div>

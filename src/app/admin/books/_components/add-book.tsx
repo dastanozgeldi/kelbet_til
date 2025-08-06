@@ -22,7 +22,7 @@ export const AddBook = () => {
       <DialogTrigger asChild>
         <Button
           size="sm"
-          className="gap-2 bg-[#6C63FF] text-sm hover:bg-[#6C63FF]/90"
+          className="gap-2 bg-primary text-sm hover:bg-primary/90"
         >
           <Icons.plus className="h-5 w-5" />
           Жаңа

@@ -29,7 +29,7 @@ export const Books = ({ data }: { data: Book[] }) => {
     <div id="books" className="py-6">
       <div className="mb-6">
         <h1 className="my-2 text-3xl font-bold md:text-4xl">Шығармалар</h1>
-        <hr className="h-[6px] max-w-[36px] border-0 bg-[#6C63FF]" />
+        <hr className="bg-primary h-[6px] max-w-[36px] border-0" />
       </div>
 
       <div className="flex flex-col gap-6 sm:flex-row sm:items-center">
@@ -43,7 +43,7 @@ export const Books = ({ data }: { data: Book[] }) => {
       <div className="relative">
         <input
           id="search"
-          className="my-6 w-full rounded-lg border-[3px] border-[#6C63FF] p-3 pl-12"
+          className="border-primary my-6 w-full rounded-lg border-[3px] p-3 pl-12"
           type="text"
           placeholder="Кітап немесе автордың атын енгізіңіз..."
           aria-label="Кітап немесе автордың атын енгізіңіз..."
@@ -52,7 +52,7 @@ export const Books = ({ data }: { data: Book[] }) => {
         />
         <label htmlFor="search">
           <Icons.search
-            className="absolute left-4 top-1/2 -translate-y-1/2"
+            className="absolute top-1/2 left-4 -translate-y-1/2"
             size={20}
           />
         </label>
@@ -60,7 +60,7 @@ export const Books = ({ data }: { data: Book[] }) => {
 
       <div className="pb-3">
         <h2 className="my-2 text-2xl font-bold">{term}-тоқсан</h2>
-        <hr className="h-[6px] max-w-[36px] border-0 bg-[#6C63FF]" />
+        <hr className="bg-primary h-[6px] max-w-[36px] border-0" />
       </div>
       <div className="my-6 grid grid-cols-1 gap-4 md:grid-cols-2">
         {filteredBooks.map(
@@ -69,7 +69,7 @@ export const Books = ({ data }: { data: Book[] }) => {
               <Link
                 key={book.id}
                 href={`/${book.id}`}
-                className="min-w-[300px] rounded bg-[#F8F8F8] p-8"
+                className="min-w-[300px] rounded bg-gray-50 p-8"
               >
                 <h2 className="text-2xl font-bold">{book.title}</h2>
               </Link>

@@ -17,7 +17,7 @@ export const Sidebar = () => {
           href={href}
           className={cn(
             "mb-6 flex items-center gap-3 text-sm",
-            href === pathname && "text-[#6C63FF]",
+            href === pathname && "text-primary",
           )}
         >
           {icon}

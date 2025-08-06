@@ -64,7 +64,7 @@ export function Chat({
             className={cn(
               "max-w-max whitespace-pre-wrap rounded-lg p-3",
               m.role === "user"
-                ? "ml-auto bg-[#6C63FF] text-right text-white"
+                ? "ml-auto bg-primary text-right text-white"
                 : "bg-gray-300",
             )}
             dangerouslySetInnerHTML={{ __html: renderMarkdown(m.content) }}
