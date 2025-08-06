@@ -27,7 +27,7 @@ export default function RootLayout({
           <main>
             <Nav />
             {children}
-            <footer className="mt-6 border-t pt-3 text-center">
+            <footer className="mt-6 border-t py-3 text-center">
               made with 🥰 by{" "}
               <a href="https://ozgeldi.tech" className="font-semibold">
                 @dastanozgeldi
