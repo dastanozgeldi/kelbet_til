@@ -11,7 +11,6 @@ import { usePDFBook } from "../_hooks/use-pdf-book";
 import { useExplanation } from "../_hooks/use-explanation";
 import { useRectangle } from "../_hooks/use-rectangle";
 import { ExplanationDialog } from "./explanation-dialog";
-import { ChatDialog } from "./chat-dialog";
 import {
   BookOpenCheckIcon,
   ChevronLeftIcon,
@@ -92,10 +91,6 @@ export const PDFBook = ({ book }: { book: Book }) => {
             {currentPage}-бет (жалпы {numPages})
           </span>
         )}
-
-        {/* {user && ( */}
-        <ChatDialog book={book} />
-        {/* )} */}
       </div>
 
       <Document

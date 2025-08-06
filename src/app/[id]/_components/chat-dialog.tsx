@@ -1,7 +1,5 @@
-"use client";
-
 import { BotIcon } from "lucide-react";
-import type { Book, Message } from "@prisma/client";
+import type { Book } from "@prisma/client";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -12,27 +10,13 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Chat } from "./chat";
-import { useCallback, useState } from "react";
+import { Suspense } from "react";
+import { db } from "@/server/db";
+import { auth, signIn } from "@/server/auth";
 
-interface Props {
-  book: Book;
-}
-
-export const ChatDialog = ({ book }: Props) => {
-  const [history, setHistory] = useState<Message[]>([]);
-
-  const loadHistory = useCallback(async () => {
-    const res = await fetch("/api/ai", {
-      method: "POST",
-      body: JSON.stringify({ bookId: book.id }),
-    });
-    const { messages } = await res.json();
-
-    setHistory(messages);
-  }, [book.id]);
-
+export async function ChatDialog({ book }: { book: Book }) {
   return (
-    <Dialog onOpenChange={loadHistory}>
+    <Dialog>
       <DialogTrigger asChild>
         <Button>
           <BotIcon className="size-4" />
@@ -46,16 +30,47 @@ export const ChatDialog = ({ book }: Props) => {
             Жасанды интеллект кейде шындыққа жанаспайтын жауаптар беруі мүмкін.
           </DialogDescription>
         </DialogHeader>
-        <Chat
-          book={book}
-          // user={user}
-          initialMessages={history.map((message) => ({
-            id: message.id,
-            content: message.content,
-            role: message.isAI ? "assistant" : "user",
-          }))}
-        />
+        <Suspense fallback={<>loading chat history...</>}>
+          <SuspenseBoundary book={book} />
+        </Suspense>
       </DialogContent>
     </Dialog>
   );
-};
+}
+
+async function SuspenseBoundary({ book }: { book: Book }) {
+  const session = await auth();
+  const userId = session?.user.id;
+
+  if (!userId)
+    return (
+      <div className="space-y-3">
+        <p>Жасанды интеллектті қолдану үшін аккаунтқа кіріңіз.</p>
+        <form
+          action={async () => {
+            "use server";
+            await signIn("google");
+          }}
+        >
+          <Button type="submit">Кіру</Button>
+        </form>
+      </div>
+    );
+
+  await new Promise((resolve) => setTimeout(resolve, 5000));
+
+  const messages = await db.message.findMany({
+    where: { userId, bookId: book.id },
+  });
+
+  return (
+    <Chat
+      book={book}
+      initialMessages={messages.map((message) => ({
+        id: message.id,
+        content: message.content,
+        role: message.isAI ? "assistant" : "user",
+      }))}
+    />
+  );
+}
