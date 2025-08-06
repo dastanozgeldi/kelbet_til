@@ -1,12 +1,27 @@
+# TODO (August 2025 Sprint)
+
+- [ ] save progress button at /[id] that saves current book progress to my books table
+- [ ] separate books page to optimize home page
+- [ ] abandon saving user filters in local storage, implement url params instead
+- [ ] cta button to /books
+- [ ] spam server components where possible
+- [ ] edgestore -> cloudflare r2
+
+## core
+
+- [ ] prisma -> drizzle
+- [ ] next-auth -> better-auth
+
 # TODO
+
 - [x] translate circled text feature
-    - [x] drawing feature to be able to draw rectangle on certain text
-    - [x] crop that image
-    - [x] send to gpt-4o (if he can read images directly, research that)
+  - [x] drawing feature to be able to draw rectangle on certain text
+  - [x] crop that image
+  - [x] send to gpt-4o (if he can read images directly, research that)
 - [x] fix ai chat input behavior
 - [x] render markdown given by chatgpt responses correctly (bold text, italic text and other stuff)
-    - [x] in explain dialog
-    - [x] in ai chat
+  - [x] in explain dialog
+  - [x] in ai chat
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
