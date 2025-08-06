@@ -14,7 +14,7 @@ export const Hero = () => {
           </h1>
 
           <div>
-            <Link href="/#books">
+            <Link href="/books">
               <Button
                 variant="default"
                 size="lg"

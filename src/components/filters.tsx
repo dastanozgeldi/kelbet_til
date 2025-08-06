@@ -3,11 +3,9 @@ import { filters } from "@/config";
 import { Label } from "./ui/label";
 
 export const ProgramFilter = ({
-  key,
   program,
   setProgram,
 }: {
-  key: string;
   program: string;
   setProgram: (program: string) => void;
 }) => {
@@ -18,7 +16,7 @@ export const ProgramFilter = ({
         value={program}
         onValueChange={(value) => {
           setProgram(value);
-          localStorage.setItem(key, value);
+          localStorage.setItem("program", value);
         }}
       >
         <TabsList>
@@ -34,11 +32,9 @@ export const ProgramFilter = ({
 };
 
 export const GradeFilter = ({
-  key,
   grade,
   setGrade,
 }: {
-  key: string;
   grade: string;
   setGrade: (grade: string) => void;
 }) => {
@@ -49,7 +45,7 @@ export const GradeFilter = ({
         value={grade}
         onValueChange={(value) => {
           setGrade(value);
-          localStorage.setItem(key, value);
+          localStorage.setItem("grade", value);
         }}
       >
         <TabsList>
@@ -65,11 +61,9 @@ export const GradeFilter = ({
 };
 
 export const LanguageFilter = ({
-  key,
   language,
   setLanguage,
 }: {
-  key: string;
   language: string;
   setLanguage: (language: string) => void;
 }) => {
@@ -80,7 +74,7 @@ export const LanguageFilter = ({
         value={language}
         onValueChange={(value) => {
           setLanguage(value);
-          localStorage.setItem(key, value);
+          localStorage.setItem("language", value);
         }}
       >
         <TabsList>
@@ -93,11 +87,9 @@ export const LanguageFilter = ({
 };
 
 export const TermFilter = ({
-  key,
   term,
   setTerm,
 }: {
-  key: string;
   term: string;
   setTerm: (term: string) => void;
 }) => {
@@ -108,7 +100,7 @@ export const TermFilter = ({
         value={term}
         onValueChange={(value) => {
           setTerm(value);
-          localStorage.setItem(key, value);
+          localStorage.setItem("term", value);
         }}
       >
         <TabsList>

@@ -5,10 +5,8 @@ export const dynamic = "force-dynamic";
 import { ratelimit } from "@/ratelimit";
 import { waitUntil } from "@vercel/functions";
 
-export async function GET(
-  _: Request,
-  { params }: { params: { userId: string } },
-) {
+export async function GET(_: Request, props: { params: Promise<{ userId: string }> }) {
+  const params = await props.params;
   const { success, limit, remaining, pending } = await ratelimit.limit(
     params.userId,
   );
