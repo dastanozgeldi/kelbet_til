@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <GoogleAnalytics GA_TRACKING_ID={process.env.GA_TRACKING_ID!} />
-      <body className="container mx-auto my-6 antialiased">
+      <body className="container mx-auto antialiased">
         <EdgeStoreProvider>
           <main>
             <Nav />
