@@ -1,18 +1,13 @@
-# TODO (August 2025 Sprint)
+# TODO (Next.js 15 Sprint)
 
+- [x] cta button to /books
 - [x] update pdf reader packages
-- [ ] fix pdf reader
-- [ ] save progress button at /[id] that saves current book progress to my books table
-- [ ] separate books page to optimize home page
-- [ ] abandon saving user filters in local storage, implement url params instead
-- [ ] cta button to /books
-- [ ] spam server components where possible
+- [x] fix pdf reader
+- [x] separate books page to optimize home page
+- [x] abandon saving user filters in local storage, implement url params instead
+- [ ] debounce filters
 - [ ] edgestore -> cloudflare r2
-
-## core
-
-- [ ] prisma -> drizzle
-- [ ] next-auth -> better-auth
+- [ ] save progress button at /[id] that saves current book progress to my books table
 
 # TODO
 
