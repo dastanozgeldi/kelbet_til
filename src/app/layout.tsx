@@ -30,7 +30,7 @@ export default function RootLayout({
           <footer className="mt-6 border-t p-3 text-center">
             made with 🥰 by{" "}
             <a
-              href="https://ozgeldi.tech"
+              href="https://instagram.com/dastanozgeldi"
               className="font-semibold"
               target="_blank"
               rel="noopener noreferrer"
