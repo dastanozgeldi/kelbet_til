@@ -25,9 +25,9 @@ export default function RootLayout({
       <body className="container mx-auto antialiased">
         <EdgeStoreProvider>
           <Nav />
-          <main className="px-3">{children}</main>
+          <main className="px-6">{children}</main>
 
-          <footer className="mt-6 border-t p-3 text-center">
+          <footer className="mt-6 border-t py-3 px-6 text-center">
             made with 🥰 by{" "}
             <a
               href="https://instagram.com/dastanozgeldi"
