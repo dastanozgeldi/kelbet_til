@@ -1,33 +1,23 @@
 "use client";
+
 import { Book } from "@prisma/client";
 import { type Message, useChat } from "ai/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { cn, renderMarkdown } from "@/lib/utils";
 import { SendIcon } from "lucide-react";
 
 interface Props {
   book: Book;
-  // user: User;
   initialMessages: Message[];
 }
 
-export function Chat({
-  book,
-  // user,
-  initialMessages,
-}: Props) {
+export function Chat({ book, initialMessages }: Props) {
   const { messages, input, isLoading, handleInputChange, handleSubmit } =
     useChat({
       initialMessages,
     });
-
-  const [status, setStatus] = useState({
-    success: true,
-    limit: 2,
-    remaining: 2,
-  });
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -38,21 +28,6 @@ export function Chat({
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
-
-  // const handleRatelimit = async () => {
-  //   try {
-  //     const response = await fetch(`/api/ratelimit/${user.id}`);
-  //     const data = await response.text();
-  //     setStatus(JSON.parse(data));
-  //   } catch (error) {
-  //     console.error("Error fetching data:", error);
-  //     setStatus({
-  //       success: false,
-  //       limit: -1,
-  //       remaining: -1,
-  //     });
-  //   }
-  // };
 
   return (
     <div className="flex h-[400px] flex-col">
@@ -72,18 +47,11 @@ export function Chat({
         <div ref={messagesEndRef} />
       </div>
 
-      {!(status.remaining > 0) && (
-        <div className="text-muted-foreground mb-4 text-center text-sm">
-          Хабарлама шегіне жеттіңіз, сәлден соң қайтып келіңіз.
-        </div>
-      )}
-
       <form
         className="flex items-center gap-3 bg-white"
         onSubmit={(e) =>
           handleSubmit(e, {
             data: {
-              // userId: user.id,
               bookId: book.id,
               bookTitle: book.title,
             },
@@ -95,10 +63,7 @@ export function Chat({
           placeholder="Сұрақ қойыңыз..."
           onChange={handleInputChange}
         />
-        <Button
-          disabled={isLoading || !(status.remaining > 0)}
-          // onClick={handleRatelimit}
-        >
+        <Button disabled={isLoading}>
           <SendIcon className="size-4" />
           Сұрау
         </Button>
