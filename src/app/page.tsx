@@ -14,13 +14,9 @@ export default async function Home() {
 
           <div>
             <Link href="/books">
-              <Button
-                variant="default"
-                size="lg"
-                className="bg-[#6C63FF] text-xl hover:bg-[#6C63FF]/90"
-              >
+              <Button size="lg" className="bg-primary">
                 Бастау
-                {/* <ArrowRightIcon className="size-8" /> */}
+                <ArrowRightIcon className="size-4" />
               </Button>
             </Link>
           </div>
