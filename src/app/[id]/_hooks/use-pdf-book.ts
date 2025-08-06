@@ -35,7 +35,7 @@ export const usePDFBook = (bookId: string, resetRectangle: () => void) => {
       const id = localStorage.getItem("last-book-id");
       const page = Number(localStorage.getItem("last-book-page"));
 
-      if (id && id === bookId && page) {
+      if (id && page && id === bookId) {
         setCurrentPage(page);
       }
     };
