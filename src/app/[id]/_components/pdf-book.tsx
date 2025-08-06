@@ -5,7 +5,6 @@ import type { Book, Message } from "@prisma/client";
 import type { User } from "next-auth";
 import Image from "next/image";
 import { Document, Page, pdfjs } from "react-pdf";
-import { Icons } from "@/components/icons";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { isValidRectangle } from "@/lib/utils";
@@ -14,6 +13,13 @@ import { useExplanation } from "../_hooks/use-explanation";
 import { useRectangle } from "../_hooks/use-rectangle";
 import { ExplanationDialog } from "./explanation-dialog";
 import { ChatDialog } from "./chat-dialog";
+import {
+  BookOpenCheckIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  Loader2Icon,
+  XIcon,
+} from "lucide-react";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
@@ -60,7 +66,7 @@ export const PDFBook = ({ book, user, history, loadHistory }: Props) => {
         disabled={noPrevPage}
         onClick={handlePrevPage}
       >
-        <Icons.left className="h-8 w-8" />
+        <ChevronLeftIcon className="size-8" />
       </button>
 
       <button
@@ -68,7 +74,7 @@ export const PDFBook = ({ book, user, history, loadHistory }: Props) => {
         disabled={noNextPage}
         onClick={handleNextPage}
       >
-        <Icons.right className="h-8 w-8" />
+        <ChevronRightIcon className="size-8" />
       </button>
 
       <div className="flex items-center justify-between">
@@ -105,14 +111,14 @@ export const PDFBook = ({ book, user, history, loadHistory }: Props) => {
         className="mt-3 flex flex-col items-center justify-center border-t xl:flex-row"
         loading={
           <div className="mt-3 flex items-center justify-center gap-2">
-            <Icons.spinner className="animate-spin" />
+            <Loader2Icon className="animate-spin" />
             Кітап ашылуда...
           </div>
         }
         error={
           <div className="mt-3 flex flex-col items-center">
             <div className="flex items-center gap-2">
-              <Icons.x />
+              <XIcon />
               <span>Шығарма жүктелмеген.</span>
             </div>
             <Image
@@ -171,9 +177,9 @@ export const PDFBook = ({ book, user, history, loadHistory }: Props) => {
                 onClick={() => handleExplanation(book.title, croppedImage)}
               >
                 {isExplanationLoading ? (
-                  <Icons.spinner className="h-4 w-4 animate-spin" />
+                  <Loader2Icon className="size-4 animate-spin" />
                 ) : (
-                  <Icons.explain className="h-4 w-4" />
+                  <BookOpenCheckIcon className="size-4" />
                 )}
                 Мағынасы
               </Button>

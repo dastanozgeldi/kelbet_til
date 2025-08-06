@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
 import { cn } from "@/lib/utils";
 import { links } from "@/config";
-import { Icons } from "@/components/icons";
+import { LogOutIcon } from "lucide-react";
 
 export const Sidebar = () => {
   const pathname = usePathname();
@@ -29,7 +29,7 @@ export const Sidebar = () => {
         className="absolute bottom-6 flex items-center gap-3 text-sm text-red-500"
         onClick={() => signOut()}
       >
-        <Icons.logout width={20} height={20} />
+        <LogOutIcon className="size-5" />
         <span className="hidden md:block">Шығу</span>
       </button>
     </div>

@@ -9,7 +9,6 @@ import {
   ProgramFilter,
   TermFilter,
 } from "./filters";
-import { Icons } from "./icons";
 import {
   Card,
   CardHeader,
@@ -18,7 +17,7 @@ import {
   CardFooter,
 } from "./ui/card";
 import { Button } from "./ui/button";
-import { ArrowRightIcon } from "lucide-react";
+import { ArrowRightIcon, SearchIcon } from "lucide-react";
 
 export const Books = ({ data }: { data: Book[] }) => {
   const {
@@ -61,10 +60,7 @@ export const Books = ({ data }: { data: Book[] }) => {
           onChange={(e) => setSearchValue(e.target.value)}
         />
         <label htmlFor="search">
-          <Icons.search
-            className="absolute top-1/2 left-4 -translate-y-1/2"
-            size={20}
-          />
+          <SearchIcon className="absolute top-1/2 left-4 size-5 -translate-y-1/2" />
         </label>
       </div>
 

@@ -3,10 +3,9 @@ import { Book } from "@prisma/client";
 import { type Message, useChat } from "ai/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { User } from "next-auth";
 import { useEffect, useRef, useState } from "react";
 import { cn, renderMarkdown } from "@/lib/utils";
-import { Icons } from "@/components/icons";
+import { SendIcon } from "lucide-react";
 
 interface Props {
   book: Book;
@@ -62,9 +61,9 @@ export function Chat({
           <div
             key={m.id}
             className={cn(
-              "max-w-max whitespace-pre-wrap rounded-lg p-3",
+              "max-w-max rounded-lg p-3 whitespace-pre-wrap",
               m.role === "user"
-                ? "ml-auto bg-primary text-right text-white"
+                ? "bg-primary ml-auto text-right text-white"
                 : "bg-gray-300",
             )}
             dangerouslySetInnerHTML={{ __html: renderMarkdown(m.content) }}
@@ -74,7 +73,7 @@ export function Chat({
       </div>
 
       {!(status.remaining > 0) && (
-        <div className="mb-4 text-center text-sm text-muted-foreground">
+        <div className="text-muted-foreground mb-4 text-center text-sm">
           Хабарлама шегіне жеттіңіз, сәлден соң қайтып келіңіз.
         </div>
       )}
@@ -100,7 +99,7 @@ export function Chat({
           disabled={isLoading || !(status.remaining > 0)}
           // onClick={handleRatelimit}
         >
-          <Icons.send className="mr-2 h-4 w-4" />
+          <SendIcon className="size-4" />
           Сұрау
         </Button>
       </form>
