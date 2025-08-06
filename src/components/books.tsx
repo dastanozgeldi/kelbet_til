@@ -2,7 +2,12 @@
 import { type Book } from "@prisma/client";
 import Link from "next/link";
 import { useBooks } from "@/hooks/use-books";
-import { GradeFilter, LanguageFilter, ProgramFilter, TermFilter } from "./filters";
+import {
+  GradeFilter,
+  LanguageFilter,
+  ProgramFilter,
+  TermFilter,
+} from "./filters";
 import { Icons } from "./icons";
 
 export const Books = ({ data }: { data: Book[] }) => {
@@ -28,14 +33,10 @@ export const Books = ({ data }: { data: Book[] }) => {
       </div>
 
       <div className="flex flex-col gap-6 sm:flex-row sm:items-center">
-        <ProgramFilter key="program" program={program} setProgram={setProgram} />
-        <GradeFilter key="grade" grade={grade} setGrade={setGrade} />
-        <LanguageFilter
-          key="language"
-          language={language}
-          setLanguage={setLanguage}
-        />
-        <TermFilter key="term" term={term} setTerm={setTerm} />
+        <ProgramFilter program={program} setProgram={setProgram} />
+        <GradeFilter grade={grade} setGrade={setGrade} />
+        <LanguageFilter language={language} setLanguage={setLanguage} />
+        <TermFilter term={term} setTerm={setTerm} />
       </div>
 
       {/* search functionality */}

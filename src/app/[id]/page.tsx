@@ -1,4 +1,5 @@
 "use client";
+import { use } from "react";
 import { pdfjs } from "react-pdf";
 
 import { Skeleton } from "@/components/ui/skeleton";
@@ -10,7 +11,8 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   import.meta.url,
 ).toString();
 
-export default function Page({ params }: { params: { id: string } }) {
+export default function Page(props: { params: Promise<{ id: string }> }) {
+  const params = use(props.params);
   const { loading, book, user, history, loadHistory } = useBook(params.id);
 
   if (loading) {
