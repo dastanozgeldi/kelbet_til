@@ -9,7 +9,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Chat } from "./chat";
+import { Chat, ChatSkeleton } from "./chat";
 import { Suspense } from "react";
 import { db } from "@/server/db";
 import { auth, signIn } from "@/server/auth";
@@ -30,7 +30,7 @@ export async function ChatDialog({ book }: { book: Book }) {
             Жасанды интеллект кейде шындыққа жанаспайтын жауаптар беруі мүмкін.
           </DialogDescription>
         </DialogHeader>
-        <Suspense fallback={<>loading chat history...</>}>
+        <Suspense fallback={<ChatSkeleton />}>
           <SuspenseBoundary book={book} />
         </Suspense>
       </DialogContent>
@@ -56,8 +56,6 @@ async function SuspenseBoundary({ book }: { book: Book }) {
         </form>
       </div>
     );
-
-  await new Promise((resolve) => setTimeout(resolve, 5000));
 
   const messages = await db.message.findMany({
     where: { userId, bookId: book.id },
