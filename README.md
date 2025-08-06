@@ -5,6 +5,7 @@
 - [x] fix pdf reader
 - [x] separate books page to optimize home page
 - [x] abandon saving user filters in local storage, implement url params instead
+- [x] reset filters button
 - [ ] debounce filters
 - [ ] edgestore -> cloudflare r2
 - [ ] save progress button at /[id] that saves current book progress to my books table
