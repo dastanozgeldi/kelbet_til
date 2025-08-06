@@ -2,6 +2,7 @@ import type { Program, Language } from "@prisma/client";
 import { db } from "@/server/db";
 import Filters from "./_components/filters";
 import BookCard from "./_components/book-card";
+import { PageHeader } from "@/components/page-header";
 
 export default async function BooksPage(props: {
   searchParams?: Promise<{
@@ -30,10 +31,7 @@ export default async function BooksPage(props: {
 
   return (
     <>
-      <div className="mb-6">
-        <h1 className="my-2 text-3xl font-bold md:text-4xl">Шығармалар</h1>
-        <hr className="bg-primary h-[6px] max-w-[36px] border-0" />
-      </div>
+      <PageHeader title="Шығармалар" />
 
       <Filters />
 

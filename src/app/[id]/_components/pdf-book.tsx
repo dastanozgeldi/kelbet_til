@@ -123,7 +123,7 @@ export const PDFBook = ({ book }: { book: Book }) => {
         }}
         onLoadError={console.error}
       >
-        <div className="relative mt-3 flex flex-col items-center justify-center border-t xl:flex-row">
+        <div className="relative flex flex-col items-center justify-center xl:flex-row">
           <Page
             noData={`Бұндай бет (${currentPage}-бет) жоқ`}
             error="Бетті жүктеуде қате туындады"
