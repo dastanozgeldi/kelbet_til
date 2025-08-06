@@ -50,7 +50,7 @@ export const AddBook = () => {
                   href={data.fileUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className={buttonVariants({ variant: "outline" })}
+                  className={buttonVariants({ variant: "outline-solid" })}
                 >
                   Көру
                 </a>
