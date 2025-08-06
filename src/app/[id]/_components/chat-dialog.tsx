@@ -1,6 +1,6 @@
-import type { User } from "next-auth";
+import { BotIcon } from "lucide-react";
 import type { Book, Message } from "@prisma/client";
-import { buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -9,8 +9,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Icons } from "@/components/icons";
-import { cn } from "@/lib/utils";
 import { Chat } from "./chat";
 
 interface Props {
@@ -28,11 +26,11 @@ export const ChatDialog = ({
 }: Props) => {
   return (
     <Dialog onOpenChange={loadHistory}>
-      <DialogTrigger
-        className={cn(buttonVariants(), "flex items-center gap-3")}
-      >
-        <Icons.ai className="h-4 w-4" />
-        AI
+      <DialogTrigger asChild>
+        <Button>
+          <BotIcon className="size-4" />
+          AI
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
