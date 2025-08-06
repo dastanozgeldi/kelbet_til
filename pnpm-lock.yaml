@@ -88,8 +88,8 @@ importers:
         specifier: 15.3.5
         version: 15.3.5(eslint@8.50.0)(typescript@5.8.3)
       lucide-react:
-        specifier: ^0.279.0
-        version: 0.279.0(react@19.1.0)
+        specifier: ^0.536.0
+        version: 0.536.0(react@19.1.0)
       marked:
         specifier: ^14.1.2
         version: 14.1.4
@@ -100,8 +100,8 @@ importers:
         specifier: 5.0.0-beta.29
         version: 5.0.0-beta.29(next@15.3.5(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)
       next-themes:
-        specifier: ^0.3.0
-        version: 0.3.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        specifier: ^0.4.6
+        version: 0.4.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       pdfjs-dist:
         specifier: ^3.0.0
         version: 3.11.174
@@ -118,8 +118,8 @@ importers:
         specifier: ^4.11.0
         version: 4.12.0(react@19.1.0)
       react-pdf:
-        specifier: ^7.4.0
-        version: 7.7.3(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        specifier: ^10.0.1
+        version: 10.0.1(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       sonner:
         specifier: ^1.5.0
         version: 1.7.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -688,6 +688,70 @@ packages:
   '@mapbox/node-pre-gyp@1.0.11':
     resolution: {integrity: sha512-Yhlar6v9WQgUp/He7BdgzOz8lqMQ8sU+jkCq7Wx8Myc5YFJLbEe7lgui/V7G1qB1DJykHSGwreceSaD60Y0PUQ==}
     hasBin: true
+
+  '@napi-rs/canvas-android-arm64@0.1.76':
+    resolution: {integrity: sha512-7EAfkLBQo2QoEzpHdInFbfEUYTXsiO2hvtFo1D9zfTzcQM8n5piZdOpJ3EIkmpe8yLoSV8HLyUQtq4bv11x6Tg==}
+    engines: {node: '>= 10'}
+    cpu: [arm64]
+    os: [android]
+
+  '@napi-rs/canvas-darwin-arm64@0.1.76':
+    resolution: {integrity: sha512-Cs8WRMzaWSJWeWY8tvnCe+TuduHUbB0xFhZ0FmOrNy2prPxT4A6aU3FQu8hR9XJw8kKZ7v902wzaDmy9SdhG8A==}
+    engines: {node: '>= 10'}
+    cpu: [arm64]
+    os: [darwin]
+
+  '@napi-rs/canvas-darwin-x64@0.1.76':
+    resolution: {integrity: sha512-ya+T6gV9XAq7YAnMa2fKhWXAuRR5cpRny2IoHacoMxgtOARnUkJO/k3hIb52FtMoq7UxLi5+IFGVHU6ZiMu4Ag==}
+    engines: {node: '>= 10'}
+    cpu: [x64]
+    os: [darwin]
+
+  '@napi-rs/canvas-linux-arm-gnueabihf@0.1.76':
+    resolution: {integrity: sha512-fgnPb+FKVuixACvkHGldJqYXExORBwvqGgL0K80uE6SGH2t0UKD2auHw2CtBy14DUzfg82PkupO2ix2w7kB+Xw==}
+    engines: {node: '>= 10'}
+    cpu: [arm]
+    os: [linux]
+
+  '@napi-rs/canvas-linux-arm64-gnu@0.1.76':
+    resolution: {integrity: sha512-r8OxIenvBPOa4I014k1ZWTCz2dB0ZTsxMP7+ovMOKO7jkl1Z+YZo2OTAqxArpMhN0wdEeI3Lw9zUcn2HgwEgDA==}
+    engines: {node: '>= 10'}
+    cpu: [arm64]
+    os: [linux]
+
+  '@napi-rs/canvas-linux-arm64-musl@0.1.76':
+    resolution: {integrity: sha512-smxwzKfHYaOYG7QXUuDPrFEC7WqjL3Lx4AM6mk8/FxDAS+8o0eoZJwSu+zXsaBLimEQUozEYgEGtJ2JJ0RdL4A==}
+    engines: {node: '>= 10'}
+    cpu: [arm64]
+    os: [linux]
+
+  '@napi-rs/canvas-linux-riscv64-gnu@0.1.76':
+    resolution: {integrity: sha512-G2PsFwsP+r4syEoNLStV3n1wtNAClwf8s/qB57bexG08R4f4WaiBd+x+d4iYS0Y5o90YIEm8/ewZn4bLIa0wNQ==}
+    engines: {node: '>= 10'}
+    cpu: [riscv64]
+    os: [linux]
+
+  '@napi-rs/canvas-linux-x64-gnu@0.1.76':
+    resolution: {integrity: sha512-SNK+vgge4DnuONYdYE3Y09LivGgUiUPQDU+PdGNZJIzIi0hRDLcA59eag8LGeQfPmJW84c1aZD04voihybKFog==}
+    engines: {node: '>= 10'}
+    cpu: [x64]
+    os: [linux]
+
+  '@napi-rs/canvas-linux-x64-musl@0.1.76':
+    resolution: {integrity: sha512-tWHLBI9iVoR1NsfpHz1MGERTkqcca8akbH/CzX6JQUNC+lJOeYYXeRuK8hKqMIg1LI+4QOMAtHNVeZu8NvjEug==}
+    engines: {node: '>= 10'}
+    cpu: [x64]
+    os: [linux]
+
+  '@napi-rs/canvas-win32-x64-msvc@0.1.76':
+    resolution: {integrity: sha512-ifM5HOGw2hP5QLQzCB41Riw3Pq5yKAAjZpn+lJC0sYBmyS2s/Kq6KpTOKxf0CuptkI1wMcRcYQfhLRdeWiYvIg==}
+    engines: {node: '>= 10'}
+    cpu: [x64]
+    os: [win32]
+
+  '@napi-rs/canvas@0.1.76':
+    resolution: {integrity: sha512-YIk5okeNN53GzjvWmAyCQFE9xrLeQXzYpudX4TiLvqaz9SqXgIgxIuKPe4DKyB5nccsQMIev7JGKTzZaN5rFdw==}
+    engines: {node: '>= 10'}
 
   '@napi-rs/wasm-runtime@0.2.11':
     resolution: {integrity: sha512-9DPkXtvHydrcOsopiYpUgPHpmj0HWZKMUnL2dZqpvC42lsratuBG06V5ipyno0fUek5VlFsNQ+AcFATSrJXgMA==}
@@ -2658,16 +2722,16 @@ packages:
   lru-cache@10.4.3:
     resolution: {integrity: sha512-JNAzZcXrCt42VGLuYz0zfAzDfAvJWW6AfYlDBQyDV5DClI2m5sAmK+OIO7s59XfsRsWHp02jAJrRadPRGTt6SQ==}
 
-  lucide-react@0.279.0:
-    resolution: {integrity: sha512-LJ8g66+Bxc3t3x9vKTeK3wn3xucrOQGfJ9ou9GsBwCt2offsrT2BB90XrTrIzE1noYYDe2O8jZaRHi6sAHXNxw==}
+  lucide-react@0.536.0:
+    resolution: {integrity: sha512-2PgvNa9v+qz4Jt/ni8vPLt4jwoFybXHuubQT8fv4iCW5TjDxkbZjNZZHa485ad73NSEn/jdsEtU57eE1g+ma8A==}
     peerDependencies:
-      react: ^16.5.1 || ^17.0.0 || ^18.0.0
+      react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
   magic-string@0.30.17:
     resolution: {integrity: sha512-sNPKHvyjVf7gyjwS4xGTaW/mCnF8wnjtifKBEhxfZ7E/S8tQ0rssrwGNn6q8JH/ohItJfSQp9mBtQYuTlH5QnA==}
 
-  make-cancellable-promise@1.3.2:
-    resolution: {integrity: sha512-GCXh3bq/WuMbS+Ky4JBPW1hYTOU+znU+Q5m9Pu+pI8EoUqIHk9+tviOKC6/qhHh8C4/As3tzJ69IF32kdz85ww==}
+  make-cancellable-promise@2.0.0:
+    resolution: {integrity: sha512-3SEQqTpV9oqVsIWqAcmDuaNeo7yBO3tqPtqGRcKkEo0lrzD3wqbKG9mkxO65KoOgXqj+zH2phJ2LiAsdzlogSw==}
 
   make-dir@3.1.0:
     resolution: {integrity: sha512-g3FeP20LNwhALb/6Cz6Dd4F2ngze0jz7tbzrD2wAV+o9FeNHe4rL+yK2md0J/fiSf1sa1ADhXqi5+oVwOM/eGw==}
@@ -2676,8 +2740,8 @@ packages:
   make-error@1.3.6:
     resolution: {integrity: sha512-s8UhlNe7vPKomQhC1qFelMokr/Sc3AgNbso3n74mVPA5LTZwkB9NlXf4XPamLxJE8h0gh73rM94xvwRT2CVInw==}
 
-  make-event-props@1.6.2:
-    resolution: {integrity: sha512-iDwf7mA03WPiR8QxvcVHmVWEPfMY1RZXerDVNCRYW7dUr2ppH3J58Rwb39/WG39yTZdRSxr3x+2v22tvI0VEvA==}
+  make-event-props@2.0.0:
+    resolution: {integrity: sha512-G/hncXrl4Qt7mauJEXSg3AcdYzmpkIITTNl5I+rH9sog5Yw0kK6vseJjCaPfOXqOqQuPUP89Rkhfz5kPS8ijtw==}
 
   marked@14.1.4:
     resolution: {integrity: sha512-vkVZ8ONmUdPnjCKc5uTRvmkRbx4EAi2OkTOXmfTDhZz3OFqMNBM1oTTWwTr4HY4uAEojhzPf+Fy8F1DWa3Sndg==}
@@ -2688,8 +2752,8 @@ packages:
     resolution: {integrity: sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==}
     engines: {node: '>= 0.4'}
 
-  merge-refs@1.3.0:
-    resolution: {integrity: sha512-nqXPXbso+1dcKDpPCXvwZyJILz+vSLqGGOnDrYHQYE+B8n9JTCekVLC65AfCpR4ggVyA/45Y0iR9LDyS2iI+zA==}
+  merge-refs@2.0.0:
+    resolution: {integrity: sha512-3+B21mYK2IqUWnd2EivABLT7ueDhb0b8/dGK8LoFQPrU61YITeCMn14F7y7qZafWNZhUEKb24cJdiT5Wxs3prg==}
     peerDependencies:
       '@types/react': 19.1.8
     peerDependenciesMeta:
@@ -2782,11 +2846,11 @@ packages:
       nodemailer:
         optional: true
 
-  next-themes@0.3.0:
-    resolution: {integrity: sha512-/QHIrsYpd6Kfk7xakK4svpDI5mmXP0gfvCoJdGpZQ2TOrQZmsW0QxjaiLn8wbIKjtm4BTSqLoix4lxYYOnLJ/w==}
+  next-themes@0.4.6:
+    resolution: {integrity: sha512-pZvgD5L0IEvX5/9GWyHMf3m8BKiVQwsCMHfoFosXtXBMnaS0ZnIJ9ST4b4NqLVKDEm8QBxoNNGNaBv2JNF6XNA==}
     peerDependencies:
-      react: ^16.8 || ^17 || ^18
-      react-dom: ^16.8 || ^17 || ^18
+      react: ^16.8 || ^17 || ^18 || ^19 || ^19.0.0-rc
+      react-dom: ^16.8 || ^17 || ^18 || ^19 || ^19.0.0-rc
 
   next@15.3.5:
     resolution: {integrity: sha512-RkazLBMMDJSJ4XZQ81kolSpwiCt907l0xcgcpF4xC2Vml6QVcPNXW0NQRwQ80FFtSn7UM52XN0anaw8TEJXaiw==}
@@ -2929,6 +2993,10 @@ packages:
   pdfjs-dist@3.11.174:
     resolution: {integrity: sha512-TdTZPf1trZ8/UFu5Cx/GXB7GZM30LT+wWUNfsi6Bq8ePLnb+woNKtDymI2mxZYBpMbonNFqKmiz684DIfnd8dA==}
     engines: {node: '>=18'}
+
+  pdfjs-dist@5.3.31:
+    resolution: {integrity: sha512-EhPdIjNX0fcdwYQO+e3BAAJPXt+XI29TZWC7COhIXs/K0JHcUt1Gdz1ITpebTwVMFiLsukdUZ3u0oTO7jij+VA==}
+    engines: {node: '>=20.16.0 || >=22.3.0'}
 
   picocolors@1.1.1:
     resolution: {integrity: sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==}
@@ -3107,12 +3175,12 @@ packages:
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
-  react-pdf@7.7.3:
-    resolution: {integrity: sha512-a2VfDl8hiGjugpqezBTUzJHYLNB7IS7a2t7GD52xMI9xHg8LdVaTMsnM9ZlNmKadnStT/tvX5IfV0yLn+JvYmw==}
+  react-pdf@10.0.1:
+    resolution: {integrity: sha512-dblLZ5BqubeNFZwTzHkRi7Rexev2+Xb9z7sEvNYT+IOxmih1KgrByeqD4Hm0RnwR9nTWludXbiHQMe9d47DK2w==}
     peerDependencies:
       '@types/react': 19.1.8
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
-      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
     peerDependenciesMeta:
       '@types/react':
         optional: true
@@ -4499,6 +4567,50 @@ snapshots:
     transitivePeerDependencies:
       - encoding
       - supports-color
+    optional: true
+
+  '@napi-rs/canvas-android-arm64@0.1.76':
+    optional: true
+
+  '@napi-rs/canvas-darwin-arm64@0.1.76':
+    optional: true
+
+  '@napi-rs/canvas-darwin-x64@0.1.76':
+    optional: true
+
+  '@napi-rs/canvas-linux-arm-gnueabihf@0.1.76':
+    optional: true
+
+  '@napi-rs/canvas-linux-arm64-gnu@0.1.76':
+    optional: true
+
+  '@napi-rs/canvas-linux-arm64-musl@0.1.76':
+    optional: true
+
+  '@napi-rs/canvas-linux-riscv64-gnu@0.1.76':
+    optional: true
+
+  '@napi-rs/canvas-linux-x64-gnu@0.1.76':
+    optional: true
+
+  '@napi-rs/canvas-linux-x64-musl@0.1.76':
+    optional: true
+
+  '@napi-rs/canvas-win32-x64-msvc@0.1.76':
+    optional: true
+
+  '@napi-rs/canvas@0.1.76':
+    optionalDependencies:
+      '@napi-rs/canvas-android-arm64': 0.1.76
+      '@napi-rs/canvas-darwin-arm64': 0.1.76
+      '@napi-rs/canvas-darwin-x64': 0.1.76
+      '@napi-rs/canvas-linux-arm-gnueabihf': 0.1.76
+      '@napi-rs/canvas-linux-arm64-gnu': 0.1.76
+      '@napi-rs/canvas-linux-arm64-musl': 0.1.76
+      '@napi-rs/canvas-linux-riscv64-gnu': 0.1.76
+      '@napi-rs/canvas-linux-x64-gnu': 0.1.76
+      '@napi-rs/canvas-linux-x64-musl': 0.1.76
+      '@napi-rs/canvas-win32-x64-msvc': 0.1.76
     optional: true
 
   '@napi-rs/wasm-runtime@0.2.11':
@@ -6753,7 +6865,7 @@ snapshots:
 
   lru-cache@10.4.3: {}
 
-  lucide-react@0.279.0(react@19.1.0):
+  lucide-react@0.536.0(react@19.1.0):
     dependencies:
       react: 19.1.0
 
@@ -6761,7 +6873,7 @@ snapshots:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.4
 
-  make-cancellable-promise@1.3.2: {}
+  make-cancellable-promise@2.0.0: {}
 
   make-dir@3.1.0:
     dependencies:
@@ -6770,13 +6882,13 @@ snapshots:
 
   make-error@1.3.6: {}
 
-  make-event-props@1.6.2: {}
+  make-event-props@2.0.0: {}
 
   marked@14.1.4: {}
 
   math-intrinsics@1.1.0: {}
 
-  merge-refs@1.3.0(@types/react@19.1.8):
+  merge-refs@2.0.0(@types/react@19.1.8):
     optionalDependencies:
       '@types/react': 19.1.8
 
@@ -6844,7 +6956,7 @@ snapshots:
       next: 15.3.5(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       react: 19.1.0
 
-  next-themes@0.3.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+  next-themes@0.4.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
     dependencies:
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
@@ -7002,6 +7114,10 @@ snapshots:
       - encoding
       - supports-color
 
+  pdfjs-dist@5.3.31:
+    optionalDependencies:
+      '@napi-rs/canvas': 0.1.76
+
   picocolors@1.1.1: {}
 
   picomatch@2.3.1: {}
@@ -7106,24 +7222,20 @@ snapshots:
 
   react-is@16.13.1: {}
 
-  react-pdf@7.7.3(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+  react-pdf@10.0.1(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
     dependencies:
       clsx: 2.1.1
       dequal: 2.0.3
-      make-cancellable-promise: 1.3.2
-      make-event-props: 1.6.2
-      merge-refs: 1.3.0(@types/react@19.1.8)
-      pdfjs-dist: 3.11.174
-      prop-types: 15.8.1
+      make-cancellable-promise: 2.0.0
+      make-event-props: 2.0.0
+      merge-refs: 2.0.0(@types/react@19.1.8)
+      pdfjs-dist: 5.3.31
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
       tiny-invariant: 1.3.3
       warning: 4.0.3
     optionalDependencies:
       '@types/react': 19.1.8
-    transitivePeerDependencies:
-      - encoding
-      - supports-color
 
   react-remove-scroll-bar@2.3.8(@types/react@19.1.8)(react@19.1.0):
     dependencies:
