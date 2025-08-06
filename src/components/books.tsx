@@ -1,4 +1,5 @@
 "use client";
+
 import { type Book } from "@prisma/client";
 import Link from "next/link";
 import { useBooks } from "@/hooks/use-books";
@@ -82,7 +83,7 @@ export const Books = ({ data }: { data: Book[] }) => {
                     жүктелу күні: {book.createdAt.toLocaleDateString()}
                   </CardDescription>
                 </CardHeader>
-                <CardFooter>
+                <CardFooter className="mt-auto">
                   <Button variant="outline" asChild>
                     <Link href={`/${book.id}`}>
                       Оқу
