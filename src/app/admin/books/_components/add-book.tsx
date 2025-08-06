@@ -1,5 +1,4 @@
 "use client";
-import { Icons } from "@/components/icons";
 import {
   Dialog,
   DialogContent,
@@ -13,7 +12,7 @@ import { Label } from "@/components/ui/label";
 import { Upload } from "@/components/upload";
 import { useAddBook } from "../hooks/use-add-book";
 import { filters } from "@/config";
-import { ExternalLinkIcon } from "lucide-react";
+import { ExternalLinkIcon, PlusIcon } from "lucide-react";
 
 export const AddBook = () => {
   const { data, setData, handleSubmit } = useAddBook();
@@ -25,7 +24,7 @@ export const AddBook = () => {
           size="sm"
           className="bg-primary hover:bg-primary/90 gap-2 text-sm"
         >
-          <Icons.plus className="h-5 w-5" />
+          <PlusIcon className="size-5" />
           Жаңа
         </Button>
       </DialogTrigger>
