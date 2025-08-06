@@ -12,14 +12,12 @@ export default async function Home() {
             Республика мектептерінің әдеби шығармалары бір жерде
           </h1>
 
-          <div>
+          <Button size="lg" asChild>
             <Link href="/books">
-              <Button size="lg" className="bg-primary">
-                Бастау
-                <ArrowRightIcon className="size-4" />
-              </Button>
+              Бастау
+              <ArrowRightIcon className="size-4" />
             </Link>
-          </div>
+          </Button>
         </div>
         <div className="lg:w-1/2">
           <Image
