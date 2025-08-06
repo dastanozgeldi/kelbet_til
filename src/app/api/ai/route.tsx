@@ -1,8 +1,15 @@
+import { auth } from "@/server/auth";
 import { db } from "@/server/db";
+import { notFound } from "next/navigation";
 
 // Load user chat history for corresponding book.
 export async function POST(request: Request) {
-  const { userId, bookId } = await request.json();
+  const session = await auth();
+  const userId = session?.user.id;
+
+  if (!userId) notFound();
+
+  const { bookId } = await request.json();
 
   const messages = await db.message.findMany({
     where: { userId, bookId },

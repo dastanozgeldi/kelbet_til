@@ -1,8 +1,7 @@
 "use client";
 
 import "react-pdf/dist/Page/AnnotationLayer.css";
-import type { Book, Message } from "@prisma/client";
-import type { User } from "next-auth";
+import type { Book } from "@prisma/client";
 import Image from "next/image";
 import { Document, Page, pdfjs } from "react-pdf";
 import { Input } from "@/components/ui/input";
@@ -23,14 +22,7 @@ import {
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
-interface Props {
-  book: Book;
-  user: User | null;
-  history: Message[];
-  loadHistory: () => void;
-}
-
-export const PDFBook = ({ book, user, history, loadHistory }: Props) => {
+export const PDFBook = ({ book }: { book: Book }) => {
   const {
     croppedImage,
     rectangle,
@@ -61,21 +53,25 @@ export const PDFBook = ({ book, user, history, loadHistory }: Props) => {
 
   return (
     <>
-      <button
-        className="fixed top-1/2 left-3 z-10 disabled:text-gray-400"
+      <Button
+        size="icon"
+        variant="ghost"
+        className="fixed top-1/2 left-3 z-10"
         disabled={noPrevPage}
         onClick={handlePrevPage}
       >
         <ChevronLeftIcon className="size-8" />
-      </button>
+      </Button>
 
-      <button
-        className="fixed top-1/2 right-3 z-10 disabled:text-gray-400"
+      <Button
+        size="icon"
+        variant="ghost"
+        className="fixed top-1/2 right-3 z-10"
         disabled={noNextPage}
         onClick={handleNextPage}
       >
         <ChevronRightIcon className="size-8" />
-      </button>
+      </Button>
 
       <div className="flex items-center justify-between">
         {isEditing ? (
@@ -98,12 +94,7 @@ export const PDFBook = ({ book, user, history, loadHistory }: Props) => {
         )}
 
         {/* {user && ( */}
-        <ChatDialog
-          book={book}
-          // user={user}
-          history={history}
-          loadHistory={loadHistory}
-        />
+        <ChatDialog book={book} />
         {/* )} */}
       </div>
 

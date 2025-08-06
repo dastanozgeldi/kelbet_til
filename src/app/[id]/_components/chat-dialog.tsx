@@ -1,3 +1,5 @@
+"use client";
+
 import { BotIcon } from "lucide-react";
 import type { Book, Message } from "@prisma/client";
 import { Button } from "@/components/ui/button";
@@ -10,20 +12,25 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Chat } from "./chat";
+import { useCallback, useState } from "react";
 
 interface Props {
   book: Book;
-  // user: User;
-  history: Message[];
-  loadHistory: () => void;
 }
 
-export const ChatDialog = ({
-  book,
-  // user,
-  history,
-  loadHistory,
-}: Props) => {
+export const ChatDialog = ({ book }: Props) => {
+  const [history, setHistory] = useState<Message[]>([]);
+
+  const loadHistory = useCallback(async () => {
+    const res = await fetch("/api/ai", {
+      method: "POST",
+      body: JSON.stringify({ bookId: book.id }),
+    });
+    const { messages } = await res.json();
+
+    setHistory(messages);
+  }, [book.id]);
+
   return (
     <Dialog onOpenChange={loadHistory}>
       <DialogTrigger asChild>
