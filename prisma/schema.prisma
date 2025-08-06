@@ -2,8 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["fullTextSearch"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -46,14 +45,14 @@ model Book {
   fileUrl String // set from uploadthing
   status  BookStatus @default(ACTIVE)
 
-  program  Program @default(NIS)
+  program  Program  @default(NIS)
   grade    String // [7, 8, 9, 10, 11, 12]
   language Language
   term     String // [1, 2, 3, 4]
 
-  user   User?   @relation(fields: [userId], references: [id])
-  userId String?
-  messages  Message[]
+  user     User?     @relation(fields: [userId], references: [id])
+  userId   String?
+  messages Message[]
 
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
