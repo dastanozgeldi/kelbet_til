@@ -38,10 +38,7 @@ async function SuspenseBoundary({ id }: { id: string }) {
   if (!book) notFound();
   return (
     <>
-      <div className="flex items-center justify-between">
-        <PageHeader title={book.title} />
-        <ChatDialog book={book} />
-      </div>
+      <PageHeader title={book.title} button={<ChatDialog book={book} />} />
       <PDFBook book={book} />
     </>
   );
