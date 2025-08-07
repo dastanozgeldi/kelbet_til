@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
-import { Nav } from "@/components/nav";
+import Link from "next/link";
+import Image from "next/image";
 import { Toaster } from "@/components/ui/sonner";
 import { EdgeStoreProvider } from "@/lib/edgestore";
+import SignInButton from "@/components/sign-in-button";
+import { UserButton } from "@/components/user-button";
+import { auth } from "@/server/auth";
 import { GoogleAnalytics } from "./google-analytics";
 import "./globals.css";
 
@@ -14,30 +18,46 @@ export const metadata: Metadata = {
     "Назарбаев Зияткерлік Мектептерінің қазақ тілі мен әдебиеті бағдарламасы бойынша шығармалар жинағы.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await auth();
+
   return (
     <html lang="en">
       <GoogleAnalytics GA_TRACKING_ID={process.env.GA_TRACKING_ID!} />
-      <body className="container mx-auto antialiased">
+      <body className="antialiased">
         <EdgeStoreProvider>
-          <Nav />
-          <main className="px-6">{children}</main>
+          <main className="container mx-auto">
+            <nav className="flex w-full items-center justify-between border px-6 py-3">
+              <Link href="/" className="flex items-center space-x-2.5">
+                <Image src="/logo.png" width={32} height={32} alt="Logo" />
+                <div className="text-xl font-bold">kelbet-til.kz</div>
+              </Link>
 
-          <footer className="mt-6 border-t py-3 px-6 text-center">
-            made with 🥰 by{" "}
-            <a
-              href="https://instagram.com/dastanozgeldi"
-              className="font-semibold"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              @dastanozgeldi
-            </a>
-          </footer>
+              {!session?.user ? (
+                <SignInButton />
+              ) : (
+                <UserButton user={session.user} />
+              )}
+            </nav>
+
+            <div className="m-6">{children}</div>
+
+            <footer className="border-t px-6 py-3 text-center">
+              made with 🥰 by{" "}
+              <a
+                href="https://instagram.com/dastanozgeldi"
+                className="font-semibold"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                @dastanozgeldi
+              </a>
+            </footer>
+          </main>
         </EdgeStoreProvider>
         <Toaster />
       </body>

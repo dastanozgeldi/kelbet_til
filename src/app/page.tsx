@@ -6,7 +6,7 @@ export default async function Home() {
   return (
     <div className="flex w-full flex-col items-center gap-3 lg:flex-row lg:justify-between">
       <div className="lg:w-1/2">
-        <h1 className="my-3 text-3xl font-extrabold lg:mb-6 lg:text-4xl">
+        <h1 className="mb-3 text-3xl font-extrabold lg:mb-6 lg:text-4xl">
           Республика мектептерінің әдеби шығармалары бір жерде
         </h1>
 
