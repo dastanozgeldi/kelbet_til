@@ -18,8 +18,8 @@ export default async function Page({
       fallback={
         <>
           <div className="mb-6">
-            <Skeleton className="my-2 h-10 w-full" />
-            <hr className="bg-primary h-[6px] max-w-[36px] border-0" />
+            <Skeleton className="h-[32px] w-full sm:h-[36px]" />
+            <hr className="bg-primary mt-1 h-[6px] max-w-[36px] border-0" />
           </div>
           <Skeleton className="h-[600px]" />
         </>
