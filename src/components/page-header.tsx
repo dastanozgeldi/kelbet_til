@@ -1,8 +1,17 @@
-export function PageHeader({ title }: { title: string }) {
+export function PageHeader({
+  title,
+  button,
+}: {
+  title: string;
+  button?: React.ReactNode;
+}) {
   return (
-    <div className="mb-6">
-      <h2 className="my-2 text-2xl font-bold sm:text-3xl">{title}</h2>
-      <hr className="bg-primary h-[6px] max-w-[36px] border-0" />
+    <div className="mb-6 flex items-center justify-between">
+      <div>
+        <h2 className="text-2xl font-bold sm:text-3xl">{title}</h2>
+        <hr className="bg-primary mt-1 h-[6px] max-w-[36px] border-0" />
+      </div>
+      {button}
     </div>
   );
 }
