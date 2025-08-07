@@ -1,24 +1,30 @@
 "use client";
 
 import { Book } from "@prisma/client";
-import { type Message, useChat } from "ai/react";
+import { UIMessage, useChat } from "@ai-sdk/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { cn, renderMarkdown } from "@/lib/utils";
-import { SendIcon, MessageCircleIcon } from "lucide-react";
+import {
+  SendIcon,
+  MessageCircleIcon,
+  SendHorizonalIcon,
+  SquareIcon,
+  Loader2Icon,
+} from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 
 interface Props {
   book: Book;
-  initialMessages: Message[];
+  initialMessages: UIMessage[];
 }
 
 export function Chat({ book, initialMessages }: Props) {
-  const { messages, input, isLoading, handleInputChange, handleSubmit } =
-    useChat({
-      initialMessages,
-    });
+  const [input, setInput] = useState("");
+  const { messages, sendMessage, status, stop } = useChat({
+    messages: initialMessages,
+  });
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -42,42 +48,56 @@ export function Chat({ book, initialMessages }: Props) {
             </p>
           </div>
         ) : (
-          messages.map((m) => (
-            <div
-              key={m.id}
-              className={cn(
-                "max-w-max rounded-lg p-3 whitespace-pre-wrap",
-                m.role === "user"
-                  ? "bg-primary ml-auto text-right text-white"
-                  : "bg-gray-300",
-              )}
-              dangerouslySetInnerHTML={{ __html: renderMarkdown(m.content) }}
-            />
+          messages.map((message) => (
+            <MessageBubble key={message.id} message={message} />
           ))
         )}
         <div ref={messagesEndRef} />
       </div>
 
       <form
-        className="flex items-center gap-3 bg-white"
-        onSubmit={(e) =>
-          handleSubmit(e, {
-            data: {
-              bookId: book.id,
-              bookTitle: book.title,
+        className="flex items-center gap-2 bg-white"
+        onSubmit={(e) => {
+          e.preventDefault();
+          sendMessage(
+            { text: input },
+            {
+              body: {
+                bookId: book.id,
+                bookTitle: book.title,
+              },
             },
-          })
-        }
+          );
+          setInput("");
+        }}
       >
         <Input
           value={input}
           placeholder="Сұрақ қойыңыз..."
-          onChange={handleInputChange}
+          onChange={(e) => setInput(e.target.value)}
         />
-        <Button disabled={isLoading}>
-          <SendIcon className="size-4" />
-          Сұрау
-        </Button>
+        {status === "submitted" || status === "streaming" ? (
+          <Button
+            type="button"
+            size="icon"
+            onClick={() => stop()}
+            disabled={status === "submitted"}
+          >
+            {status === "submitted" ? (
+              <Loader2Icon className="size-4 animate-spin" />
+            ) : (
+              <SquareIcon className="size-4" />
+            )}
+          </Button>
+        ) : (
+          <Button
+            type="submit"
+            size="icon"
+            disabled={input === "" || status !== "ready"}
+          >
+            <SendHorizonalIcon />
+          </Button>
+        )}
       </form>
     </div>
   );
@@ -126,6 +146,33 @@ export function ChatSkeleton() {
           Сұрау
         </Button>
       </div>
+    </div>
+  );
+}
+
+function MessageBubble({ message }: { message: UIMessage }) {
+  return (
+    <div
+      className={cn(
+        "max-w-max rounded-lg p-3 whitespace-pre-wrap",
+        message.role === "user"
+          ? "bg-primary ml-auto text-right text-white"
+          : "bg-gray-300",
+      )}
+    >
+      {message.parts.map((part, i) => {
+        switch (part.type) {
+          case "text":
+            return (
+              <div
+                key={`${message.id}-${i}`}
+                dangerouslySetInnerHTML={{
+                  __html: renderMarkdown(part.text),
+                }}
+              />
+            );
+        }
+      })}
     </div>
   );
 }
