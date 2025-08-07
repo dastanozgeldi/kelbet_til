@@ -12,7 +12,8 @@ import {
 import { Chat, ChatSkeleton } from "./chat";
 import { Suspense } from "react";
 import { db } from "@/server/db";
-import { auth, signIn } from "@/server/auth";
+import { auth } from "@/server/auth";
+import SignInButton from "@/components/sign-in-button";
 
 export async function ChatDialog({ book }: { book: Book }) {
   return (
@@ -46,14 +47,7 @@ async function SuspenseBoundary({ book }: { book: Book }) {
     return (
       <div className="space-y-3">
         <p>Жасанды интеллектті қолдану үшін аккаунтқа кіріңіз.</p>
-        <form
-          action={async () => {
-            "use server";
-            await signIn("google");
-          }}
-        >
-          <Button type="submit">Кіру</Button>
-        </form>
+        <SignInButton />
       </div>
     );
 
