@@ -3,10 +3,10 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { filters } from "@/config";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { XIcon } from "lucide-react";
+import { useDebouncedCallback } from "use-debounce";
 
 export default function Filters() {
   const searchParams = useSearchParams();
@@ -14,40 +14,43 @@ export default function Filters() {
   const { replace } = useRouter();
 
   const [tabs, setTabs] = useState({
-    program: searchParams.get("program") || "",
-    grade: searchParams.get("grade") || "",
-    language: searchParams.get("language") || "",
-    term: searchParams.get("term") || "",
+    program: searchParams.get("program"),
+    grade: searchParams.get("grade"),
+    language: searchParams.get("language"),
+    term: searchParams.get("term"),
   });
 
   useEffect(() => {
     setTabs({
-      program: searchParams.get("program") || "",
-      grade: searchParams.get("grade") || "",
-      language: searchParams.get("language") || "",
-      term: searchParams.get("term") || "",
+      program: searchParams.get("program"),
+      grade: searchParams.get("grade"),
+      language: searchParams.get("language"),
+      term: searchParams.get("term"),
     });
   }, [searchParams]);
 
-  function handleSearch({
-    program,
-    grade,
-    language,
-    term,
-  }: {
-    program?: string;
-    grade?: string;
-    language?: string;
-    term?: string;
-  }) {
-    const params = new URLSearchParams(searchParams);
-    if (program) params.set("program", program);
-    if (grade) params.set("grade", grade);
-    if (language) params.set("language", language);
-    if (term) params.set("term", term);
+  const handleSearch = useDebouncedCallback(
+    ({
+      program,
+      grade,
+      language,
+      term,
+    }: {
+      program?: string;
+      grade?: string;
+      language?: string;
+      term?: string;
+    }) => {
+      const params = new URLSearchParams(searchParams);
+      if (program) params.set("program", program);
+      if (grade) params.set("grade", grade);
+      if (language) params.set("language", language);
+      if (term) params.set("term", term);
 
-    replace(`${pathname}?${params.toString()}`);
-  }
+      replace(`${pathname}?${params.toString()}`);
+    },
+    300,
+  );
 
   function handleReset() {
     const params = new URLSearchParams(searchParams);
@@ -56,7 +59,7 @@ export default function Filters() {
     params.delete("language");
     params.delete("term");
 
-    replace(`${pathname}?${params.toString()}`);
+    replace(pathname);
   }
 
   const hasActiveFilters =
@@ -67,7 +70,7 @@ export default function Filters() {
       <div className="space-y-1">
         <Label>Бағдарлама</Label>
         <Tabs
-          defaultValue={tabs.program}
+          value={tabs.program || ""}
           onValueChange={(value) => handleSearch({ program: value })}
         >
           <TabsList>
@@ -84,11 +87,11 @@ export default function Filters() {
       <div className="space-y-1">
         <Label>Сынып</Label>
         <Tabs
-          defaultValue={tabs.grade}
+          value={tabs.grade || ""}
           onValueChange={(value) => handleSearch({ grade: value })}
         >
           <TabsList>
-            {filters.grades.map((grade) => (
+            {["5", "6", "7", "8", "9", "10", "11", "12"].map((grade) => (
               <TabsTrigger key={grade} value={grade}>
                 {grade}
               </TabsTrigger>
@@ -100,7 +103,7 @@ export default function Filters() {
       <div className="space-y-1">
         <Label>Оқыту тілі</Label>
         <Tabs
-          defaultValue={tabs.language}
+          value={tabs.language || ""}
           onValueChange={(value) => handleSearch({ language: value })}
         >
           <TabsList>
@@ -113,7 +116,7 @@ export default function Filters() {
       <div className="space-y-1">
         <Label>Тоқсан</Label>
         <Tabs
-          defaultValue={tabs.term}
+          value={tabs.term || ""}
           onValueChange={(value) => handleSearch({ term: value })}
         >
           <TabsList>
