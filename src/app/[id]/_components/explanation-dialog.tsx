@@ -1,3 +1,4 @@
+import { Response } from "@/components/ai-elements/response";
 import {
   Dialog,
   DialogContent,
@@ -5,7 +6,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { renderMarkdown } from "@/lib/utils";
 
 export const ExplanationDialog = ({ content }: { content: string }) => {
   return (
@@ -17,7 +17,7 @@ export const ExplanationDialog = ({ content }: { content: string }) => {
             Жасанды интеллект кейде шындыққа жанаспайтын жауаптар беруі мүмкін.
           </DialogDescription>
         </DialogHeader>
-        <div dangerouslySetInnerHTML={{ __html: renderMarkdown(content) }} />
+        <Response>{content}</Response>
       </DialogContent>
     </Dialog>
   );
