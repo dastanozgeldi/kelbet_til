@@ -18,7 +18,7 @@
 - [x] reset filters button
 - [x] debounce filters
 - [x] ai sdk v5
-- [ ] use of ai sdk components where possible
+- [x] use of ai sdk components where possible
 
 # TODO
 
