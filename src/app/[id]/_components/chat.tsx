@@ -1,83 +1,108 @@
 "use client";
 
 import { Book } from "@prisma/client";
-import { type Message, useChat } from "ai/react";
+import { UIMessage, useChat } from "@ai-sdk/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useEffect, useRef } from "react";
-import { cn, renderMarkdown } from "@/lib/utils";
-import { SendIcon, MessageCircleIcon } from "lucide-react";
+import { useState } from "react";
+import {
+  SendIcon,
+  SendHorizonalIcon,
+  SquareIcon,
+  Loader2Icon,
+} from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import {
+  Conversation,
+  ConversationContent,
+} from "@/components/ai-elements/conversation";
+import { Message, MessageContent } from "@/components/ai-elements/message";
+import { Response } from "@/components/ai-elements/response";
 
-interface Props {
+export function Chat({
+  book,
+  initialMessages,
+}: {
   book: Book;
-  initialMessages: Message[];
-}
+  initialMessages: UIMessage[];
+}) {
+  const [input, setInput] = useState("");
+  const { messages, sendMessage, status, stop } = useChat({
+    messages: initialMessages,
+  });
 
-export function Chat({ book, initialMessages }: Props) {
-  const { messages, input, isLoading, handleInputChange, handleSubmit } =
-    useChat({
-      initialMessages,
-    });
-
-  const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (input.trim()) {
+      sendMessage(
+        { text: input },
+        {
+          body: {
+            bookId: book.id,
+            bookTitle: book.title,
+          },
+        },
+      );
+      setInput("");
+    }
   };
 
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
   return (
-    <div className="flex h-[400px] flex-col">
-      <div className="mb-4 flex-1 space-y-3 overflow-auto">
-        {messages.length === 0 ? (
-          <div className="flex h-full flex-col items-center justify-center text-center">
-            <MessageCircleIcon className="mb-4 size-12" />
-            <h3 className="text-lg font-medium">Сұрақ қоя бастаңыз</h3>
-            <p className="text-muted-foreground text-sm">
-              Жасанды интеллект сізге кітап мазмұны бойынша жауап береді.
-            </p>
-          </div>
-        ) : (
-          messages.map((m) => (
-            <div
-              key={m.id}
-              className={cn(
-                "max-w-max rounded-lg p-3 whitespace-pre-wrap",
-                m.role === "user"
-                  ? "bg-primary ml-auto text-right text-white"
-                  : "bg-gray-300",
-              )}
-              dangerouslySetInnerHTML={{ __html: renderMarkdown(m.content) }}
-            />
-          ))
-        )}
-        <div ref={messagesEndRef} />
-      </div>
+    <div className="flex h-[500px] flex-col space-y-3">
+      <Conversation>
+        <ConversationContent className="p-0">
+          {messages.map((message) => (
+            <Message from={message.role} key={message.id}>
+              <MessageContent>
+                {message.parts.map((part, i) => {
+                  switch (part.type) {
+                    case "text":
+                      return (
+                        <Response key={`${message.id}-${i}`}>
+                          {part.text}
+                        </Response>
+                      );
+                    default:
+                      return null;
+                  }
+                })}
+              </MessageContent>
+            </Message>
+          ))}
+        </ConversationContent>
+      </Conversation>
 
       <form
-        className="flex items-center gap-3 bg-white"
-        onSubmit={(e) =>
-          handleSubmit(e, {
-            data: {
-              bookId: book.id,
-              bookTitle: book.title,
-            },
-          })
-        }
+        className="flex items-center gap-2 bg-white"
+        onSubmit={handleSubmit}
       >
         <Input
           value={input}
           placeholder="Сұрақ қойыңыз..."
-          onChange={handleInputChange}
+          onChange={(e) => setInput(e.target.value)}
         />
-        <Button disabled={isLoading}>
-          <SendIcon className="size-4" />
-          Сұрау
-        </Button>
+        {status === "submitted" || status === "streaming" ? (
+          <Button
+            type="button"
+            size="icon"
+            onClick={() => stop()}
+            disabled={status === "submitted"}
+          >
+            {status === "submitted" ? (
+              <Loader2Icon className="size-4 animate-spin" />
+            ) : (
+              <SquareIcon className="size-4" />
+            )}
+          </Button>
+        ) : (
+          <Button
+            type="submit"
+            size="icon"
+            disabled={input.trim() === "" || status !== "ready"}
+          >
+            <SendHorizonalIcon />
+          </Button>
+        )}
       </form>
     </div>
   );

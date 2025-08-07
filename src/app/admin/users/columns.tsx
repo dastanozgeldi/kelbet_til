@@ -1,9 +1,8 @@
 "use client";
 
-import { type User } from "@prisma/client";
+import type { UserRole, User } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "@/components/ui/badge";
-import { isAdmin } from "@/lib/utils";
 import { UserDropdown } from "./user-dropdown";
 
 export const columns: ColumnDef<User>[] = [
@@ -20,11 +19,11 @@ export const columns: ColumnDef<User>[] = [
   {
     accessorKey: "role",
     header: "Рөл",
-    cell: ({ row }) => (
-      <Badge variant="outline">
-        {isAdmin(row.getValue("role")) ? "Админ" : "Қолданушы"}
-      </Badge>
-    ),
+    cell: ({ row }) => {
+      const role = row.getValue("role") as UserRole;
+      const isAdmin = role === "ADMIN";
+      return <Badge variant="outline">{isAdmin ? "Админ" : "Қолданушы"}</Badge>;
+    },
   },
   {
     id: "actions",

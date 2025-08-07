@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Upload } from "@/components/upload";
 import { useAddBook } from "../hooks/use-add-book";
-import { filters } from "@/config";
+import { filters } from "@/data/config";
 import { ExternalLinkIcon, PlusIcon } from "lucide-react";
 
 export const AddBook = () => {

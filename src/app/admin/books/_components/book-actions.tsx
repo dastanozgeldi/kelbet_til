@@ -33,7 +33,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useDeleteBook } from "../hooks/use-delete-book";
 import { useEditBook } from "../hooks/use-edit-book";
-import { filters } from "@/config";
+import { filters } from "@/data/config";
 import { useToggleBook } from "../hooks/use-toggle-book";
 import { isActive } from "@/lib/utils";
 

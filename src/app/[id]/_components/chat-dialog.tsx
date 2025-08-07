@@ -60,8 +60,13 @@ async function SuspenseBoundary({ book }: { book: Book }) {
       book={book}
       initialMessages={messages.map((message) => ({
         id: message.id,
-        content: message.content,
         role: message.isAI ? "assistant" : "user",
+        parts: [
+          {
+            type: "text",
+            text: message.content,
+          },
+        ],
       }))}
     />
   );
