@@ -11,6 +11,7 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
   Loader2Icon,
+  PencilIcon,
   XIcon,
 } from "lucide-react";
 
@@ -52,11 +53,14 @@ export const PDFBook = ({ book }: { book: Book }) => {
         <ChevronRightIcon className="size-8" />
       </Button>
 
-      <div className="flex items-center justify-between">
+      <div className="flex items-center gap-2">
         {isEditing ? (
-          <div className="flex items-center justify-center gap-3">
+          <div className="flex items-center justify-center gap-2">
             <Input
-              className="ml-2 w-16"
+              type="number"
+              min={1}
+              max={numPages}
+              value={currentPage}
               onChange={(event) =>
                 setCurrentPage(Number(event.currentTarget.value))
               }
@@ -64,13 +68,20 @@ export const PDFBook = ({ book }: { book: Book }) => {
             <Button onClick={() => setIsEditing(false)}>OK</Button>
           </div>
         ) : (
-          <span
+          <Button
             onClick={() => setIsEditing(true)}
-            className="flex items-center justify-center font-bold"
+            size="icon"
+            variant="outline"
           >
-            {currentPage}-бет (жалпы {numPages})
-          </span>
+            <PencilIcon />
+          </Button>
         )}
+        <span
+          onClick={() => setIsEditing(true)}
+          className="flex items-center justify-center font-medium"
+        >
+          {currentPage}-бет (жалпы {numPages})
+        </span>
       </div>
 
       <Document
