@@ -1,4 +1,4 @@
-import { filters } from "@/config";
+import { filters } from "@/data/config";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
