@@ -3,6 +3,7 @@ import Google from "next-auth/providers/google";
 import NextAuth, { DefaultSession } from "next-auth";
 
 import { db } from "@/server/db";
+import { env } from "@/data/env/server";
 
 declare module "next-auth" {
   interface Session {
@@ -27,8 +28,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         console.log("here i got the profile data", profile);
         return { role: profile.role ?? "user", ...profile };
       },
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      clientId: env.GOOGLE_CLIENT_ID,
+      clientSecret: env.GOOGLE_CLIENT_SECRET,
       allowDangerousEmailAccountLinking: true,
     }),
   ],
