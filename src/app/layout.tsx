@@ -31,8 +31,8 @@ export default async function RootLayout({
       <GoogleAnalytics GA_TRACKING_ID={env.GA_TRACKING_ID} />
       <body className="antialiased">
         <EdgeStoreProvider>
-          <main className="container mx-auto">
-            <nav className="flex w-full items-center justify-between px-6 py-3">
+          <main className="container mx-auto space-y-3 px-6">
+            <nav className="flex w-full items-center justify-between border-b py-3">
               <Link href="/" className="flex items-center space-x-2.5">
                 <Image src="/logo.png" width={32} height={32} alt="Logo" />
                 <div className="text-xl font-bold">kelbet-til.kz</div>
@@ -45,9 +45,9 @@ export default async function RootLayout({
               )}
             </nav>
 
-            <div className="m-6">{children}</div>
+            {children}
 
-            <footer className="border-t px-6 py-3 text-center">
+            <footer className="border-t py-3 text-center">
               made with 🥰 by{" "}
               <a
                 href="https://instagram.com/dastanozgeldi"
