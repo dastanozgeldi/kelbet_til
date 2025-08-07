@@ -1,13 +1,9 @@
-import type { BookStatus, UserRole } from "@prisma/client";
+import type { BookStatus } from "@prisma/client";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
-}
-
-export function isAdmin(role: UserRole) {
-  return role === "ADMIN";
 }
 
 export function isActive(status: BookStatus) {
