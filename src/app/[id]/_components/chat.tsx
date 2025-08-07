@@ -4,72 +4,77 @@ import { Book } from "@prisma/client";
 import { UIMessage, useChat } from "@ai-sdk/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useEffect, useRef, useState } from "react";
-import { cn, renderMarkdown } from "@/lib/utils";
+import { useState } from "react";
 import {
   SendIcon,
-  MessageCircleIcon,
   SendHorizonalIcon,
   SquareIcon,
   Loader2Icon,
 } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import {
+  Conversation,
+  ConversationContent,
+} from "@/components/ai-elements/conversation";
+import { Message, MessageContent } from "@/components/ai-elements/message";
+import { Response } from "@/components/ai-elements/response";
 
-interface Props {
+export function Chat({
+  book,
+  initialMessages,
+}: {
   book: Book;
   initialMessages: UIMessage[];
-}
-
-export function Chat({ book, initialMessages }: Props) {
+}) {
   const [input, setInput] = useState("");
   const { messages, sendMessage, status, stop } = useChat({
     messages: initialMessages,
   });
 
-  const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (input.trim()) {
+      sendMessage(
+        { text: input },
+        {
+          body: {
+            bookId: book.id,
+            bookTitle: book.title,
+          },
+        },
+      );
+      setInput("");
+    }
   };
 
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
   return (
-    <div className="flex h-[400px] flex-col">
-      <div className="mb-4 flex-1 space-y-3 overflow-auto">
-        {messages.length === 0 ? (
-          <div className="flex h-full flex-col items-center justify-center text-center">
-            <MessageCircleIcon className="mb-4 size-12" />
-            <h3 className="text-lg font-medium">Сұрақ қоя бастаңыз</h3>
-            <p className="text-muted-foreground text-sm">
-              Жасанды интеллект сізге кітап мазмұны бойынша жауап береді.
-            </p>
-          </div>
-        ) : (
-          messages.map((message) => (
-            <MessageBubble key={message.id} message={message} />
-          ))
-        )}
-        <div ref={messagesEndRef} />
-      </div>
+    <div className="flex h-[500px] flex-col space-y-3">
+      <Conversation>
+        <ConversationContent className="p-0">
+          {messages.map((message) => (
+            <Message from={message.role} key={message.id}>
+              <MessageContent>
+                {message.parts.map((part, i) => {
+                  switch (part.type) {
+                    case "text":
+                      return (
+                        <Response key={`${message.id}-${i}`}>
+                          {part.text}
+                        </Response>
+                      );
+                    default:
+                      return null;
+                  }
+                })}
+              </MessageContent>
+            </Message>
+          ))}
+        </ConversationContent>
+      </Conversation>
 
       <form
         className="flex items-center gap-2 bg-white"
-        onSubmit={(e) => {
-          e.preventDefault();
-          sendMessage(
-            { text: input },
-            {
-              body: {
-                bookId: book.id,
-                bookTitle: book.title,
-              },
-            },
-          );
-          setInput("");
-        }}
+        onSubmit={handleSubmit}
       >
         <Input
           value={input}
@@ -93,7 +98,7 @@ export function Chat({ book, initialMessages }: Props) {
           <Button
             type="submit"
             size="icon"
-            disabled={input === "" || status !== "ready"}
+            disabled={input.trim() === "" || status !== "ready"}
           >
             <SendHorizonalIcon />
           </Button>
@@ -146,33 +151,6 @@ export function ChatSkeleton() {
           Сұрау
         </Button>
       </div>
-    </div>
-  );
-}
-
-function MessageBubble({ message }: { message: UIMessage }) {
-  return (
-    <div
-      className={cn(
-        "max-w-max rounded-lg p-3 whitespace-pre-wrap",
-        message.role === "user"
-          ? "bg-primary ml-auto text-right text-white"
-          : "bg-gray-300",
-      )}
-    >
-      {message.parts.map((part, i) => {
-        switch (part.type) {
-          case "text":
-            return (
-              <div
-                key={`${message.id}-${i}`}
-                dangerouslySetInnerHTML={{
-                  __html: renderMarkdown(part.text),
-                }}
-              />
-            );
-        }
-      })}
     </div>
   );
 }
