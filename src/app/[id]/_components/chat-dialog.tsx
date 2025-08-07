@@ -1,6 +1,6 @@
-import type { User } from "next-auth";
-import type { Book, Message } from "@prisma/client";
-import { buttonVariants } from "@/components/ui/button";
+import { BotIcon } from "lucide-react";
+import type { Book } from "@prisma/client";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -9,30 +9,20 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Icons } from "@/components/icons";
-import { cn } from "@/lib/utils";
-import { Chat } from "./chat";
+import { Chat, ChatSkeleton } from "./chat";
+import { Suspense } from "react";
+import { db } from "@/server/db";
+import { auth } from "@/server/auth";
+import SignInButton from "@/components/sign-in-button";
 
-interface Props {
-  book: Book;
-  // user: User;
-  history: Message[];
-  loadHistory: () => void;
-}
-
-export const ChatDialog = ({
-  book,
-  // user,
-  history,
-  loadHistory,
-}: Props) => {
+export async function ChatDialog({ book }: { book: Book }) {
   return (
-    <Dialog onOpenChange={loadHistory}>
-      <DialogTrigger
-        className={cn(buttonVariants(), "flex items-center gap-3")}
-      >
-        <Icons.ai className="h-4 w-4" />
-        AI
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button>
+          <BotIcon className="size-4" />
+          AI
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -41,16 +31,38 @@ export const ChatDialog = ({
             Жасанды интеллект кейде шындыққа жанаспайтын жауаптар беруі мүмкін.
           </DialogDescription>
         </DialogHeader>
-        <Chat
-          book={book}
-          // user={user}
-          initialMessages={history.map((message) => ({
-            id: message.id,
-            content: message.content,
-            role: message.isAI ? "assistant" : "user",
-          }))}
-        />
+        <Suspense fallback={<ChatSkeleton />}>
+          <SuspenseBoundary book={book} />
+        </Suspense>
       </DialogContent>
     </Dialog>
   );
-};
+}
+
+async function SuspenseBoundary({ book }: { book: Book }) {
+  const session = await auth();
+  const userId = session?.user.id;
+
+  if (!userId)
+    return (
+      <div className="space-y-3">
+        <p>Жасанды интеллектті қолдану үшін аккаунтқа кіріңіз.</p>
+        <SignInButton />
+      </div>
+    );
+
+  const messages = await db.message.findMany({
+    where: { userId, bookId: book.id },
+  });
+
+  return (
+    <Chat
+      book={book}
+      initialMessages={messages.map((message) => ({
+        id: message.id,
+        content: message.content,
+        role: message.isAI ? "assistant" : "user",
+      }))}
+    />
+  );
+}

@@ -1,14 +1,9 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import { Nav } from "@/components/nav";
-import { Footer } from "@/components/footer";
 import { Toaster } from "@/components/ui/sonner";
 import { EdgeStoreProvider } from "@/lib/edgestore";
-import { cn } from "@/lib/utils";
 import { GoogleAnalytics } from "./google-analytics";
 import "./globals.css";
-
-const inter = Inter({ subsets: ["latin"], weight: ["400", "500", "700"] });
 
 export const metadata: Metadata = {
   title: {
@@ -27,13 +22,22 @@ export default function RootLayout({
   return (
     <html lang="en">
       <GoogleAnalytics GA_TRACKING_ID={process.env.GA_TRACKING_ID!} />
-      <body className={cn(inter.className, "min-h-screen px-6 py-4 lg:px-24")}>
+      <body className="container mx-auto antialiased">
         <EdgeStoreProvider>
-          <main>
-            <Nav />
-            {children}
-            <Footer />
-          </main>
+          <Nav />
+          <main className="px-6">{children}</main>
+
+          <footer className="mt-6 border-t py-3 px-6 text-center">
+            made with 🥰 by{" "}
+            <a
+              href="https://instagram.com/dastanozgeldi"
+              className="font-semibold"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              @dastanozgeldi
+            </a>
+          </footer>
         </EdgeStoreProvider>
         <Toaster />
       </body>

@@ -1,12 +1,33 @@
+# TODO (Admin Rewrite Sprint)
+
+- [ ] replace api endpoints with server actions
+
+# TODO (My Books Page)
+
+- [ ] my books page
+- [ ] save progress button at /[id] that saves current book progress to my books table
+- [ ] edgestore -> cloudflare r2
+
+# TODO (Next.js 15 Sprint)
+
+- [x] cta button to /books
+- [x] update pdf reader packages
+- [x] fix pdf reader
+- [x] separate books page to optimize home page
+- [x] abandon saving user filters in local storage, implement url params instead
+- [x] reset filters button
+- [x] debounce filters
+
 # TODO
+
 - [x] translate circled text feature
-    - [x] drawing feature to be able to draw rectangle on certain text
-    - [x] crop that image
-    - [x] send to gpt-4o (if he can read images directly, research that)
+  - [x] drawing feature to be able to draw rectangle on certain text
+  - [x] crop that image
+  - [x] send to gpt-4o (if he can read images directly, research that)
 - [x] fix ai chat input behavior
 - [x] render markdown given by chatgpt responses correctly (bold text, italic text and other stuff)
-    - [x] in explain dialog
-    - [x] in ai chat
+  - [x] in explain dialog
+  - [x] in ai chat
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
