@@ -17,6 +17,8 @@
 - [x] abandon saving user filters in local storage, implement url params instead
 - [x] reset filters button
 - [x] debounce filters
+- [x] ai sdk v5
+- [ ] use of ai sdk components where possible
 
 # TODO
 
