@@ -1,8 +1,6 @@
 "use client";
 
 import "react-pdf/dist/Page/AnnotationLayer.css";
-import { useCallback, useRef } from "react";
-import { PDFDocumentProxy, PDFPageProxy } from "pdfjs-dist";
 import type { Book } from "@prisma/client";
 import Image from "next/image";
 import { Document, Page, pdfjs } from "react-pdf";
@@ -19,13 +17,6 @@ import {
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
 export const PDFBook = ({ book }: { book: Book }) => {
-  const pdfDocumentRef = useRef<PDFDocumentProxy | null>(null);
-  const pdfPageRef = useRef<PDFPageProxy | null>(null);
-
-  const handlePageRender = useCallback((page: PDFPageProxy) => {
-    pdfPageRef.current = page;
-  }, []);
-
   const {
     numPages,
     currentPage,
@@ -106,10 +97,7 @@ export const PDFBook = ({ book }: { book: Book }) => {
           </div>
         }
         file={book.fileUrl}
-        onLoadSuccess={(pdf) => {
-          pdfDocumentRef.current = pdf;
-          handleDocumentLoadSuccess(pdf);
-        }}
+        onLoadSuccess={handleDocumentLoadSuccess}
         onLoadError={console.error}
       >
         <div className="relative flex flex-col items-center justify-center xl:flex-row">
@@ -119,7 +107,6 @@ export const PDFBook = ({ book }: { book: Book }) => {
             loading="Бет жүктелуде..."
             renderTextLayer={false}
             pageNumber={currentPage}
-            onRenderSuccess={handlePageRender}
           />
         </div>
       </Document>
