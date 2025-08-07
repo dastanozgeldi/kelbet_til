@@ -1,5 +1,12 @@
 # TODO (Admin Rewrite Sprint)
+
 - [ ] replace api endpoints with server actions
+
+# TODO (My Books Page)
+
+- [ ] my books page
+- [ ] save progress button at /[id] that saves current book progress to my books table
+- [ ] edgestore -> cloudflare r2
 
 # TODO (Next.js 15 Sprint)
 
@@ -9,10 +16,7 @@
 - [x] separate books page to optimize home page
 - [x] abandon saving user filters in local storage, implement url params instead
 - [x] reset filters button
-- [ ] debounce filters
-- [ ] my books page
-- [ ] edgestore -> cloudflare r2
-- [ ] save progress button at /[id] that saves current book progress to my books table
+- [x] debounce filters
 
 # TODO
 
