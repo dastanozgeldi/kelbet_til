@@ -6,6 +6,7 @@ import { EdgeStoreProvider } from "@/lib/edgestore";
 import SignInButton from "@/components/sign-in-button";
 import { UserButton } from "@/components/user-button";
 import { auth } from "@/server/auth";
+import { env } from "@/data/env/server";
 import { GoogleAnalytics } from "./google-analytics";
 import "./globals.css";
 
@@ -27,7 +28,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <GoogleAnalytics GA_TRACKING_ID={process.env.GA_TRACKING_ID!} />
+      <GoogleAnalytics GA_TRACKING_ID={env.GA_TRACKING_ID} />
       <body className="antialiased">
         <EdgeStoreProvider>
           <main className="container mx-auto">
