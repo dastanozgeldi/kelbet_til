@@ -3,7 +3,7 @@
 import { useCallback } from "react";
 import { usePathname } from "next/navigation";
 import { type Session } from "next-auth";
-import { links } from "@/config";
+import { links } from "@/data/config";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export const Header = ({ user }: { user: Session["user"] }) => {

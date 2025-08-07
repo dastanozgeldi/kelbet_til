@@ -1,44 +1,69 @@
-import { generateSystemPrompt } from "@/lib/utils";
+import { auth } from "@/server/auth";
 import { db } from "@/server/db";
 import { azure } from "@ai-sdk/azure";
-import { streamText, convertToCoreMessages } from "ai";
+import { streamText, convertToModelMessages, UIMessage } from "ai";
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
 
 export async function POST(req: Request) {
-  const { data, messages } = await req.json();
-  const userId = "clrj7czjo000272dk2v1g44k5";
-  // const { userId, bookId, bookTitle } = data;
-  const { bookId, bookTitle } = data;
+  const session = await auth();
+  const userId = session?.user.id;
+  if (!userId) throw new Error("User not found");
 
-  const lastUserMessage = messages[messages.length - 1];
+  const {
+    messages,
+    bookId,
+    bookTitle,
+  }: {
+    messages: UIMessage[];
+    bookId: string;
+    bookTitle: string;
+  } = await req.json();
 
-  await db.message.create({
-    data: {
-      content: lastUserMessage.content,
-      userId,
-      bookId,
-    },
-  });
-
-  const result = await streamText({
+  const result = streamText({
     model: azure("gpt-4o"),
-    messages: convertToCoreMessages([
-      generateSystemPrompt(bookTitle),
+    messages: convertToModelMessages([
+      {
+        role: "system",
+        parts: [
+          {
+            type: "text",
+            text:
+              `Сен -- қазақ әдебиетін өте жақсы білетін жасанды интеллектсің.\n` +
+              `Қазір сен Kelbet Til сайтында жұмыс істеп отырсың.\n` +
+              `Қолданушылар саған әдеби шығармалар бойынша сұрақ қояды.\n` +
+              `Сен қолданушымен тек бір тақырыпта сөйлесесің.\n` +
+              `Мысалы, сен "Ақбілек" романына енгізілген жасанды интеллектсің.\n` +
+              `Тек "Ақбілек" романы бойынша сұраққа жауап бересің.\n` +
+              `Тақырыптан тыс сұрақтарға "Мен әдеби чатботпын, әдебиеттен тыс сұрақтарға жауап бере алмаймын" деп жауап бересің.\n` +
+              `Шығарманың тақырыбы: ${bookTitle}`,
+          },
+        ],
+      },
       ...messages,
     ]),
     onFinish: async ({ text }) => {
-      await db.message.create({
-        data: {
-          content: text,
-          isAI: true,
-          userId,
-          bookId,
-        },
+      const lastUserMessage = messages[messages.length - 1].parts[0];
+
+      await db.message.createMany({
+        data: [
+          {
+            content:
+              lastUserMessage.type === "text" ? lastUserMessage.text : "",
+            userId,
+            bookId,
+          },
+          {
+            content: text,
+            isAI: true,
+            userId,
+            bookId,
+          },
+        ],
       });
     },
   });
 
-  return result.toDataStreamResponse();
+  return result.toUIMessageStreamResponse();
 }
