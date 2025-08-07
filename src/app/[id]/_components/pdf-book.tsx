@@ -1,18 +1,15 @@
 "use client";
 
 import "react-pdf/dist/Page/AnnotationLayer.css";
+import { useCallback, useRef } from "react";
+import { PDFDocumentProxy, PDFPageProxy } from "pdfjs-dist";
 import type { Book } from "@prisma/client";
 import Image from "next/image";
 import { Document, Page, pdfjs } from "react-pdf";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { isValidRectangle } from "@/lib/utils";
 import { usePDFBook } from "../_hooks/use-pdf-book";
-import { useExplanation } from "../_hooks/use-explanation";
-import { useRectangle } from "../_hooks/use-rectangle";
-import { ExplanationDialog } from "./explanation-dialog";
 import {
-  BookOpenCheckIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
   Loader2Icon,
@@ -22,17 +19,12 @@ import {
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
 export const PDFBook = ({ book }: { book: Book }) => {
-  const {
-    croppedImage,
-    rectangle,
-    pdfDocumentRef,
-    canvasRef,
-    handlePageRender,
-    handleStart,
-    handleMove,
-    handleEnd,
-    resetRectangle,
-  } = useRectangle();
+  const pdfDocumentRef = useRef<PDFDocumentProxy | null>(null);
+  const pdfPageRef = useRef<PDFPageProxy | null>(null);
+
+  const handlePageRender = useCallback((page: PDFPageProxy) => {
+    pdfPageRef.current = page;
+  }, []);
 
   const {
     numPages,
@@ -45,10 +37,7 @@ export const PDFBook = ({ book }: { book: Book }) => {
     handlePrevPage,
     handleNextPage,
     handleDocumentLoadSuccess,
-  } = usePDFBook(book.id, resetRectangle);
-
-  const { isExplanationLoading, explanation, handleExplanation } =
-    useExplanation();
+  } = usePDFBook(book.id);
 
   return (
     <>
@@ -132,50 +121,8 @@ export const PDFBook = ({ book }: { book: Book }) => {
             pageNumber={currentPage}
             onRenderSuccess={handlePageRender}
           />
-          {/* {user?.canUseAI && ( */}
-          <>
-            <canvas
-              ref={canvasRef}
-              onMouseDown={handleStart}
-              onMouseMove={handleMove}
-              onMouseUp={handleEnd}
-              onTouchStart={handleStart}
-              onTouchMove={handleMove}
-              onTouchEnd={handleEnd}
-              style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                pointerEvents: "all",
-              }}
-            />
-            {rectangle && isValidRectangle(rectangle) && croppedImage && (
-              <Button
-                className="flex items-center gap-2"
-                disabled={isExplanationLoading}
-                size="sm"
-                style={{
-                  position: "absolute",
-                  top: `${rectangle.y + rectangle.height}px`,
-                  left: `${rectangle.x}px`,
-                  zIndex: 10,
-                }}
-                onClick={() => handleExplanation(book.title, croppedImage)}
-              >
-                {isExplanationLoading ? (
-                  <Loader2Icon className="size-4 animate-spin" />
-                ) : (
-                  <BookOpenCheckIcon className="size-4" />
-                )}
-                Мағынасы
-              </Button>
-            )}
-          </>
-          {/* )} */}
         </div>
       </Document>
-
-      {explanation && <ExplanationDialog content={explanation} />}
     </>
   );
 };
