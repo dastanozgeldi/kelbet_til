@@ -6,6 +6,7 @@ import { Document, Page, pdfjs } from "react-pdf";
 import { usePDFBook } from "../_hooks/use-pdf-book";
 import PageControls from "./page-controls";
 import { useContainerWidth } from "@/hooks/use-container-width";
+import { Skeleton } from "@/components/ui/skeleton";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
@@ -27,12 +28,13 @@ export const PDFBook = ({ book }: { book: Book }) => {
         file={book.fileUrl}
         onLoadSuccess={handleDocumentLoadSuccess}
         onLoadError={console.error}
+        loading={<Skeleton className="h-[600px] w-full" />}
       >
         <Page
           width={width}
           noData={`Бұндай бет (${currentPage}-бет) жоқ`}
           error="Бетті жүктеуде қате туындады"
-          loading="Бет жүктелуде..."
+          loading={<Skeleton className="h-[600px] w-full" />}
           renderTextLayer={false}
           pageNumber={currentPage}
         />
