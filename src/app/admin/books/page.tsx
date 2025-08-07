@@ -9,11 +9,12 @@ export const metadata: Metadata = {
   title: "Шығармалар",
 };
 
-export default async function Page({
-  searchParams,
-}: {
-  searchParams?: { query?: string };
-}) {
+export default async function Page(
+  props: {
+    searchParams?: Promise<{ query?: string }>;
+  }
+) {
+  const searchParams = await props.searchParams;
   const query = searchParams?.query;
 
   const books = await db.book.findMany({

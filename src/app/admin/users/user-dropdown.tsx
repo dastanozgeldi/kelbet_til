@@ -8,9 +8,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { Icons } from "@/components/icons";
 import { toast } from "sonner";
 import { User } from "next-auth";
+import { MoreHorizontalIcon } from "lucide-react";
 
 export const UserDropdown = ({ user }: { user: User }) => {
   const isAdmin = user.role === "ADMIN";
@@ -50,7 +50,7 @@ export const UserDropdown = ({ user }: { user: User }) => {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="h-8 w-8 p-0">
           <span className="sr-only">Меню</span>
-          <Icons.more className="h-4 w-4" />
+          <MoreHorizontalIcon className="size-4" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">

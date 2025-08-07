@@ -1,9 +1,9 @@
+"use client";
+
 import "react-pdf/dist/Page/AnnotationLayer.css";
-import type { Book, Message } from "@prisma/client";
-import type { User } from "next-auth";
+import type { Book } from "@prisma/client";
 import Image from "next/image";
-import { Document, Page } from "react-pdf";
-import { Icons } from "@/components/icons";
+import { Document, Page, pdfjs } from "react-pdf";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { isValidRectangle } from "@/lib/utils";
@@ -11,16 +11,17 @@ import { usePDFBook } from "../_hooks/use-pdf-book";
 import { useExplanation } from "../_hooks/use-explanation";
 import { useRectangle } from "../_hooks/use-rectangle";
 import { ExplanationDialog } from "./explanation-dialog";
-import { ChatDialog } from "./chat-dialog";
+import {
+  BookOpenCheckIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  Loader2Icon,
+  XIcon,
+} from "lucide-react";
 
-interface Props {
-  book: Book;
-  user: User | null;
-  history: Message[];
-  loadHistory: () => void;
-}
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
-export const PDFBook = ({ book, user, history, loadHistory }: Props) => {
+export const PDFBook = ({ book }: { book: Book }) => {
   const {
     croppedImage,
     rectangle,
@@ -51,21 +52,25 @@ export const PDFBook = ({ book, user, history, loadHistory }: Props) => {
 
   return (
     <>
-      <button
-        className="fixed left-3 top-1/2 z-10 disabled:text-gray-400"
+      <Button
+        size="icon"
+        variant="ghost"
+        className="fixed top-1/2 left-3 z-10"
         disabled={noPrevPage}
         onClick={handlePrevPage}
       >
-        <Icons.left className="h-8 w-8" />
-      </button>
+        <ChevronLeftIcon className="size-8" />
+      </Button>
 
-      <button
-        className="fixed right-3 top-1/2 z-10 disabled:text-gray-400"
+      <Button
+        size="icon"
+        variant="ghost"
+        className="fixed top-1/2 right-3 z-10"
         disabled={noNextPage}
         onClick={handleNextPage}
       >
-        <Icons.right className="h-8 w-8" />
-      </button>
+        <ChevronRightIcon className="size-8" />
+      </Button>
 
       <div className="flex items-center justify-between">
         {isEditing ? (
@@ -86,29 +91,20 @@ export const PDFBook = ({ book, user, history, loadHistory }: Props) => {
             {currentPage}-бет (жалпы {numPages})
           </span>
         )}
-
-        {/* {user && ( */}
-        <ChatDialog
-          book={book}
-          // user={user}
-          history={history}
-          loadHistory={loadHistory}
-        />
-        {/* )} */}
       </div>
 
       <Document
         className="mt-3 flex flex-col items-center justify-center border-t xl:flex-row"
         loading={
           <div className="mt-3 flex items-center justify-center gap-2">
-            <Icons.spinner className="animate-spin" />
+            <Loader2Icon className="animate-spin" />
             Кітап ашылуда...
           </div>
         }
         error={
           <div className="mt-3 flex flex-col items-center">
             <div className="flex items-center gap-2">
-              <Icons.x />
+              <XIcon />
               <span>Шығарма жүктелмеген.</span>
             </div>
             <Image
@@ -127,7 +123,7 @@ export const PDFBook = ({ book, user, history, loadHistory }: Props) => {
         }}
         onLoadError={console.error}
       >
-        <div className="relative mt-3 flex flex-col items-center justify-center border-t xl:flex-row">
+        <div className="relative flex flex-col items-center justify-center xl:flex-row">
           <Page
             noData={`Бұндай бет (${currentPage}-бет) жоқ`}
             error="Бетті жүктеуде қате туындады"
@@ -137,44 +133,44 @@ export const PDFBook = ({ book, user, history, loadHistory }: Props) => {
             onRenderSuccess={handlePageRender}
           />
           {/* {user?.canUseAI && ( */}
-            <>
-              <canvas
-                ref={canvasRef}
-                onMouseDown={handleStart}
-                onMouseMove={handleMove}
-                onMouseUp={handleEnd}
-                onTouchStart={handleStart}
-                onTouchMove={handleMove}
-                onTouchEnd={handleEnd}
+          <>
+            <canvas
+              ref={canvasRef}
+              onMouseDown={handleStart}
+              onMouseMove={handleMove}
+              onMouseUp={handleEnd}
+              onTouchStart={handleStart}
+              onTouchMove={handleMove}
+              onTouchEnd={handleEnd}
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                pointerEvents: "all",
+              }}
+            />
+            {rectangle && isValidRectangle(rectangle) && croppedImage && (
+              <Button
+                className="flex items-center gap-2"
+                disabled={isExplanationLoading}
+                size="sm"
                 style={{
                   position: "absolute",
-                  top: 0,
-                  left: 0,
-                  pointerEvents: "all",
+                  top: `${rectangle.y + rectangle.height}px`,
+                  left: `${rectangle.x}px`,
+                  zIndex: 10,
                 }}
-              />
-              {rectangle && isValidRectangle(rectangle) && croppedImage && (
-                <Button
-                  className="flex items-center gap-2"
-                  disabled={isExplanationLoading}
-                  size="sm"
-                  style={{
-                    position: "absolute",
-                    top: `${rectangle.y + rectangle.height}px`,
-                    left: `${rectangle.x}px`,
-                    zIndex: 10,
-                  }}
-                  onClick={() => handleExplanation(book.title, croppedImage)}
-                >
-                  {isExplanationLoading ? (
-                    <Icons.spinner className="h-4 w-4 animate-spin" />
-                  ) : (
-                    <Icons.explain className="h-4 w-4" />
-                  )}
-                  Мағынасы
-                </Button>
-              )}
-            </>
+                onClick={() => handleExplanation(book.title, croppedImage)}
+              >
+                {isExplanationLoading ? (
+                  <Loader2Icon className="size-4 animate-spin" />
+                ) : (
+                  <BookOpenCheckIcon className="size-4" />
+                )}
+                Мағынасы
+              </Button>
+            )}
+          </>
           {/* )} */}
         </div>
       </Document>

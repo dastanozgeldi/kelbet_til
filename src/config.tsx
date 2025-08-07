@@ -1,15 +1,15 @@
-import { Icons } from "@/components/icons";
+import { BookIcon, UsersIcon } from "lucide-react";
 
 const links = [
   {
     href: "/admin/books",
     label: "Шығармалар",
-    icon: <Icons.book width={20} height={20} />,
+    icon: <BookIcon className="size-5" />,
   },
   {
     href: "/admin/users",
     label: "Қолданушылар",
-    icon: <Icons.users width={20} height={20} />,
+    icon: <UsersIcon className="size-5" />,
   },
 ];
 

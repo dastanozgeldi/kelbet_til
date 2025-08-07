@@ -20,7 +20,7 @@ export default async function AdminLayout({
 
   if (session?.user.role !== "ADMIN") return notFound();
   return (
-    <div className="grid w-full grid-cols-[64px,1fr] md:grid-cols-[256px,1fr]">
+    <div className="grid w-full grid-cols-[64px_1fr] md:grid-cols-[256px_1fr]">
       <div className="my-6">
         <Sidebar />
       </div>
