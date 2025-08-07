@@ -31,7 +31,7 @@ export default async function RootLayout({
       <body className="antialiased">
         <EdgeStoreProvider>
           <main className="container mx-auto">
-            <nav className="flex w-full items-center justify-between border px-6 py-3">
+            <nav className="flex w-full items-center justify-between px-6 py-3">
               <Link href="/" className="flex items-center space-x-2.5">
                 <Image src="/logo.png" width={32} height={32} alt="Logo" />
                 <div className="text-xl font-bold">kelbet-til.kz</div>
