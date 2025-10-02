@@ -31,7 +31,7 @@ export default async function RootLayout({
       <GoogleAnalytics GA_TRACKING_ID={env.GA_TRACKING_ID} />
       <body className="antialiased">
         <EdgeStoreProvider>
-          <main className="container mx-auto space-y-3 px-6">
+          <main className="container mx-auto flex min-h-screen flex-col space-y-3 px-6">
             <nav className="flex w-full items-center justify-between border-b py-3">
               <Link href="/" className="flex items-center space-x-2.5">
                 <Image src="/logo.png" width={32} height={32} alt="Logo" />
@@ -44,9 +44,7 @@ export default async function RootLayout({
                 <UserButton user={session.user} />
               )}
             </nav>
-
-            {children}
-
+            <div className="flex-1">{children}</div>
             <footer className="border-t py-3 text-center">
               made with 🥰 by{" "}
               <a
