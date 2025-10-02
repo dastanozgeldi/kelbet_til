@@ -20,11 +20,8 @@ export const AddBook = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button
-          size="sm"
-          className="bg-primary hover:bg-primary/90 gap-2 text-sm"
-        >
-          <PlusIcon className="size-5" />
+        <Button size="sm">
+          <PlusIcon className="size-4" />
           Жаңа
         </Button>
       </DialogTrigger>
@@ -33,7 +30,7 @@ export const AddBook = () => {
           <DialogTitle>Жаңа шығарма</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
+          <div className="space-y-1.5">
             <Label htmlFor="title">Кітап атауы</Label>
             <Input
               id="title"
@@ -42,7 +39,7 @@ export const AddBook = () => {
               onChange={(e) => setData({ ...data, title: e.target.value })}
             />
           </div>
-          <div>
+          <div className="space-y-1.5">
             <Upload data={data} setData={setData} />
             {data.fileUrl && (
               <div className="my-3 flex items-center space-x-3">
@@ -58,7 +55,7 @@ export const AddBook = () => {
               </div>
             )}
           </div>
-          <div>
+          <div className="space-y-1.5">
             <Label htmlFor="grade">Сынып</Label>
             <select
               id="grade"
@@ -73,8 +70,8 @@ export const AddBook = () => {
               ))}
             </select>
           </div>
-          <div>
-            <label htmlFor="language">Тіл</label>
+          <div className="space-y-1.5">
+            <Label htmlFor="language">Тіл</Label>
             <select
               id="language"
               className="w-full rounded-md border bg-transparent px-3 py-2"
@@ -88,7 +85,7 @@ export const AddBook = () => {
               ))}
             </select>
           </div>
-          <div>
+          <div className="space-y-1.5">
             <Label htmlFor="term">Тоқсан</Label>
             <select
               id="term"

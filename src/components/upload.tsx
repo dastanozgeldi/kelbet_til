@@ -15,7 +15,7 @@ export const Upload = ({ data, setData }: { data: any; setData: any }) => {
   const { edgestore } = useEdgeStore();
 
   return (
-    <div>
+    <div className="space-y-1.5">
       <Label htmlFor="book-file">Шығарма</Label>
       <div className="flex items-center gap-3">
         <div className="grid w-full items-center gap-1.5">
