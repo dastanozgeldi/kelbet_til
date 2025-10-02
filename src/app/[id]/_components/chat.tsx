@@ -15,6 +15,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import {
   Conversation,
   ConversationContent,
+  ConversationScrollButton,
 } from "@/components/ai-elements/conversation";
 import { Message, MessageContent } from "@/components/ai-elements/message";
 import { Response } from "@/components/ai-elements/response";
@@ -70,6 +71,7 @@ export function Chat({
             </Message>
           ))}
         </ConversationContent>
+        <ConversationScrollButton />
       </Conversation>
 
       <form

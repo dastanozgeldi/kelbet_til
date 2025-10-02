@@ -38,7 +38,7 @@ async function SuspenseBoundary({ id }: { id: string }) {
   if (!book) notFound();
   return (
     <>
-      <PageHeader title={book.title} button={<ChatDialog book={book} />} />
+      <PageHeader title={book.title} />
       <PDFBook book={book} />
     </>
   );
