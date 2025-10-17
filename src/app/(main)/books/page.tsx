@@ -2,7 +2,7 @@ import type { Program, Language } from "@prisma/client";
 import { db } from "@/server/db";
 import Filters from "./_components/filters";
 import BookCard from "./_components/book-card";
-import { PageHeader } from "@/components/page-header";
+import { PageHeader } from "../_components/page-header";
 
 export default async function BooksPage(props: {
   searchParams?: Promise<{
