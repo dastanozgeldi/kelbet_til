@@ -46,6 +46,9 @@ export default function Filters() {
       if (grade) params.set("grade", grade);
       if (language) params.set("language", language);
       if (term) params.set("term", term);
+      
+      // Reset to page 1 when filters change
+      params.set("page", "1");
 
       replace(`${pathname}?${params.toString()}`);
     },
@@ -58,6 +61,7 @@ export default function Filters() {
     params.delete("grade");
     params.delete("language");
     params.delete("term");
+    params.delete("page");
 
     replace(pathname);
   }
