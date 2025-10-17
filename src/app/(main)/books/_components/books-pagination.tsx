@@ -72,7 +72,7 @@ export default function BooksPagination({
 
   return (
     <Pagination>
-      <PaginationContent>
+      <PaginationContent className="flex-wrap">
         <PaginationItem>
           <PaginationPrevious
             href={currentPage > 1 ? createPageURL(currentPage - 1) : "#"}
