@@ -5,7 +5,7 @@ import BookCard from "./_components/book-card";
 import { PageHeader } from "../_components/page-header";
 import BooksPagination from "./_components/books-pagination";
 
-const ITEMS_PER_PAGE = 12;
+const ITEMS_PER_PAGE = 9;
 
 export default async function BooksPage(props: {
   searchParams?: Promise<{
@@ -62,7 +62,7 @@ export default async function BooksPage(props: {
           </div>
 
           {totalPages > 1 && (
-            <div className="mt-8">
+            <div className="mt-6">
               <BooksPagination currentPage={currentPage} totalPages={totalPages} />
             </div>
           )}
