@@ -1,15 +1,13 @@
 "use client";
 
 import { useState } from "react";
-
 import { useEdgeStore } from "@/lib/edgestore";
+import { Progress } from "@/components/ui/progress";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
-import { Progress } from "./ui/progress";
-import { Label } from "./ui/label";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
-
-export const Upload = ({ data, setData }: { data: any; setData: any }) => {
+export const UploadBook = ({ data, setData }: { data: any; setData: any }) => {
   const [file, setFile] = useState<File>();
   const [uploadProgress, setUploadProgress] = useState(0);
   const { edgestore } = useEdgeStore();

@@ -2,14 +2,14 @@ import { BookIcon, UsersIcon } from "lucide-react";
 
 export const links = [
   {
-    href: "/admin/books",
-    label: "Шығармалар",
-    icon: <BookIcon className="size-5" />,
+    title: "Шығармалар",
+    url: "/admin/books",
+    icon: BookIcon,
   },
   {
-    href: "/admin/users",
-    label: "Қолданушылар",
-    icon: <UsersIcon className="size-5" />,
+    title: "Қолданушылар",
+    url: "/admin/users",
+    icon: UsersIcon,
   },
 ];
 
