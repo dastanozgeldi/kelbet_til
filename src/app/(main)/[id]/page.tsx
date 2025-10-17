@@ -3,7 +3,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { PDFBook } from "./_components/pdf-book";
 import { db } from "@/server/db";
 import { notFound } from "next/navigation";
-import { ChatDialog } from "./_components/chat-dialog";
 import { PageHeader } from "@/components/page-header";
 
 export default async function Page({
