@@ -9,13 +9,3 @@ export function cn(...inputs: ClassValue[]) {
 export function isActive(status: BookStatus) {
   return status === "ACTIVE";
 }
-
-export function isValidRectangle({
-  width,
-  height,
-}: {
-  width: number;
-  height: number;
-}) {
-  return width >= 5 && height >= 5;
-}

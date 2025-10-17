@@ -1,5 +1,3 @@
-import React from "react";
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -30,21 +28,6 @@ export const UserDropdown = ({ user }: { user: User }) => {
     toast.success("Админді өзгертуде ақаулық туындады");
   };
 
-  const toggleAI = async () => {
-    const res = await fetch("/api/ai", {
-      method: "PATCH",
-      body: JSON.stringify({ id: user.id, canUseAI: user.canUseAI }),
-    });
-
-    if (res.ok) {
-      return toast.success(
-        `ЖИ сәтті ${user.canUseAI ? "тәркіленді" : "берілді"}`,
-      );
-    }
-
-    toast.success("Құқықтарды өзгертуде ақаулық туындады");
-  };
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -57,9 +40,6 @@ export const UserDropdown = ({ user }: { user: User }) => {
         <DropdownMenuLabel>Әрекеттер</DropdownMenuLabel>
         <DropdownMenuItem onClick={toggleAdmin}>
           {isAdmin ? "Қолданушы" : "Админ"} қылу
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={toggleAI}>
-          {user.canUseAI ? "ЖИ тәркілеу" : "ЖИ беру"}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

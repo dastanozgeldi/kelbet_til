@@ -14,7 +14,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { User } from "next-auth";
 import { AlignEndHorizontalIcon, LogOutIcon } from "lucide-react";
-import { Badge } from "./ui/badge";
+import { Badge } from "@/components/ui/badge";
 
 export function UserButton({ user }: { user: User }) {
   const router = useRouter();

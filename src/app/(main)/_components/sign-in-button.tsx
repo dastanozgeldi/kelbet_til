@@ -1,5 +1,5 @@
 import { LogInIcon } from "lucide-react";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 import { signIn } from "@/server/auth";
 
 export default function SignInButton() {
