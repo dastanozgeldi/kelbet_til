@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
-import SignInButton from "@/components/sign-in-button";
-import { UserButton } from "@/components/user-button";
+import SignInButton from "./_components/sign-in-button";
+import { UserButton } from "./_components/user-button";
 import { auth } from "@/server/auth";
 
 export default async function MainLayout({

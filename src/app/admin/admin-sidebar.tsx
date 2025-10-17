@@ -1,7 +1,8 @@
 "use client";
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BookIcon, ChevronUp, LogOutIcon, UsersIcon } from "lucide-react";
+import { ChevronUp, LogOutIcon } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -25,22 +26,10 @@ import {
 import { Session } from "next-auth";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { signOut } from "next-auth/react";
+import { links } from "@/data/config";
 
 export const AdminSidebar = ({ user }: { user: Session["user"] }) => {
   const pathname = usePathname();
-
-  const items = [
-    {
-      title: "Шығармалар",
-      url: "/admin/books",
-      icon: BookIcon,
-    },
-    {
-      title: "Қолданушылар",
-      url: "/admin/users",
-      icon: UsersIcon,
-    },
-  ];
 
   return (
     <Sidebar>
@@ -67,13 +56,13 @@ export const AdminSidebar = ({ user }: { user: Session["user"] }) => {
           <SidebarGroupLabel>Басты</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {items.map((item) => (
+              {links.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild isActive={pathname === item.url}>
-                    <a href={item.url}>
-                      <item.icon />
+                    <Link href={item.url}>
+                      <item.icon className="size-5" />
                       <span>{item.title}</span>
-                    </a>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}

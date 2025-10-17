@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { PDFBook } from "./_components/pdf-book";
 import { db } from "@/server/db";
 import { notFound } from "next/navigation";
-import { PageHeader } from "@/components/page-header";
+import { PageHeader } from "../_components/page-header";
 
 export default async function Page({
   params,

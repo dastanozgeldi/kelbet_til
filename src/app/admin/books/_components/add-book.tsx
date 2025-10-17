@@ -9,7 +9,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Upload } from "@/components/upload";
+import { UploadBook } from "./upload-book";
 import { useAddBook } from "../hooks/use-add-book";
 import { filters } from "@/data/config";
 import { ExternalLinkIcon, PlusIcon } from "lucide-react";
@@ -40,7 +40,7 @@ export const AddBook = () => {
             />
           </div>
           <div className="space-y-1.5">
-            <Upload data={data} setData={setData} />
+            <UploadBook data={data} setData={setData} />
             {data.fileUrl && (
               <div className="my-3 flex items-center space-x-3">
                 <Button variant="outline" asChild>
