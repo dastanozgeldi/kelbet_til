@@ -13,16 +13,15 @@ export default async function MainLayout({
 
   return (
     <main className="container mx-auto flex min-h-screen flex-col space-y-3 px-6">
-      <nav className="flex w-full items-center justify-between border-b py-3">
+      <nav className="flex w-full items-center justify-between border-b border-border py-3">
         <Link href="/" className="flex items-center space-x-2.5">
           <Image src="/logo.png" width={32} height={32} alt="Logo" />
           <div className="text-xl font-bold">kelbet-til.kz</div>
         </Link>
-
         {!session?.user ? <SignInButton /> : <UserButton user={session.user} />}
       </nav>
       <div className="flex-1">{children}</div>
-      <footer className="border-t py-3 text-center">
+      <footer className="border-t border-border mt-3 py-3 text-center">
         made with 🥰 by{" "}
         <a
           href="https://instagram.com/dastanozgeldi"
