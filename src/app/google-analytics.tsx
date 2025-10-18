@@ -2,11 +2,11 @@
 
 import Script from "next/script";
 
-type Props = {
+export function GoogleAnalytics({
+  GA_TRACKING_ID,
+}: {
   GA_TRACKING_ID: string;
-};
-
-export const GoogleAnalytics = ({ GA_TRACKING_ID }: Props) => {
+}) {
   return (
     <>
       <Script
@@ -18,4 +18,4 @@ export const GoogleAnalytics = ({ GA_TRACKING_ID }: Props) => {
       </Script>
     </>
   );
-};
+}
