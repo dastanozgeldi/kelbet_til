@@ -10,7 +10,7 @@ export default function SignInButton() {
         await signIn("google");
       }}
     >
-      <Button type="submit" variant="outline">
+      <Button type="submit" variant="outline" size="sm">
         Кіру
         <LogInIcon className="size-4" />
       </Button>

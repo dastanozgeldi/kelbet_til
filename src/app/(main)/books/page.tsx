@@ -7,6 +7,11 @@ import BooksPagination from "./_components/books-pagination";
 import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Card, CardHeader, CardFooter } from "@/components/ui/card";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Шығармалар",
+};
 
 const ITEMS_PER_PAGE = 9;
 
