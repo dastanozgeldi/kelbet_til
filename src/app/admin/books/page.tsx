@@ -32,6 +32,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import isBookActive from "@/helpers/is-book-active";
 import { BookActions } from "./_components/book-actions";
 import { CreateBookDialog } from "./_components/create-book-dialog";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
   title: "Шығармалар",
@@ -69,6 +71,7 @@ export default async function Page(props: {
                 <TableRow>
                   <TableHead>Атауы</TableHead>
                   <TableHead>Статус</TableHead>
+                  <TableHead>Сілтеме</TableHead>
                   <TableHead className="w-[100px]">Әрекеттер</TableHead>
                 </TableRow>
               </TableHeader>
@@ -77,6 +80,9 @@ export default async function Page(props: {
                   <TableRow key={i}>
                     <TableCell>
                       <Skeleton className="h-5 w-[300px]" />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton className="h-5 w-[100px]" />
                     </TableCell>
                     <TableCell>
                       <Skeleton className="h-5 w-[100px]" />
@@ -137,6 +143,7 @@ async function SuspenseBoundary({
           <TableRow>
             <TableHead>Атауы</TableHead>
             <TableHead>Статус</TableHead>
+            <TableHead>Сілтеме</TableHead>
             <TableHead className="text-right">Әрекеттер</TableHead>
           </TableRow>
         </TableHeader>
@@ -149,6 +156,13 @@ async function SuspenseBoundary({
                   <Badge variant="outline">
                     {isBookActive(book.status) ? "Сайтта" : "Архивте"}
                   </Badge>
+                </TableCell>
+                <TableCell>
+                  <Button asChild variant="link" className="p-0">
+                    <Link href={book.fileUrl} target="_blank">
+                      {book.fileUrl.split("/").pop()}
+                    </Link>
+                  </Button>
                 </TableCell>
                 <TableCell className="flex justify-end">
                   <BookActions book={book} />
