@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["fullTextSearchPostgres"]
@@ -9,20 +6,6 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-}
-
-model Message {
-  id      String  @id @default(cuid())
-  content String
-  isAI    Boolean @default(false)
-
-  bookId String
-  book   Book   @relation(fields: [bookId], references: [id])
-  userId String
-  user   User   @relation(fields: [userId], references: [id])
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
 
 enum Program {
@@ -41,37 +24,32 @@ enum BookStatus {
 }
 
 model Book {
-  id      String     @id @default(cuid())
-  title   String
-  fileUrl String // set from uploadthing
-  status  BookStatus @default(ACTIVE)
-
-  program  Program  @default(NIS)
-  grade    String // [7, 8, 9, 10, 11, 12]
-  language Language
-  term     String // [1, 2, 3, 4]
-
-  user     User?     @relation(fields: [userId], references: [id])
-  userId   String?
-  messages Message[]
-
-  createdAt DateTime  @default(now())
-  updatedAt DateTime? @updatedAt
+  id        String     @id @default(cuid())
+  title     String
+  fileUrl   String
+  grade     String
+  language  Language
+  term      String
+  userId    String?
+  createdAt DateTime   @default(now())
+  updatedAt DateTime?  @updatedAt
+  status    BookStatus @default(ACTIVE)
+  program   Program    @default(NIS)
+  user      User?      @relation(fields: [userId], references: [id])
 }
 
-// Necessary for Next auth
 model Account {
   id                String  @id @default(cuid())
   userId            String
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String? // @db.Text
-  access_token      String? // @db.Text
+  refresh_token     String?
+  access_token      String?
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String? // @db.Text
+  id_token          String?
   session_state     String?
   user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -93,16 +71,14 @@ enum UserRole {
 
 model User {
   id            String    @id @default(cuid())
-  role          UserRole  @default(USER)
   name          String?
   email         String?   @unique
   emailVerified DateTime?
   image         String?
+  role          UserRole  @default(USER)
   accounts      Account[]
-  sessions      Session[]
   books         Book[]
-  canUseAI      Boolean   @default(false)
-  messages      Message[]
+  sessions      Session[]
 }
 
 model VerificationToken {
