@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/table";
 import { Suspense } from "react";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export const metadata: Metadata = {
   title: "Қолданушылар",
@@ -36,27 +37,35 @@ async function SuspenseBoundary() {
   });
 
   return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Аты-жөні</TableHead>
-          <TableHead>Поштасы</TableHead>
-          <TableHead>Рөл</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {users.map((user) => (
-          <TableRow key={user.id}>
-            <TableCell>{user.name}</TableCell>
-            <TableCell>{user.email}</TableCell>
-            <TableCell>
-              <Badge variant="outline">
-                {user.role === "ADMIN" ? "Админ" : "Қолданушы"}
-              </Badge>
-            </TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+    <Card className="m-6">
+      <CardHeader>
+        <CardTitle>Қолданушылар</CardTitle>
+      </CardHeader>
+
+      <CardContent>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Аты-жөні</TableHead>
+              <TableHead>Поштасы</TableHead>
+              <TableHead>Рөл</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {users.map((user) => (
+              <TableRow key={user.id}>
+                <TableCell>{user.name}</TableCell>
+                <TableCell>{user.email}</TableCell>
+                <TableCell>
+                  <Badge variant="outline">
+                    {user.role === "ADMIN" ? "Админ" : "Қолданушы"}
+                  </Badge>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </CardContent>
+    </Card>
   );
 }
