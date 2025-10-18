@@ -19,14 +19,11 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-
   return (
     <html lang="en">
       <GoogleAnalytics GA_TRACKING_ID={env.GA_TRACKING_ID} />
       <body className="antialiased">
-        <EdgeStoreProvider>
-          {children}
-        </EdgeStoreProvider>
+        <EdgeStoreProvider>{children}</EdgeStoreProvider>
         <Toaster />
       </body>
     </html>
