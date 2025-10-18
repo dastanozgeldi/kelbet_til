@@ -1,4 +1,5 @@
 "use client";
+
 import {
   Dialog,
   DialogContent,
@@ -7,16 +8,10 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { UploadBook } from "./upload-book";
-import { useAddBook } from "../hooks/use-add-book";
-import { filters } from "@/data/config";
-import { ExternalLinkIcon, PlusIcon } from "lucide-react";
+import { PlusIcon } from "lucide-react";
+import { CreateBookForm } from "./create-book-form";
 
-export const AddBook = () => {
-  const { data, setData, handleSubmit } = useAddBook();
-
+export function AddBook() {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -29,80 +24,8 @@ export const AddBook = () => {
         <DialogHeader>
           <DialogTitle>Жаңа шығарма</DialogTitle>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-1.5">
-            <Label htmlFor="title">Кітап атауы</Label>
-            <Input
-              id="title"
-              type="text"
-              placeholder="Абай жолы"
-              onChange={(e) => setData({ ...data, title: e.target.value })}
-            />
-          </div>
-          <div className="space-y-1.5">
-            <UploadBook data={data} setData={setData} />
-            {data.fileUrl && (
-              <div className="my-3 flex items-center space-x-3">
-                <Button variant="outline" asChild>
-                  <a href={data.fileUrl} target="_blank" rel="noreferrer">
-                    Көру
-                    <ExternalLinkIcon className="size-4" />
-                  </a>
-                </Button>
-                <span className="text-muted-foreground text-sm">
-                  Файл жүктелді
-                </span>
-              </div>
-            )}
-          </div>
-          <div className="space-y-1.5">
-            <Label htmlFor="grade">Сынып</Label>
-            <select
-              id="grade"
-              className="w-full rounded-md border bg-transparent px-3 py-2"
-              defaultValue={filters.grades[0]}
-              onChange={(e) => setData({ ...data, grade: e.target.value })}
-            >
-              {filters.grades.map((grade) => (
-                <option key={grade} value={grade}>
-                  {grade}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="space-y-1.5">
-            <Label htmlFor="language">Тіл</Label>
-            <select
-              id="language"
-              className="w-full rounded-md border bg-transparent px-3 py-2"
-              defaultValue="T1"
-              onChange={(e) => setData({ ...data, language: e.target.value })}
-            >
-              {filters.languages.map((language) => (
-                <option key={language} value={language}>
-                  {language}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="space-y-1.5">
-            <Label htmlFor="term">Тоқсан</Label>
-            <select
-              id="term"
-              className="w-full rounded-md border bg-transparent px-3 py-2"
-              defaultValue="1"
-              onChange={(e) => setData({ ...data, term: e.target.value })}
-            >
-              {filters.terms.map((term) => (
-                <option key={term} value={term}>
-                  {term}
-                </option>
-              ))}
-            </select>
-          </div>
-          <Button>Сақтау</Button>
-        </form>
+        <CreateBookForm />
       </DialogContent>
     </Dialog>
   );
-};
+}

@@ -39,6 +39,26 @@ export const BookActions = ({ book }: { book: Book }) => {
   const { data, setData, handleEdit } = useEditBook(book);
   const { handleDelete } = useDeleteBook(book);
 
+  const handleDownload = async () => {
+    try {
+      const response = await fetch("/api/files", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ key: book.fileUrl }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to get download URL");
+      }
+
+      const { signedUrl } = await response.json();
+      window.open(signedUrl, "_blank");
+    } catch (error) {
+      console.error("Error downloading file:", error);
+      alert("Файлды жүктеу кезінде қате пайда болды");
+    }
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -126,10 +146,8 @@ export const BookActions = ({ book }: { book: Book }) => {
         <DropdownMenuItem asChild>
           <Link href={`/${book.id}`}>Оқу</Link>
         </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <a href={book.fileUrl} download>
-            Жүктеу
-          </a>
+        <DropdownMenuItem onSelect={handleDownload}>
+          Жүктеу
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <AlertDialog>
