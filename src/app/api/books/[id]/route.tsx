@@ -1,18 +1,10 @@
 import { type Language } from "@prisma/client";
 import { db } from "@/server/db";
 
-export async function GET(request: Request, props: { params: Promise<{ id: string }> }) {
-  const params = await props.params;
-  const book = await db.book.findUnique({
-    where: {
-      id: params.id,
-    },
-  });
-
-  return Response.json({ book });
-}
-
-export async function PATCH(request: Request, props: { params: Promise<{ id: string }> }) {
+export async function PATCH(
+  request: Request,
+  props: { params: Promise<{ id: string }> },
+) {
   const params = await props.params;
   const { data } = await request.json();
 
@@ -32,7 +24,10 @@ export async function PATCH(request: Request, props: { params: Promise<{ id: str
   return Response.json({ book });
 }
 
-export async function DELETE(request: Request, props: { params: Promise<{ id: string }> }) {
+export async function DELETE(
+  request: Request,
+  props: { params: Promise<{ id: string }> },
+) {
   const params = await props.params;
   const book = await db.book.delete({
     where: {
