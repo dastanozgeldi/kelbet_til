@@ -6,7 +6,7 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | Админ",
+    template: "%s | KT Админ",
     default: "Админ",
   },
 };
@@ -17,13 +17,10 @@ export default async function AdminLayout({
   children: React.ReactNode;
 }) {
   const session = await auth();
-  const isAdmin = session?.user.role === "ADMIN";
-
-  if (!isAdmin) notFound();
+  if (session?.user.role !== "ADMIN") notFound();
   return (
     <SidebarProvider>
       <AdminSidebar user={session.user} />
-
       <div className="m-6 flex-1">
         <SidebarTrigger />
         {children}
