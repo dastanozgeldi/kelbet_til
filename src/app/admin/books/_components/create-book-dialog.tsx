@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { PlusIcon } from "lucide-react";
 import { CreateBookForm } from "./create-book-form";
 
-export function AddBook() {
+export function CreateBookDialog() {
   return (
     <Dialog>
       <DialogTrigger asChild>
