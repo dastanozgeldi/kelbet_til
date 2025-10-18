@@ -1,6 +1,6 @@
-import { isActive } from "@/lib/utils";
-import { Book } from "@prisma/client";
 import { toast } from "sonner";
+import type { Book } from "@prisma/client";
+import isBookActive from "@/helpers/is-book-active";
 
 export const useToggleBook = (book: Book) => {
   const handleToggle = async () => {
@@ -11,7 +11,7 @@ export const useToggleBook = (book: Book) => {
 
     if (res.ok) {
       return toast.success(
-        `Шығарма сәтті ${isActive(book.status) ? "архивке салынды" : "архивтен шығарылды"}`,
+        `Шығарма сәтті ${isBookActive(book.status) ? "архивке салынды" : "архивтен шығарылды"}`,
       );
     }
 
