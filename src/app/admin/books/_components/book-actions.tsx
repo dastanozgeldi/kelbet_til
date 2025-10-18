@@ -34,12 +34,9 @@ import { Input } from "@/components/ui/input";
 import { useDeleteBook } from "../hooks/use-delete-book";
 import { useEditBook } from "../hooks/use-edit-book";
 import { filters } from "@/data/config";
-import { useToggleBook } from "../hooks/use-toggle-book";
-import isBookActive from "@/helpers/is-book-active";
 
 export const BookActions = ({ book }: { book: Book }) => {
   const { data, setData, handleEdit } = useEditBook(book);
-  const { handleToggle } = useToggleBook(book);
   const { handleDelete } = useDeleteBook(book);
 
   return (
@@ -65,7 +62,7 @@ export const BookActions = ({ book }: { book: Book }) => {
               <DialogTitle>Шығарманы өзгерту</DialogTitle>
             </DialogHeader>
             <form onSubmit={handleEdit} className="space-y-4">
-              <div>
+              <div className="space-y-1.5">
                 <Label htmlFor="title">Кітап атауы</Label>
                 <Input
                   id="title"
@@ -75,7 +72,7 @@ export const BookActions = ({ book }: { book: Book }) => {
                   onChange={(e) => setData({ ...data, title: e.target.value })}
                 />
               </div>
-              <div>
+              <div className="space-y-1.5">
                 <Label htmlFor="grade">Сынып</Label>
                 <select
                   id="grade"
@@ -90,7 +87,7 @@ export const BookActions = ({ book }: { book: Book }) => {
                   ))}
                 </select>
               </div>
-              <div>
+              <div className="space-y-1.5">
                 <Label htmlFor="language">Тіл</Label>
                 <select
                   id="language"
@@ -107,7 +104,7 @@ export const BookActions = ({ book }: { book: Book }) => {
                   ))}
                 </select>
               </div>
-              <div>
+              <div className="space-y-1.5">
                 <Label htmlFor="term">Тоқсан</Label>
                 <select
                   id="term"
@@ -135,27 +132,6 @@ export const BookActions = ({ book }: { book: Book }) => {
           </a>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <AlertDialog>
-          <AlertDialogTrigger asChild>
-            <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-              {isBookActive(book.status) ? "Архивке салу" : "Архивтен шығару"}
-            </DropdownMenuItem>
-          </AlertDialogTrigger>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>Сіз сенімдісіз бе?</AlertDialogTitle>
-              <AlertDialogDescription>
-                {isBookActive(book.status)
-                  ? "Оқушылар архивтелген шығарманы қарай алмайды."
-                  : "Оқушылар архивтелген шығарманы қайта көре алады."}
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>Жоқ</AlertDialogCancel>
-              <AlertDialogAction onClick={handleToggle}>Иә</AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
