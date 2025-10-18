@@ -1,8 +1,9 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { auth } from "@/server/auth";
-import { AdminSidebar } from "./admin-sidebar";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { AdminSidebar } from "./_components/admin-sidebar";
+import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+import AdminHeader from "./_components/admin-header";
 
 export const metadata: Metadata = {
   title: {
@@ -21,10 +22,10 @@ export default async function AdminLayout({
   return (
     <SidebarProvider>
       <AdminSidebar user={session.user} />
-      <div className="m-6 flex-1">
-        <SidebarTrigger />
+      <SidebarInset>
+        <AdminHeader />
         {children}
-      </div>
+      </SidebarInset>
     </SidebarProvider>
   );
 }
