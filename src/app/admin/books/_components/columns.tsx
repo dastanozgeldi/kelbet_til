@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import type { Book } from "@prisma/client";
 import type { ColumnDef } from "@tanstack/react-table";
 import { BookActions } from "./book-actions";
-import { isActive } from "@/lib/utils";
+import isBookActive from "@/helpers/is-book-active";
 
 export const columns: ColumnDef<Book>[] = [
   {
@@ -17,7 +17,7 @@ export const columns: ColumnDef<Book>[] = [
     header: "Статус",
     cell: ({ row }) => (
       <Badge variant="outline">
-        {isActive(row.getValue("status")) ? "Сайтта" : "Архивте"}
+        {isBookActive(row.getValue("status")) ? "Сайтта" : "Архивте"}
       </Badge>
     ),
   },

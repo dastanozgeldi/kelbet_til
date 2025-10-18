@@ -1,6 +1,6 @@
-import { isActive } from "@/lib/utils";
-import { db } from "@/server/db";
 import type { BookStatus } from "@prisma/client";
+import isBookActive from "@/helpers/is-book-active";
+import { db } from "@/server/db";
 
 export async function PATCH(request: Request) {
   const { id, status: current }: { id: string; status: BookStatus } =
@@ -9,7 +9,7 @@ export async function PATCH(request: Request) {
   const book = await db.book.update({
     where: { id },
     data: {
-      status: isActive(current) ? "ARCHIVED" : "ACTIVE",
+      status: isBookActive(current) ? "ARCHIVED" : "ACTIVE",
     },
   });
 
