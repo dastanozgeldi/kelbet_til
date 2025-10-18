@@ -5,7 +5,7 @@ import type { Language } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
-const schema = z.object({
+const createBookSchema = z.object({
   title: z.string(),
   fileUrl: z.string(),
   grade: z.string(),
@@ -14,7 +14,7 @@ const schema = z.object({
 });
 
 export async function createBook(initialState: any, formData: FormData) {
-  const validatedFields = schema.safeParse({
+  const validatedFields = createBookSchema.safeParse({
     title: formData.get("title"),
     fileUrl: formData.get("fileUrl"),
     grade: formData.get("grade"),
@@ -24,7 +24,7 @@ export async function createBook(initialState: any, formData: FormData) {
 
   if (!validatedFields.success) {
     return {
-      message: validatedFields.error.flatten().formErrors.join(", "),
+      message: JSON.stringify(validatedFields.error.flatten().fieldErrors),
     };
   }
 
@@ -39,6 +39,51 @@ export async function createBook(initialState: any, formData: FormData) {
       term,
     },
   });
+
+  revalidatePath("/admin/books");
+}
+
+const editBookSchema = z.object({
+  id: z.string(),
+  title: z.string().optional(),
+  fileUrl: z.string().optional(),
+  grade: z.string().optional(),
+  language: z.string().optional(),
+  term: z.string().optional(),
+});
+
+export async function editBook(initialState: any, formData: FormData) {
+  const validatedFields = editBookSchema.safeParse({
+    id: formData.get("id"),
+    title: formData.get("title"),
+    fileUrl: formData.get("fileUrl"),
+    grade: formData.get("grade"),
+    language: formData.get("language"),
+    term: formData.get("term"),
+  });
+
+  if (!validatedFields.success) {
+    return {
+      message: JSON.stringify(validatedFields.error.flatten().fieldErrors),
+    };
+  }
+
+  const { id, title, fileUrl, grade, language, term } = validatedFields.data;
+
+  console.log("tryna update", validatedFields.data);
+
+  await db.book.update({
+    where: { id },
+    data: {
+      title,
+      fileUrl,
+      grade,
+      language: language as Language,
+      term,
+    },
+  });
+
+  console.log("updated");
 
   revalidatePath("/admin/books");
 }
