@@ -70,8 +70,6 @@ export async function editBook(initialState: any, formData: FormData) {
 
   const { id, title, fileUrl, grade, language, term } = validatedFields.data;
 
-  console.log("tryna update", validatedFields.data);
-
   await db.book.update({
     where: { id },
     data: {
@@ -83,7 +81,19 @@ export async function editBook(initialState: any, formData: FormData) {
     },
   });
 
-  console.log("updated");
-
   revalidatePath("/admin/books");
+}
+
+export async function deleteBook(bookId: string) {
+  try {
+    await db.book.delete({
+      where: { id: bookId },
+    });
+
+    revalidatePath("/admin/books");
+    return { success: true, message: "Шығарма сәтті жойылды" };
+  } catch (error) {
+    console.error("Error deleting book:", error);
+    return { success: false, message: "Шығарма жоюда ақаулық туындады" };
+  }
 }

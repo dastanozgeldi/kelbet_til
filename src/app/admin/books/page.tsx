@@ -1,6 +1,5 @@
 import { Metadata } from "next";
 import { db } from "@/server/db";
-import { AddBook } from "./_components/add-book";
 import Search from "./_components/search";
 import {
   Table,
@@ -32,6 +31,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import isBookActive from "@/helpers/is-book-active";
 import { BookActions } from "./_components/book-actions";
+import { CreateBookDialog } from "./_components/create-book-dialog";
 
 export const metadata: Metadata = {
   title: "Шығармалар",
@@ -50,11 +50,13 @@ export default async function Page(props: {
     <Card className="m-6">
       <CardHeader>
         <CardTitle>Шығармалар</CardTitle>
-        <CardDescription>Деректер базасындағы шығармаларды өңдеу және басқару</CardDescription>
+        <CardDescription>
+          Деректер базасындағы шығармаларды өңдеу және басқару
+        </CardDescription>
         <CardAction>
           <div className="flex items-center gap-3">
             <Search placeholder="Атауы бойынша іздеу..." />
-            <AddBook />
+            <CreateBookDialog />
           </div>
         </CardAction>
       </CardHeader>
