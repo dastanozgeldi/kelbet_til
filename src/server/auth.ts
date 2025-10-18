@@ -10,13 +10,11 @@ declare module "next-auth" {
     user: {
       id: string;
       role: string;
-      canUseAI: boolean;
     } & DefaultSession["user"];
   }
 
   interface User {
     role: string;
-    canUseAI: boolean;
   }
 }
 

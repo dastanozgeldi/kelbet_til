@@ -32,7 +32,7 @@ export const AdminSidebar = ({ user }: { user: Session["user"] }) => {
   const pathname = usePathname();
 
   return (
-    <Sidebar>
+    <Sidebar variant="inset">
       <SidebarHeader>
         <SidebarMenu>
           <Link href="/" className="flex items-center gap-2 p-2">
