@@ -1,6 +1,4 @@
 import { Metadata } from "next";
-import Search from "./_components/search";
-
 import { Suspense } from "react";
 import {
   Card,
@@ -10,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
+import TableSearch from "@/components/table-search";
 import { CreateBookDialog } from "./_components/create-book-dialog";
 import TableFallback from "@/components/table-fallback";
 import BooksTable from "./_components/books-table";
@@ -35,7 +33,7 @@ export default async function Page(props: {
         </CardDescription>
         <CardAction>
           <div className="flex items-center gap-3">
-            <Search placeholder="Атауы бойынша іздеу..." />
+            <TableSearch placeholder="Атауы бойынша іздеу..." />
             <CreateBookDialog />
           </div>
         </CardAction>
