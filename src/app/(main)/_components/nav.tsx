@@ -10,12 +10,8 @@ export default async function Nav() {
 
   return (
     <nav className="border-border grid w-full grid-cols-4 items-center border-b py-3">
-      <Link
-        href="/"
-        className="col-span-2 flex items-center space-x-2.5 md:col-span-1"
-      >
-        <Image src="/logo.png" width={32} height={32} alt="Logo" />
-        <div className="text-xl font-bold">kelbet-til.kz</div>
+      <Link href="/" className="col-span-2 h-9 md:col-span-1">
+        <Image src="/logo.png" width={57} height={36} alt="Logo" />
       </Link>
 
       <div className="col-span-2 hidden justify-center md:flex">
