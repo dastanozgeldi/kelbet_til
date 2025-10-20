@@ -10,6 +10,14 @@ import { editBook } from "../actions";
 import type { Book } from "@prisma/client";
 import { UploadBook } from "./upload-book";
 import { ExternalLinkIcon, FileTextIcon } from "lucide-react";
+import { fetchBookSignedUrl } from "@/helpers/fetch-book-signed-url";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const initialState = {
   message: "",
@@ -23,17 +31,7 @@ export function EditBookForm({ book }: { book: Book }) {
     if (!book.fileUrl) return;
 
     try {
-      const response = await fetch("/api/files", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ key: book.fileUrl }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to get preview URL");
-      }
-
-      const { signedUrl } = await response.json();
+      const signedUrl = await fetchBookSignedUrl(book.fileUrl);
       window.open(signedUrl, "_blank");
     } catch (error) {
       console.error("Error getting preview URL:", error);
@@ -45,17 +43,7 @@ export function EditBookForm({ book }: { book: Book }) {
     if (!newFileUrl) return;
 
     try {
-      const response = await fetch("/api/files", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ key: newFileUrl }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to get preview URL");
-      }
-
-      const { signedUrl } = await response.json();
+      const signedUrl = await fetchBookSignedUrl(newFileUrl);
       window.open(signedUrl, "_blank");
     } catch (error) {
       console.error("Error getting preview URL:", error);
@@ -66,11 +54,7 @@ export function EditBookForm({ book }: { book: Book }) {
   return (
     <form action={formAction} className="space-y-4">
       <input type="hidden" name="id" value={book.id} />
-      <input
-        type="hidden"
-        name="fileUrl"
-        value={newFileUrl || book.fileUrl}
-      />
+      <input type="hidden" name="fileUrl" value={newFileUrl || book.fileUrl} />
 
       <div className="space-y-1.5">
         <Label htmlFor="title">Кітап атауы</Label>
@@ -121,52 +105,70 @@ export function EditBookForm({ book }: { book: Book }) {
         )}
       </div>
 
-      <div className="space-y-1.5">
-        <Label htmlFor="grade">Сынып</Label>
-        <select
-          id="grade"
-          name="grade"
-          className="w-full rounded-md border bg-transparent px-3 py-2"
-          defaultValue={book.grade}
-        >
-          {filters.grades.map((grade) => (
-            <option key={grade} value={grade}>
-              {grade}
-            </option>
-          ))}
-        </select>
-      </div>
+      <div className="flex flex-wrap gap-3">
+        <div className="space-y-1.5">
+          <Label htmlFor="program">Бағдарлама</Label>
+          <Select name="program" defaultValue={book.program}>
+            <SelectTrigger>
+              <SelectValue placeholder="Бағдарламаны таңдаңыз" />
+            </SelectTrigger>
+            <SelectContent>
+              {filters.programs.map((program) => (
+                <SelectItem key={program} value={program}>
+                  {program}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
 
-      <div className="space-y-1.5">
-        <Label htmlFor="language">Тіл</Label>
-        <select
-          id="language"
-          name="language"
-          className="w-full rounded-md border bg-transparent px-3 py-2"
-          defaultValue={book.language}
-        >
-          {filters.languages.map((language) => (
-            <option key={language} value={language}>
-              {language}
-            </option>
-          ))}
-        </select>
-      </div>
+        <div className="space-y-1.5">
+          <Label htmlFor="grade">Сынып</Label>
+          <Select name="grade" defaultValue={book.grade}>
+            <SelectTrigger>
+              <SelectValue placeholder="Сыныпты таңдаңыз" />
+            </SelectTrigger>
+            <SelectContent>
+              {filters.grades.map((grade) => (
+                <SelectItem key={grade} value={grade}>
+                  {grade}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
 
-      <div className="space-y-1.5">
-        <Label htmlFor="term">Тоқсан</Label>
-        <select
-          id="term"
-          name="term"
-          className="w-full rounded-md border bg-transparent px-3 py-2"
-          defaultValue={book.term}
-        >
-          {filters.terms.map((term) => (
-            <option key={term} value={term}>
-              {term}
-            </option>
-          ))}
-        </select>
+        <div className="space-y-1.5">
+          <Label htmlFor="language">Тіл</Label>
+          <Select name="language" defaultValue={book.language}>
+            <SelectTrigger>
+              <SelectValue placeholder="Тілді таңдаңыз" />
+            </SelectTrigger>
+            <SelectContent>
+              {filters.languages.map((language) => (
+                <SelectItem key={language} value={language}>
+                  {language}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="space-y-1.5">
+          <Label htmlFor="term">Тоқсан</Label>
+          <Select name="term" defaultValue={book.term}>
+            <SelectTrigger>
+              <SelectValue placeholder="Тоқсанды таңдаңыз" />
+            </SelectTrigger>
+            <SelectContent>
+              {filters.terms.map((term) => (
+                <SelectItem key={term} value={term}>
+                  {term}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
       <p aria-live="polite">{state?.message}</p>

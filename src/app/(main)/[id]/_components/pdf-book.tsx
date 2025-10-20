@@ -8,6 +8,7 @@ import PageControls from "./page-controls";
 import { useContainerWidth } from "@/hooks/use-container-width";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useState, useEffect } from "react";
+import { fetchBookSignedUrl } from "@/helpers/fetch-book-signed-url";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
@@ -21,17 +22,7 @@ export const PDFBook = ({ book }: { book: Book }) => {
   useEffect(() => {
     const fetchSignedUrl = async () => {
       try {
-        const response = await fetch("/api/files", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ key: book.fileUrl }),
-        });
-
-        if (!response.ok) {
-          throw new Error("Failed to get file URL");
-        }
-
-        const { signedUrl } = await response.json();
+        const signedUrl = await fetchBookSignedUrl(book.fileUrl);
         setFileUrl(signedUrl);
       } catch (err) {
         console.error("Error fetching signed URL:", err);

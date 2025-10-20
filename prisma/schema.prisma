@@ -23,6 +23,12 @@ enum BookStatus {
   ARCHIVED
 }
 
+enum JournalStatus {
+  PUBLISHED
+  DRAFT
+  ARCHIVED
+}
+
 model Book {
   id        String     @id @default(cuid())
   title     String
@@ -36,6 +42,17 @@ model Book {
   status    BookStatus @default(ACTIVE)
   program   Program    @default(NIS)
   user      User?      @relation(fields: [userId], references: [id])
+}
+
+model Journal {
+  id        String        @id @default(cuid())
+  title     String
+  fileUrl   String
+  userId    String?
+  createdAt DateTime      @default(now())
+  updatedAt DateTime?     @updatedAt
+  status    JournalStatus @default(DRAFT)
+  user      User?         @relation(fields: [userId], references: [id])
 }
 
 model Account {
@@ -78,6 +95,7 @@ model User {
   role          UserRole  @default(USER)
   accounts      Account[]
   books         Book[]
+  journals      Journal[]
   sessions      Session[]
 }
 

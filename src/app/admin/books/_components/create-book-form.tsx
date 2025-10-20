@@ -9,6 +9,14 @@ import { Button } from "@/components/ui/button";
 import { useActionState } from "react";
 import { UploadBook } from "./upload-book";
 import { ExternalLinkIcon } from "lucide-react";
+import { fetchBookSignedUrl } from "@/helpers/fetch-book-signed-url";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const initialState = {
   message: "",
@@ -22,17 +30,7 @@ export function CreateBookForm() {
     if (!fileUrl) return;
 
     try {
-      const response = await fetch("/api/files", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ key: fileUrl }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to get preview URL");
-      }
-
-      const { signedUrl } = await response.json();
+      const signedUrl = await fetchBookSignedUrl(fileUrl);
       window.open(signedUrl, "_blank");
     } catch (error) {
       console.error("Error getting preview URL:", error);
@@ -60,52 +58,70 @@ export function CreateBookForm() {
         )}
       </div>
 
-      <div className="space-y-1.5">
-        <Label htmlFor="grade">Сынып</Label>
-        <select
-          id="grade"
-          name="grade"
-          className="w-full rounded-md border bg-transparent px-3 py-2"
-          defaultValue={filters.grades[0]}
-        >
-          {filters.grades.map((grade) => (
-            <option key={grade} value={grade}>
-              {grade}
-            </option>
-          ))}
-        </select>
-      </div>
+      <div className="flex flex-wrap gap-3">
+        <div className="space-y-1.5">
+          <Label htmlFor="program">Бағдарлама</Label>
+          <Select name="program" defaultValue={filters.programs[0]}>
+            <SelectTrigger>
+              <SelectValue placeholder="Бағдарламаны таңдаңыз" />
+            </SelectTrigger>
+            <SelectContent>
+              {filters.programs.map((program) => (
+                <SelectItem key={program} value={program}>
+                  {program}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
 
-      <div className="space-y-1.5">
-        <Label htmlFor="language">Тіл</Label>
-        <select
-          id="language"
-          name="language"
-          className="w-full rounded-md border bg-transparent px-3 py-2"
-          defaultValue={filters.languages[0]}
-        >
-          {filters.languages.map((language) => (
-            <option key={language} value={language}>
-              {language}
-            </option>
-          ))}
-        </select>
-      </div>
+        <div className="space-y-1.5">
+          <Label htmlFor="grade">Сынып</Label>
+          <Select name="grade" defaultValue={filters.grades[0]}>
+            <SelectTrigger>
+              <SelectValue placeholder="Сыныпты таңдаңыз" />
+            </SelectTrigger>
+            <SelectContent>
+              {filters.grades.map((grade) => (
+                <SelectItem key={grade} value={grade}>
+                  {grade}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
 
-      <div className="space-y-1.5">
-        <Label htmlFor="term">Тоқсан</Label>
-        <select
-          id="term"
-          name="term"
-          className="w-full rounded-md border bg-transparent px-3 py-2"
-          defaultValue={filters.terms[0]}
-        >
-          {filters.terms.map((term) => (
-            <option key={term} value={term}>
-              {term}
-            </option>
-          ))}
-        </select>
+        <div className="space-y-1.5">
+          <Label htmlFor="language">Тіл</Label>
+          <Select name="language" defaultValue={filters.languages[0]}>
+            <SelectTrigger>
+              <SelectValue placeholder="Тілді таңдаңыз" />
+            </SelectTrigger>
+            <SelectContent>
+              {filters.languages.map((language) => (
+                <SelectItem key={language} value={language}>
+                  {language}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="space-y-1.5">
+          <Label htmlFor="term">Тоқсан</Label>
+          <Select name="term" defaultValue={filters.terms[0]}>
+            <SelectTrigger>
+              <SelectValue placeholder="Тоқсанды таңдаңыз" />
+            </SelectTrigger>
+            <SelectContent>
+              {filters.terms.map((term) => (
+                <SelectItem key={term} value={term}>
+                  {term}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
       <p aria-live="polite">{state?.message}</p>

@@ -35,18 +35,9 @@ export const AdminSidebar = ({ user }: { user: Session["user"] }) => {
     <Sidebar variant="inset">
       <SidebarHeader>
         <SidebarMenu>
-          <Link href="/" className="flex items-center gap-2 p-2">
-            <Image
-              src="/logo.png"
-              alt="Kelbet Til Logo"
-              width={32}
-              height={32}
-              className="size-8"
-            />
-            <div className="flex items-center gap-2">
-              <span className="text-lg font-bold">Kelbet Til</span>
-              <Badge>Админ</Badge>
-            </div>
+          <Link href="/" className="flex items-center gap-3 p-2">
+            <Image src="/logo.png" width={51} height={32} alt="Logo" />
+            <Badge>Админ</Badge>
           </Link>
         </SidebarMenu>
       </SidebarHeader>

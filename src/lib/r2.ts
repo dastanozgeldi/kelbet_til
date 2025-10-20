@@ -20,7 +20,7 @@ const R2_BUCKET = "kelbet-til";
 export async function uploadFile(file: Buffer, key: string) {
   const command = new PutObjectCommand({
     Bucket: R2_BUCKET,
-    Key: `books/${key}`,
+    Key: key,
     Body: file,
   });
 
@@ -39,7 +39,7 @@ export async function getSignedUrlForUpload(
 ): Promise<string> {
   const command = new PutObjectCommand({
     Bucket: R2_BUCKET,
-    Key: `books/${key}`,
+    Key: key,
     ContentType: contentType,
   });
 
@@ -55,7 +55,7 @@ export async function getSignedUrlForUpload(
 export async function getSignedUrlForDownload(key: string): Promise<string> {
   const command = new GetObjectCommand({
     Bucket: R2_BUCKET,
-    Key: `books/${key}`,
+    Key: key,
   });
 
   try {
@@ -85,7 +85,7 @@ export async function listFiles(prefix: string = ""): Promise<FileObject[]> {
 export async function deleteFile(key: string) {
   const command = new DeleteObjectCommand({
     Bucket: R2_BUCKET,
-    Key: `books/${key}`,
+    Key: key,
   });
 
   try {

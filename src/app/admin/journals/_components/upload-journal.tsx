@@ -6,11 +6,11 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-interface UploadBookProps {
+interface UploadJournalProps {
   onFileUploaded?: (fileUrl: string) => void;
 }
 
-export const UploadBook = ({ onFileUploaded }: UploadBookProps) => {
+export const UploadJournal = ({ onFileUploaded }: UploadJournalProps) => {
   const [file, setFile] = useState<File | null>(null);
   const [fileUrl, setFileUrl] = useState("");
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -78,7 +78,7 @@ export const UploadBook = ({ onFileUploaded }: UploadBookProps) => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          directory: "books",
+          directory: "journals",
           fileName: file.name,
           fileType: file.type,
         }),
@@ -133,11 +133,11 @@ export const UploadBook = ({ onFileUploaded }: UploadBookProps) => {
 
   return (
     <div className="space-y-1.5">
-      <Label htmlFor="book-file">Шығарма</Label>
+      <Label htmlFor="journal-file">Журнал</Label>
       <div className="flex items-center gap-3">
         <div className="grid w-full items-center gap-1.5">
           <Input
-            id="book-file"
+            id="journal-file"
             type="file"
             accept=".pdf"
             disabled={isUploading}
