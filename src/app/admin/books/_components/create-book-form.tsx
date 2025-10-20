@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { filters } from "@/data/config";
+import { filters } from "@/config";
 import { createBook } from "../actions";
 import { Button } from "@/components/ui/button";
 import { useActionState } from "react";
