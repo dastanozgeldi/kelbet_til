@@ -9,8 +9,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import TableFallback from "@/components/table-fallback";
+import TableSearch from "@/components/table-search";
 import { UsersTable } from "./_components/users-table";
-import Search from "./_components/search";
 
 export const metadata: Metadata = {
   title: "Қолданушылар",
@@ -31,7 +31,7 @@ export default async function Page(props: {
           Деректер базасындағы қолданушыларды басқару
         </CardDescription>
         <CardAction>
-          <Search placeholder="Аты-жөні немесе поштасы бойынша іздеу..." />
+          <TableSearch placeholder="Аты-жөні немесе поштасы бойынша іздеу..." />
         </CardAction>
       </CardHeader>
       <CardContent>
