@@ -27,6 +27,7 @@ export default async function BooksPage(props: {
       <PageHeader title="Шығармалар" />
       <Filters />
       <Suspense
+        key={JSON.stringify(searchParams)}
         fallback={
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
             {Array.from({ length: 9 }).map((_, i) => (
