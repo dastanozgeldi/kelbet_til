@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Toaster } from "@/components/ui/sonner";
-import { env } from "@/data/env/server";
+import { env } from "@/env";
 import { GoogleAnalytics } from "./google-analytics";
 import "./globals.css";
 

@@ -12,7 +12,7 @@ import {
   BreadcrumbPage,
 } from "@/components/ui/breadcrumb";
 import { Fragment } from "react";
-import { links } from "@/data/config";
+import { links } from "@/config";
 
 export default function AdminHeader() {
   const pathname = usePathname();

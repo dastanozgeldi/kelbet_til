@@ -26,7 +26,7 @@ import {
 import { Session } from "next-auth";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { signOut } from "next-auth/react";
-import { links } from "@/data/config";
+import { links } from "@/config";
 
 export const AdminSidebar = ({ user }: { user: Session["user"] }) => {
   const pathname = usePathname();

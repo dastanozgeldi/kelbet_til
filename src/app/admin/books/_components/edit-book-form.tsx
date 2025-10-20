@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { filters } from "@/data/config";
+import { filters } from "@/config";
 import { useActionState } from "react";
 import { editBook } from "../actions";
 import type { Book } from "@prisma/client";
