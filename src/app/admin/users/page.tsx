@@ -1,27 +1,45 @@
 import { Metadata } from "next";
 import { Suspense } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import TableFallback from "@/components/table-fallback";
 import { UsersTable } from "./_components/users-table";
+import Search from "./_components/search";
 
 export const metadata: Metadata = {
   title: "Қолданушылар",
 };
 
 export default async function Page(props: {
-  searchParams?: Promise<{ page?: string }>;
+  searchParams?: Promise<{ query?: string; page?: string }>;
 }) {
   const searchParams = await props.searchParams;
+  const query = searchParams?.query;
   const currentPage = Number(searchParams?.page) || 1;
 
   return (
     <Card className="m-6">
       <CardHeader>
         <CardTitle>Қолданушылар</CardTitle>
+        <CardDescription>
+          Деректер базасындағы қолданушыларды басқару
+        </CardDescription>
+        <CardAction>
+          <Search placeholder="Аты-жөні немесе поштасы бойынша іздеу..." />
+        </CardAction>
       </CardHeader>
       <CardContent>
-        <Suspense fallback={<TableFallback columns={3} />}>
-          <UsersTable currentPage={currentPage} />
+        <Suspense
+          key={(query ?? "") + currentPage}
+          fallback={<TableFallback columns={3} />}
+        >
+          <UsersTable currentPage={currentPage} query={query} />
         </Suspense>
       </CardContent>
     </Card>
