@@ -1,6 +1,7 @@
 "use server";
 
 import { db } from "@/server/db";
+import { JournalStatus } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
@@ -40,6 +41,7 @@ const editJournalSchema = z.object({
   id: z.string(),
   title: z.string().optional(),
   fileUrl: z.string().optional(),
+  status: z.enum(JournalStatus).optional(),
 });
 
 export async function editJournal(initialState: any, formData: FormData) {
@@ -47,6 +49,7 @@ export async function editJournal(initialState: any, formData: FormData) {
     id: formData.get("id"),
     title: formData.get("title"),
     fileUrl: formData.get("fileUrl"),
+    status: formData.get("status"),
   });
 
   if (!validatedFields.success) {
@@ -55,13 +58,14 @@ export async function editJournal(initialState: any, formData: FormData) {
     };
   }
 
-  const { id, title, fileUrl } = validatedFields.data;
+  const { id, title, fileUrl, status } = validatedFields.data;
 
   await db.journal.update({
     where: { id },
     data: {
       title,
       fileUrl,
+      status,
     },
   });
 
