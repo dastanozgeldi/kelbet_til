@@ -1,5 +1,3 @@
-import { Metadata } from "next";
-import { db } from "@/server/db";
 import {
   Table,
   TableBody,
@@ -8,9 +6,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Suspense } from "react";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Pagination,
   PaginationContent,
@@ -20,76 +15,82 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import TableFallback from "@/components/table-fallback";
-
-export const metadata: Metadata = {
-  title: "Қолданушылар",
-};
+import { Badge } from "@/components/ui/badge";
+import isBookActive from "@/helpers/is-book-active";
+import { db } from "@/server/db";
+import { BookActions } from "./book-actions";
 
 const ITEMS_PER_PAGE = 10;
 
-export default async function Page(props: {
-  searchParams?: Promise<{ page?: string }>;
+export default async function BooksTable({
+  currentPage,
+  query,
+}: {
+  currentPage: number;
+  query?: string;
 }) {
-  const searchParams = await props.searchParams;
-  const currentPage = Number(searchParams?.page) || 1;
-
-  return (
-    <Card className="m-6">
-      <CardHeader>
-        <CardTitle>Қолданушылар</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <Suspense fallback={<TableFallback columns={3} />}>
-          <SuspenseBoundary currentPage={currentPage} />
-        </Suspense>
-      </CardContent>
-    </Card>
-  );
-}
-
-async function SuspenseBoundary({ currentPage }: { currentPage: number }) {
   const skip = (currentPage - 1) * ITEMS_PER_PAGE;
 
-  const [users, totalUsers] = await Promise.all([
-    db.user.findMany({
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        role: true,
-      },
-      orderBy: { role: "desc" },
+  const whereClause = query
+    ? { title: { search: query.trim().replace(/\s+/g, " & ") } }
+    : {};
+
+  const [books, totalBooks] = await Promise.all([
+    db.book.findMany({
+      where: whereClause,
+      orderBy: { createdAt: "desc" },
       skip,
       take: ITEMS_PER_PAGE,
     }),
-    db.user.count(),
+    db.book.count({ where: whereClause }),
   ]);
 
-  const totalPages = Math.ceil(totalUsers / ITEMS_PER_PAGE);
+  const totalPages = Math.ceil(totalBooks / ITEMS_PER_PAGE);
+
+  // Build query params for pagination links
+  const buildHref = (page: number) => {
+    const params = new URLSearchParams();
+    if (query) params.set("query", query);
+    params.set("page", page.toString());
+    return `/admin/books?${params.toString()}`;
+  };
 
   return (
     <>
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Аты-жөні</TableHead>
-            <TableHead>Поштасы</TableHead>
-            <TableHead>Рөл</TableHead>
+            <TableHead>Атауы</TableHead>
+            <TableHead className="w-[100px]">Статус</TableHead>
+            <TableHead className="w-[200px] text-right">Жүктелді</TableHead>
+            <TableHead className="w-[100px] text-right">Әрекеттер</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {users.map((user) => (
-            <TableRow key={user.id}>
-              <TableCell>{user.name}</TableCell>
-              <TableCell>{user.email}</TableCell>
-              <TableCell>
-                <Badge variant="outline">
-                  {user.role === "ADMIN" ? "Админ" : "Қолданушы"}
-                </Badge>
+          {books.length > 0 ? (
+            books.map((book) => (
+              <TableRow key={book.id}>
+                <TableCell>{book.title}</TableCell>
+                <TableCell>
+                  <Badge variant="outline">
+                    {isBookActive(book.status) ? "Сайтта" : "Архивте"}
+                  </Badge>
+                </TableCell>
+                <TableCell className="text-right">
+                  {book.createdAt.toLocaleString("ru-RU")}
+                </TableCell>
+                <TableCell className="flex justify-end">
+                  <BookActions book={book} />
+                </TableCell>
+              </TableRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={4} className="h-16 text-center">
+                {query ? "Шығарма табылмады." : "Шығарма жоқ."}
               </TableCell>
             </TableRow>
-          ))}
+          )}
         </TableBody>
       </Table>
 
@@ -98,7 +99,7 @@ async function SuspenseBoundary({ currentPage }: { currentPage: number }) {
           <PaginationContent>
             <PaginationItem>
               <PaginationPrevious
-                href={`/admin/users?page=${currentPage - 1}`}
+                href={buildHref(currentPage - 1)}
                 aria-disabled={currentPage === 1}
                 className={
                   currentPage === 1 ? "pointer-events-none opacity-50" : ""
@@ -116,7 +117,7 @@ async function SuspenseBoundary({ currentPage }: { currentPage: number }) {
                 return (
                   <PaginationItem key={page}>
                     <PaginationLink
-                      href={`/admin/users?page=${page}`}
+                      href={buildHref(page)}
                       isActive={currentPage === page}
                     >
                       {page}
@@ -135,7 +136,7 @@ async function SuspenseBoundary({ currentPage }: { currentPage: number }) {
 
             <PaginationItem>
               <PaginationNext
-                href={`/admin/users?page=${currentPage + 1}`}
+                href={buildHref(currentPage + 1)}
                 aria-disabled={currentPage === totalPages}
                 className={
                   currentPage === totalPages
