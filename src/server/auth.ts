@@ -22,7 +22,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [
     Google({
       profile(profile) {
-        console.log("here i got the profile data", profile);
         return { role: profile.role ?? "user", ...profile };
       },
       clientId: env.GOOGLE_CLIENT_ID,
