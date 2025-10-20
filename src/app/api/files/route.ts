@@ -14,12 +14,6 @@ export async function POST(request: NextRequest) {
   const { key } = await request.json();
 
   try {
-    // Check if the URL is from EdgeStore - if so, return it directly
-    if (key && key.includes("edgestore.dev")) {
-      return NextResponse.json({ signedUrl: key });
-    }
-
-    // Otherwise, get signed URL from Cloudflare R2
     const signedUrl = await getSignedUrlForDownload(key);
     return NextResponse.json({ signedUrl });
   } catch (error) {
