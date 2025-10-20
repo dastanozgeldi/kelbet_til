@@ -14,7 +14,7 @@ const initialState = {
   message: "",
 };
 
-export function CreateJournalForm() {
+export function CreateJournalForm({ userId }: { userId: string }) {
   const [state, formAction, pending] = useActionState(
     createJournal,
     initialState,
@@ -35,6 +35,8 @@ export function CreateJournalForm() {
 
   return (
     <form action={formAction} className="space-y-4">
+      <input type="hidden" name="userId" value={userId} />
+
       <div className="space-y-1.5">
         <Label htmlFor="title">Журнал атауы</Label>
         <Input id="title" name="title" placeholder="Абай жолы" required />

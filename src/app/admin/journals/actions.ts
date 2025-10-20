@@ -5,12 +5,14 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
 const createJournalSchema = z.object({
+  userId: z.string(),
   title: z.string(),
   fileUrl: z.string(),
 });
 
 export async function createJournal(initialState: any, formData: FormData) {
   const validatedFields = createJournalSchema.safeParse({
+    userId: formData.get("userId"),
     title: formData.get("title"),
     fileUrl: formData.get("fileUrl"),
   });
@@ -21,10 +23,11 @@ export async function createJournal(initialState: any, formData: FormData) {
     };
   }
 
-  const { title, fileUrl } = validatedFields.data;
+  const { userId, title, fileUrl } = validatedFields.data;
 
   await db.journal.create({
     data: {
+      userId,
       title,
       fileUrl,
     },

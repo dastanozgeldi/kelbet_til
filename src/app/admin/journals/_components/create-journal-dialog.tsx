@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { PlusIcon } from "lucide-react";
 import { CreateJournalForm } from "./create-journal-form";
 
-export function CreateJournalDialog() {
+export function CreateJournalDialog({ userId }: { userId: string }) {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -24,7 +24,7 @@ export function CreateJournalDialog() {
         <DialogHeader>
           <DialogTitle>Жаңа журнал</DialogTitle>
         </DialogHeader>
-        <CreateJournalForm />
+        <CreateJournalForm userId={userId} />
       </DialogContent>
     </Dialog>
   );
