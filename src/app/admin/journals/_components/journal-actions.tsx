@@ -19,7 +19,7 @@ export const JournalActions = ({ journal }: { journal: Journal }) => {
   return (
     <div className="flex items-center">
       <Button asChild variant="ghost" size="icon" className="h-8 w-8 p-0">
-        <Link href={`/${journal.id}`}>
+        <Link href={`/journals/${journal.id}`}>
           <EyeIcon />
         </Link>
       </Button>

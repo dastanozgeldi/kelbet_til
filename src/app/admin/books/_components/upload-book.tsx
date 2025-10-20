@@ -41,7 +41,11 @@ export const UploadBook = ({ onFileUploaded }: UploadBookProps) => {
         if (xhr.status === 200 || xhr.status === 204) {
           resolve();
         } else {
-          reject(new Error(`Upload failed with status ${xhr.status}: ${xhr.responseText}`));
+          reject(
+            new Error(
+              `Upload failed with status ${xhr.status}: ${xhr.responseText}`,
+            ),
+          );
         }
       };
 
@@ -73,7 +77,11 @@ export const UploadBook = ({ onFileUploaded }: UploadBookProps) => {
       const response = await fetch("/api/upload", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ fileName: file.name, fileType: file.type }),
+        body: JSON.stringify({
+          directory: "books",
+          fileName: file.name,
+          fileType: file.type,
+        }),
       });
 
       console.log("Response status:", response.status);
@@ -105,7 +113,9 @@ export const UploadBook = ({ onFileUploaded }: UploadBookProps) => {
         console.log("Upload cancelled by user");
       } else {
         console.error("Error uploading file:", error);
-        alert(`Файлды жүктеу кезінде қате пайда болды: ${error instanceof Error ? error.message : 'Unknown error'}`);
+        alert(
+          `Файлды жүктеу кезінде қате пайда болды: ${error instanceof Error ? error.message : "Unknown error"}`,
+        );
       }
       setFileUrl("");
     } finally {

@@ -77,7 +77,11 @@ export const UploadJournal = ({ onFileUploaded }: UploadJournalProps) => {
       const response = await fetch("/api/upload", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ fileName: file.name, fileType: file.type }),
+        body: JSON.stringify({
+          directory: "journals",
+          fileName: file.name,
+          fileType: file.type,
+        }),
       });
 
       console.log("Response status:", response.status);
