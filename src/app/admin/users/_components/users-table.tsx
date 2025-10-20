@@ -20,11 +20,27 @@ import {
 
 const ITEMS_PER_PAGE = 10;
 
-export async function UsersTable({ currentPage }: { currentPage: number }) {
+export async function UsersTable({
+  currentPage,
+  query,
+}: {
+  currentPage: number;
+  query?: string;
+}) {
   const skip = (currentPage - 1) * ITEMS_PER_PAGE;
+
+  const whereClause = query
+    ? {
+        OR: [
+          { name: { contains: query, mode: "insensitive" as const } },
+          { email: { contains: query, mode: "insensitive" as const } },
+        ],
+      }
+    : {};
 
   const [users, totalUsers] = await Promise.all([
     db.user.findMany({
+      where: whereClause,
       select: {
         id: true,
         name: true,
@@ -35,10 +51,18 @@ export async function UsersTable({ currentPage }: { currentPage: number }) {
       skip,
       take: ITEMS_PER_PAGE,
     }),
-    db.user.count(),
+    db.user.count({ where: whereClause }),
   ]);
 
   const totalPages = Math.ceil(totalUsers / ITEMS_PER_PAGE);
+
+  // Build query params for pagination links
+  const buildHref = (page: number) => {
+    const params = new URLSearchParams();
+    if (query) params.set("query", query);
+    params.set("page", page.toString());
+    return `/admin/users?${params.toString()}`;
+  };
 
   return (
     <>
@@ -66,7 +90,7 @@ export async function UsersTable({ currentPage }: { currentPage: number }) {
           ) : (
             <TableRow>
               <TableCell colSpan={3} className="h-16 text-center">
-                Қолданушы жоқ.
+                {query ? "Қолданушы табылмады." : "Қолданушы жоқ."}
               </TableCell>
             </TableRow>
           )}
@@ -78,7 +102,7 @@ export async function UsersTable({ currentPage }: { currentPage: number }) {
           <PaginationContent>
             <PaginationItem>
               <PaginationPrevious
-                href={`/admin/users?page=${currentPage - 1}`}
+                href={buildHref(currentPage - 1)}
                 aria-disabled={currentPage === 1}
                 className={
                   currentPage === 1 ? "pointer-events-none opacity-50" : ""
@@ -96,7 +120,7 @@ export async function UsersTable({ currentPage }: { currentPage: number }) {
                 return (
                   <PaginationItem key={page}>
                     <PaginationLink
-                      href={`/admin/users?page=${page}`}
+                      href={buildHref(page)}
                       isActive={currentPage === page}
                     >
                       {page}
@@ -115,7 +139,7 @@ export async function UsersTable({ currentPage }: { currentPage: number }) {
 
             <PaginationItem>
               <PaginationNext
-                href={`/admin/users?page=${currentPage + 1}`}
+                href={buildHref(currentPage + 1)}
                 aria-disabled={currentPage === totalPages}
                 className={
                   currentPage === totalPages
