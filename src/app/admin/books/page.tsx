@@ -71,7 +71,7 @@ export default async function Page(props: {
                 <TableRow>
                   <TableHead>Атауы</TableHead>
                   <TableHead>Статус</TableHead>
-                  <TableHead>Сілтеме</TableHead>
+                  <TableHead>Жүктелді</TableHead>
                   <TableHead className="w-[100px]">Әрекеттер</TableHead>
                 </TableRow>
               </TableHeader>
@@ -143,7 +143,7 @@ async function SuspenseBoundary({
           <TableRow>
             <TableHead>Атауы</TableHead>
             <TableHead>Статус</TableHead>
-            <TableHead>Сілтеме</TableHead>
+            <TableHead>Жүктелді</TableHead>
             <TableHead className="text-right">Әрекеттер</TableHead>
           </TableRow>
         </TableHeader>
@@ -157,13 +157,7 @@ async function SuspenseBoundary({
                     {isBookActive(book.status) ? "Сайтта" : "Архивте"}
                   </Badge>
                 </TableCell>
-                <TableCell>
-                  <Button asChild variant="link" className="p-0">
-                    <Link href={book.fileUrl} target="_blank">
-                      {book.fileUrl.split("/").pop()}
-                    </Link>
-                  </Button>
-                </TableCell>
+                <TableCell>{book.createdAt.toLocaleString("ru-RU")}</TableCell>
                 <TableCell className="flex justify-end">
                   <BookActions book={book} />
                 </TableCell>
@@ -171,7 +165,7 @@ async function SuspenseBoundary({
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan={3} className="h-24 text-center">
+              <TableCell colSpan={5} className="h-24 text-center">
                 {query ? "Шығарма табылмады." : "Шығарма жоқ."}
               </TableCell>
             </TableRow>
