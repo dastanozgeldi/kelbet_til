@@ -4,6 +4,13 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useActionState } from "react";
 import { editJournal } from "../actions";
 import type { Journal } from "@prisma/client";
@@ -64,6 +71,20 @@ export function EditJournalForm({ journal }: { journal: Journal }) {
           placeholder="Абай жолы"
           required
         />
+      </div>
+
+      <div className="space-y-1.5">
+        <Label htmlFor="status">Статус</Label>
+        <Select name="status" defaultValue={journal.status}>
+          <SelectTrigger>
+            <SelectValue placeholder="Статусты таңдаңыз" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="PUBLISHED">Публикация</SelectItem>
+            <SelectItem value="DRAFT">Черновик</SelectItem>
+            <SelectItem value="ARCHIVED">Архив</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
 
       <div className="space-y-1.5">
