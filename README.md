@@ -1,12 +1,12 @@
 # TODO (Admin Rewrite Sprint)
 
-- [ ] replace api endpoints with server actions
+- [x] replace api endpoints with server actions
 
 # TODO (My Books Page)
 
 - [ ] my books page
 - [ ] save progress button at /[id] that saves current book progress to my books table
-- [ ] edgestore -> cloudflare r2
+- [x] edgestore -> cloudflare r2
 
 # TODO (Next.js 15 Sprint)
 
