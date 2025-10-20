@@ -1,13 +1,14 @@
 "use server";
 
 import { db } from "@/server/db";
-import type { Language } from "@prisma/client";
+import type { Language, Program } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
 const createBookSchema = z.object({
   title: z.string(),
   fileUrl: z.string(),
+  program: z.string(),
   grade: z.string(),
   language: z.string(),
   term: z.string(),
@@ -17,6 +18,7 @@ export async function createBook(initialState: any, formData: FormData) {
   const validatedFields = createBookSchema.safeParse({
     title: formData.get("title"),
     fileUrl: formData.get("fileUrl"),
+    program: formData.get("program"),
     grade: formData.get("grade"),
     language: formData.get("language"),
     term: formData.get("term"),
@@ -28,12 +30,13 @@ export async function createBook(initialState: any, formData: FormData) {
     };
   }
 
-  const { title, fileUrl, grade, language, term } = validatedFields.data;
+  const { title, fileUrl, program, grade, language, term } = validatedFields.data;
 
   await db.book.create({
     data: {
       title,
       fileUrl,
+      program: program as Program,
       grade,
       language: language as Language,
       term,
@@ -47,6 +50,7 @@ const editBookSchema = z.object({
   id: z.string(),
   title: z.string().optional(),
   fileUrl: z.string().optional(),
+  program: z.string().optional(),
   grade: z.string().optional(),
   language: z.string().optional(),
   term: z.string().optional(),
@@ -57,6 +61,7 @@ export async function editBook(initialState: any, formData: FormData) {
     id: formData.get("id"),
     title: formData.get("title"),
     fileUrl: formData.get("fileUrl"),
+    program: formData.get("program"),
     grade: formData.get("grade"),
     language: formData.get("language"),
     term: formData.get("term"),
@@ -68,13 +73,14 @@ export async function editBook(initialState: any, formData: FormData) {
     };
   }
 
-  const { id, title, fileUrl, grade, language, term } = validatedFields.data;
+  const { id, title, fileUrl, program, grade, language, term } = validatedFields.data;
 
   await db.book.update({
     where: { id },
     data: {
       title,
       fileUrl,
+      program: program as Program,
       grade,
       language: language as Language,
       term,

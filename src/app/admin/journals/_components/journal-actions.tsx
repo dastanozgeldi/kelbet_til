@@ -9,17 +9,17 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { type Book } from "@prisma/client";
+import { type Journal } from "@prisma/client";
 import Link from "next/link";
-import { EditBookDialog } from "./edit-book-dialog";
-import { DeleteBookDialog } from "./delete-book-dialog";
-import { fetchBookSignedUrl } from "@/helpers/fetch-book-signed-url";
+import { EditJournalDialog } from "./edit-journal-dialog";
+import { DeleteJournalDialog } from "./delete-journal-dialog";
+import { fetchJournalSignedUrl } from "@/helpers/fetch-journal-signed-url";
 
-export const BookActions = ({ book }: { book: Book }) => {
+export const JournalActions = ({ journal }: { journal: Journal }) => {
   return (
     <div className="flex items-center">
       <Button asChild variant="ghost" size="icon" className="h-8 w-8 p-0">
-        <Link href={`/${book.id}`}>
+        <Link href={`/journals/${journal.id}`}>
           <EyeIcon />
         </Link>
       </Button>
@@ -35,11 +35,11 @@ export const BookActions = ({ book }: { book: Book }) => {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <EditBookDialog book={book} />
+          <EditJournalDialog journal={journal} />
           <DropdownMenuItem
             onSelect={async () => {
               try {
-                const signedUrl = await fetchBookSignedUrl(book.fileUrl);
+                const signedUrl = await fetchJournalSignedUrl(journal.fileUrl);
                 window.open(signedUrl, "_blank");
               } catch (error) {
                 console.error("Error downloading file:", error);
@@ -50,7 +50,7 @@ export const BookActions = ({ book }: { book: Book }) => {
             Жүктеу
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DeleteBookDialog id={book.id} />
+          <DeleteJournalDialog id={journal.id} />
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

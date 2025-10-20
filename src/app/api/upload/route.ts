@@ -2,10 +2,12 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSignedUrlForUpload } from "@/lib/r2";
 
 export async function POST(request: NextRequest) {
-  const { fileName, fileType } = await request.json();
+  const { directory, fileName, fileType } = await request.json();
+
+  const key = `${directory}/${fileName}`;
 
   try {
-    const signedUrl = await getSignedUrlForUpload(fileName, fileType);
+    const signedUrl = await getSignedUrlForUpload(key, fileType);
     return NextResponse.json({ signedUrl });
   } catch (error) {
     return NextResponse.json(
