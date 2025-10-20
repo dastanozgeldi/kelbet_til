@@ -10,25 +10,35 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 
+const links = [
+  // {
+  //   label: "Kelbet-Til Журналы",
+  //   href: "/journals",
+  // },
+  {
+    label: "Шығармалар",
+    href: "/books",
+  },
+  // {
+  //   label: "Мақалалар",
+  //   href: "/articles",
+  // },
+];
+
 export function NavMenu() {
   return (
     <NavigationMenu>
       <NavigationMenuList className="flex-wrap">
-        <NavigationMenuItem>
-          <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-            <Link href="/journals">Kelbet-Til Журналы</Link>
-          </NavigationMenuLink>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-            <Link href="/books">Шығармалар</Link>
-          </NavigationMenuLink>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-            <Link href="/articles">Мақалалар</Link>
-          </NavigationMenuLink>
-        </NavigationMenuItem>
+        {links.map((link) => (
+          <NavigationMenuItem key={link.href}>
+            <NavigationMenuLink
+              asChild
+              className={navigationMenuTriggerStyle()}
+            >
+              <Link href={link.href}>{link.label}</Link>
+            </NavigationMenuLink>
+          </NavigationMenuItem>
+        ))}
       </NavigationMenuList>
     </NavigationMenu>
   );
