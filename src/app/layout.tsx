@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Toaster } from "@/components/ui/sonner";
-import { EdgeStoreProvider } from "@/lib/edgestore";
 import { env } from "@/data/env/server";
 import { GoogleAnalytics } from "./google-analytics";
 import "./globals.css";
@@ -23,7 +22,7 @@ export default async function RootLayout({
     <html lang="en">
       <GoogleAnalytics GA_TRACKING_ID={env.GA_TRACKING_ID} />
       <body className="antialiased">
-        <EdgeStoreProvider>{children}</EdgeStoreProvider>
+        {children}
         <Toaster />
       </body>
     </html>
