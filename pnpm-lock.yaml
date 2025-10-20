@@ -21,12 +21,6 @@ importers:
       '@aws-sdk/s3-request-presigner':
         specifier: ^3.913.0
         version: 3.913.0
-      '@edgestore/react':
-        specifier: ^0.1.4
-        version: 0.1.7(next@15.3.5(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(zod@4.0.15)
-      '@edgestore/server':
-        specifier: ^0.1.4
-        version: 0.1.7(@aws-sdk/client-s3@3.913.0)(@aws-sdk/s3-request-presigner@3.913.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(zod@4.0.15)
       '@prisma/client':
         specifier: ^6.11.1
         version: 6.11.1(prisma@6.11.1(typescript@5.8.3))(typescript@5.8.3)
@@ -395,41 +389,6 @@ packages:
   '@cspotcode/source-map-support@0.8.1':
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
     engines: {node: '>=12'}
-
-  '@edgestore/react@0.1.7':
-    resolution: {integrity: sha512-NaoS9VwzIDhYi47NQoOx4DllsXMcL5c+yl5JHs8JqxT3tEmVPKyj7z0reRGN5XIf7yxRIAPrwwiZ0PovWNo2rA==}
-    peerDependencies:
-      next: '*'
-      react: '>=16.8.0'
-      react-dom: '>=16.8.0'
-      zod: '>=3.0.0'
-
-  '@edgestore/server@0.1.7':
-    resolution: {integrity: sha512-/iIB8nRPgdhDlQCloZD7zseklbMvwedm4zsjbORv7LJs8LAM64xdtdd2PefSWbrKY1jOrtG6W8UFpW4s6QbE1w==}
-    peerDependencies:
-      '@aws-sdk/client-s3': '>=3.0.0'
-      '@aws-sdk/s3-request-presigner': '>=3.0.0'
-      '@azure/storage-blob': ^12.17.0
-      zod: '>=3.0.0'
-    peerDependenciesMeta:
-      '@aws-sdk/client-s3':
-        optional: true
-      '@aws-sdk/s3-request-presigner':
-        optional: true
-      '@azure/storage-blob':
-        optional: true
-      zod:
-        optional: true
-
-  '@edgestore/shared@0.1.7':
-    resolution: {integrity: sha512-4GQjy+Bgq0iQXSYPVGg7Z4cUBik4XSDxuLCsAGzXUi6n7GAqlpIOQbK0cU4Vta4Zh73ci1oIlt4Lx0VcyalArQ==}
-    peerDependencies:
-      react: '>=16.8.0'
-      react-dom: '>=16.8.0'
-      zod: '>=3.0.0'
-    peerDependenciesMeta:
-      zod:
-        optional: true
 
   '@emnapi/core@1.4.3':
     resolution: {integrity: sha512-4m62DuCE07lw01soJwPiBGC0nAww0Q+RY70VZ+n49yDIO13yyinhbWCeNnaob0lakDtWQzSdtNWzJeOJt2ma+g==}
@@ -2283,10 +2242,6 @@ packages:
   concat-map@0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
 
-  cookie@0.5.0:
-    resolution: {integrity: sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==}
-    engines: {node: '>= 0.6'}
-
   cookie@1.0.2:
     resolution: {integrity: sha512-9Kr/j4O16ISv8zBBhJoi4bXOYNTkFLOqSL3UDB0njXxCXNezjeyVrJyGOWtgfs/q2km1gwBcfH8q1yEGoMYunA==}
     engines: {node: '>=18'}
@@ -2832,9 +2787,6 @@ packages:
   jiti@2.6.1:
     resolution: {integrity: sha512-ekilCSN1jwRvIbgeg/57YFh8qQDNbwDb9xT/qu2DAHbFFZUicIl4ygVaAvzveMhMVr3LnpSKTNnwt8PoOfmKhQ==}
     hasBin: true
-
-  jose@4.15.9:
-    resolution: {integrity: sha512-1vUQX+IdDMVPj4k8kOxgUqlcK518yluMuGZwqlr44FS1ppZB/5GWh4rZG89erpOBOJjU/OBsnCVFfapsRz6nEA==}
 
   jose@6.0.11:
     resolution: {integrity: sha512-QxG7EaliDARm1O1S8BGakqncGT9s25bKL1WSf6/oa17Tkqwi8D2ZNglqCF+DsYF88/rV66Q/Q2mFAy697E1DUg==}
@@ -3663,10 +3615,6 @@ packages:
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
-  uuid@9.0.1:
-    resolution: {integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==}
-    hasBin: true
-
   v8-compile-cache-lib@3.0.1:
     resolution: {integrity: sha512-wa7YjyUGfNZngI/vtK0UHAN+lgDCxBPCylVXGp0zu59Fz5aiGtNXaq3DhIov063MorB+VfufLh3JlF2KdTK3xg==}
 
@@ -4284,44 +4232,6 @@ snapshots:
   '@cspotcode/source-map-support@0.8.1':
     dependencies:
       '@jridgewell/trace-mapping': 0.3.9
-
-  '@edgestore/react@0.1.7(next@15.3.5(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(zod@4.0.15)':
-    dependencies:
-      '@aws-sdk/client-s3': 3.913.0
-      '@aws-sdk/s3-request-presigner': 3.913.0
-      '@edgestore/shared': 0.1.7(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(zod@4.0.15)
-      '@panva/hkdf': 1.2.1
-      cookie: 0.5.0
-      jose: 4.15.9
-      next: 15.3.5(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      react: 19.1.0
-      react-dom: 19.1.0(react@19.1.0)
-      uuid: 9.0.1
-      zod: 4.0.15
-    transitivePeerDependencies:
-      - aws-crt
-
-  '@edgestore/server@0.1.7(@aws-sdk/client-s3@3.913.0)(@aws-sdk/s3-request-presigner@3.913.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(zod@4.0.15)':
-    dependencies:
-      '@edgestore/shared': 0.1.7(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(zod@4.0.15)
-      '@panva/hkdf': 1.2.1
-      cookie: 0.5.0
-      jose: 4.15.9
-      uuid: 9.0.1
-    optionalDependencies:
-      '@aws-sdk/client-s3': 3.913.0
-      '@aws-sdk/s3-request-presigner': 3.913.0
-      zod: 4.0.15
-    transitivePeerDependencies:
-      - react
-      - react-dom
-
-  '@edgestore/shared@0.1.7(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(zod@4.0.15)':
-    dependencies:
-      react: 19.1.0
-      react-dom: 19.1.0(react@19.1.0)
-    optionalDependencies:
-      zod: 4.0.15
 
   '@emnapi/core@1.4.3':
     dependencies:
@@ -6089,8 +5999,6 @@ snapshots:
 
   concat-map@0.0.1: {}
 
-  cookie@0.5.0: {}
-
   cookie@1.0.2: {}
 
   create-require@1.1.1: {}
@@ -6801,8 +6709,6 @@ snapshots:
   jiti@2.4.2: {}
 
   jiti@2.6.1: {}
-
-  jose@4.15.9: {}
 
   jose@6.0.11: {}
 
@@ -7647,8 +7553,6 @@ snapshots:
   use-sync-external-store@1.5.0(react@19.1.0):
     dependencies:
       react: 19.1.0
-
-  uuid@9.0.1: {}
 
   v8-compile-cache-lib@3.0.1: {}
 
