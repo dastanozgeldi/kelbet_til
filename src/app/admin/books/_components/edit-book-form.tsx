@@ -66,6 +66,11 @@ export function EditBookForm({ book }: { book: Book }) {
   return (
     <form action={formAction} className="space-y-4">
       <input type="hidden" name="id" value={book.id} />
+      <input
+        type="hidden"
+        name="fileUrl"
+        value={newFileUrl || book.fileUrl}
+      />
 
       <div className="space-y-1.5">
         <Label htmlFor="title">Кітап атауы</Label>
