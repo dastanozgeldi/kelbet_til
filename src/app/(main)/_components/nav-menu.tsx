@@ -16,7 +16,7 @@ export function NavMenu() {
       <NavigationMenuList className="flex-wrap">
         <NavigationMenuItem>
           <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-            <Link href="/journal">Kelbet-Til Журналы</Link>
+            <Link href="/journals">Kelbet-Til Журналы</Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
