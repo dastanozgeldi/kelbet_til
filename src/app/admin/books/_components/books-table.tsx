@@ -16,7 +16,6 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { Badge } from "@/components/ui/badge";
-import isBookActive from "@/helpers/is-book-active";
 import { db } from "@/server/db";
 import { BookActions } from "./book-actions";
 
@@ -73,7 +72,7 @@ export default async function BooksTable({
                 <TableCell>{book.title}</TableCell>
                 <TableCell>
                   <Badge variant="outline">
-                    {isBookActive(book.status) ? "Сайтта" : "Архивте"}
+                    {book.status === "ACTIVE" ? "Сайтта" : "Архивте"}
                   </Badge>
                 </TableCell>
                 <TableCell className="text-right">
