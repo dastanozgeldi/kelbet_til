@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { useActionState } from "react";
 import { UploadBook } from "./upload-book";
 import { ExternalLinkIcon } from "lucide-react";
+import { fetchBookSignedUrl } from "@/helpers/fetch-book-signed-url";
 
 const initialState = {
   message: "",
@@ -22,17 +23,7 @@ export function CreateBookForm() {
     if (!fileUrl) return;
 
     try {
-      const response = await fetch("/api/files", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ key: fileUrl }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to get preview URL");
-      }
-
-      const { signedUrl } = await response.json();
+      const signedUrl = await fetchBookSignedUrl(fileUrl);
       window.open(signedUrl, "_blank");
     } catch (error) {
       console.error("Error getting preview URL:", error);

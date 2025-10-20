@@ -13,6 +13,7 @@ import { type Book } from "@prisma/client";
 import Link from "next/link";
 import { EditBookDialog } from "./edit-book-dialog";
 import { DeleteBookDialog } from "./delete-book-dialog";
+import { fetchBookSignedUrl } from "@/helpers/fetch-book-signed-url";
 
 export const BookActions = ({ book }: { book: Book }) => {
   return (
@@ -38,17 +39,7 @@ export const BookActions = ({ book }: { book: Book }) => {
           <DropdownMenuItem
             onSelect={async () => {
               try {
-                const response = await fetch("/api/files", {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({ key: book.fileUrl }),
-                });
-
-                if (!response.ok) {
-                  throw new Error("Failed to get download URL");
-                }
-
-                const { signedUrl } = await response.json();
+                const signedUrl = await fetchBookSignedUrl(book.fileUrl);
                 window.open(signedUrl, "_blank");
               } catch (error) {
                 console.error("Error downloading file:", error);
