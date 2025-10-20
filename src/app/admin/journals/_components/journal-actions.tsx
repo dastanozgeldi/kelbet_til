@@ -13,6 +13,7 @@ import { type Journal } from "@prisma/client";
 import Link from "next/link";
 import { EditJournalDialog } from "./edit-journal-dialog";
 import { DeleteJournalDialog } from "./delete-journal-dialog";
+import { fetchJournalSignedUrl } from "@/helpers/fetch-journal-signed-url";
 
 export const JournalActions = ({ journal }: { journal: Journal }) => {
   return (
@@ -38,17 +39,7 @@ export const JournalActions = ({ journal }: { journal: Journal }) => {
           <DropdownMenuItem
             onSelect={async () => {
               try {
-                const response = await fetch("/api/files", {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({ key: journal.fileUrl }),
-                });
-
-                if (!response.ok) {
-                  throw new Error("Failed to get download URL");
-                }
-
-                const { signedUrl } = await response.json();
+                const signedUrl = await fetchJournalSignedUrl(journal.fileUrl);
                 window.open(signedUrl, "_blank");
               } catch (error) {
                 console.error("Error downloading file:", error);

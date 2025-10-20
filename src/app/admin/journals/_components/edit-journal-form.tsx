@@ -10,6 +10,7 @@ import { editJournal } from "../actions";
 import type { Journal } from "@prisma/client";
 import { UploadJournal } from "./upload-journal";
 import { ExternalLinkIcon, FileTextIcon } from "lucide-react";
+import { fetchJournalSignedUrl } from "@/helpers/fetch-journal-signed-url";
 
 const initialState = {
   message: "",
@@ -26,17 +27,7 @@ export function EditJournalForm({ journal }: { journal: Journal }) {
     if (!journal.fileUrl) return;
 
     try {
-      const response = await fetch("/api/files", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ key: journal.fileUrl }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to get preview URL");
-      }
-
-      const { signedUrl } = await response.json();
+      const signedUrl = await fetchJournalSignedUrl(journal.fileUrl);
       window.open(signedUrl, "_blank");
     } catch (error) {
       console.error("Error getting preview URL:", error);
@@ -48,17 +39,7 @@ export function EditJournalForm({ journal }: { journal: Journal }) {
     if (!newFileUrl) return;
 
     try {
-      const response = await fetch("/api/files", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ key: newFileUrl }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to get preview URL");
-      }
-
-      const { signedUrl } = await response.json();
+      const signedUrl = await fetchJournalSignedUrl(newFileUrl);
       window.open(signedUrl, "_blank");
     } catch (error) {
       console.error("Error getting preview URL:", error);

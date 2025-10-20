@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { useActionState } from "react";
 import { UploadJournal } from "./upload-journal";
 import { ExternalLinkIcon } from "lucide-react";
+import { fetchJournalSignedUrl } from "@/helpers/fetch-journal-signed-url";
 
 const initialState = {
   message: "",
@@ -24,17 +25,7 @@ export function CreateJournalForm() {
     if (!fileUrl) return;
 
     try {
-      const response = await fetch("/api/files/journals", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ key: fileUrl }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to get preview URL");
-      }
-
-      const { signedUrl } = await response.json();
+      const signedUrl = await fetchJournalSignedUrl(fileUrl);
       window.open(signedUrl, "_blank");
     } catch (error) {
       console.error("Error getting preview URL:", error);

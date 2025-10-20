@@ -10,6 +10,7 @@ import { editBook } from "../actions";
 import type { Book } from "@prisma/client";
 import { UploadBook } from "./upload-book";
 import { ExternalLinkIcon, FileTextIcon } from "lucide-react";
+import { fetchBookSignedUrl } from "@/helpers/fetch-book-signed-url";
 
 const initialState = {
   message: "",
@@ -23,17 +24,7 @@ export function EditBookForm({ book }: { book: Book }) {
     if (!book.fileUrl) return;
 
     try {
-      const response = await fetch("/api/files", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ key: book.fileUrl }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to get preview URL");
-      }
-
-      const { signedUrl } = await response.json();
+      const signedUrl = await fetchBookSignedUrl(book.fileUrl);
       window.open(signedUrl, "_blank");
     } catch (error) {
       console.error("Error getting preview URL:", error);
@@ -45,17 +36,7 @@ export function EditBookForm({ book }: { book: Book }) {
     if (!newFileUrl) return;
 
     try {
-      const response = await fetch("/api/files", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ key: newFileUrl }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to get preview URL");
-      }
-
-      const { signedUrl } = await response.json();
+      const signedUrl = await fetchBookSignedUrl(newFileUrl);
       window.open(signedUrl, "_blank");
     } catch (error) {
       console.error("Error getting preview URL:", error);
@@ -66,11 +47,7 @@ export function EditBookForm({ book }: { book: Book }) {
   return (
     <form action={formAction} className="space-y-4">
       <input type="hidden" name="id" value={book.id} />
-      <input
-        type="hidden"
-        name="fileUrl"
-        value={newFileUrl || book.fileUrl}
-      />
+      <input type="hidden" name="fileUrl" value={newFileUrl || book.fileUrl} />
 
       <div className="space-y-1.5">
         <Label htmlFor="title">Кітап атауы</Label>
