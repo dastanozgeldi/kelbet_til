@@ -11,18 +11,18 @@ import {
 } from "@/components/ui/navigation-menu";
 
 const links = [
-  // {
-  //   label: "Kelbet-Til Журналы",
-  //   href: "/journals",
-  // },
+  {
+    label: "Kelbet-Til Журналы",
+    href: "/journals",
+  },
   {
     label: "Шығармалар",
     href: "/books",
   },
-  // {
-  //   label: "Мақалалар",
-  //   href: "/articles",
-  // },
+  {
+    label: "Мақалалар",
+    href: "/articles",
+  },
 ];
 
 export function NavMenu() {
