@@ -60,6 +60,7 @@ export default async function BooksTable({
         <TableHeader>
           <TableRow>
             <TableHead>Атауы</TableHead>
+            <TableHead>Аудитория</TableHead>
             <TableHead className="w-[100px]">Статус</TableHead>
             <TableHead className="w-[200px] text-right">Жүктелді</TableHead>
             <TableHead className="w-[100px] text-right">Әрекеттер</TableHead>
@@ -70,6 +71,14 @@ export default async function BooksTable({
             books.map((book) => (
               <TableRow key={book.id}>
                 <TableCell>{book.title}</TableCell>
+                <TableCell>
+                  <div className="flex flex-wrap gap-1">
+                    <Badge variant="outline">{book.program}</Badge>
+                    <Badge variant="outline">{book.grade} сынып</Badge>
+                    <Badge variant="outline">{book.language}</Badge>
+                    <Badge variant="outline">{book.term} тоқсан</Badge>
+                  </div>
+                </TableCell>
                 <TableCell>
                   <Badge variant="outline">
                     {book.status === "ACTIVE" ? "Сайтта" : "Архивте"}
