@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { filters } from "@/config";
@@ -17,14 +17,26 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { toast } from "sonner";
 
 const initialState = {
+  success: false,
   message: "",
 };
 
-export function CreateBookForm() {
+export function CreateBookForm({ onSuccess }: { onSuccess?: () => void }) {
   const [state, formAction, pending] = useActionState(createBook, initialState);
   const [fileUrl, setFileUrl] = useState("");
+
+  useEffect(() => {
+    if (state?.success) {
+      toast.success(state.message);
+      onSuccess?.();
+    } else if (state?.message && !state?.success) {
+      toast.error(state.message);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state]);
 
   const handlePreview = async () => {
     if (!fileUrl) return;
@@ -40,6 +52,8 @@ export function CreateBookForm() {
 
   return (
     <form action={formAction} className="space-y-4">
+      <input type="hidden" name="fileUrl" value={fileUrl} />
+
       <div className="space-y-1.5">
         <Label htmlFor="title">Кітап атауы</Label>
         <Input id="title" name="title" placeholder="Абай жолы" required />
@@ -124,8 +138,7 @@ export function CreateBookForm() {
         </div>
       </div>
 
-      <p aria-live="polite">{state?.message}</p>
-      <Button disabled={pending}>Сақтау</Button>
+      <Button disabled={pending || !fileUrl}>Сақтау</Button>
     </form>
   );
 }
