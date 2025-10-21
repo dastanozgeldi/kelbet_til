@@ -15,6 +15,8 @@ export default function TableSearch({ placeholder }: { placeholder: string }) {
     } else {
       params.delete("query");
     }
+    // Reset to page 1 when searching
+    params.delete("page");
     replace(`${pathname}?${params.toString()}`);
   }, 500);
 
