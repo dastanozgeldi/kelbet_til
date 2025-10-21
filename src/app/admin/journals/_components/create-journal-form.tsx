@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { createJournal } from "../actions";
@@ -9,17 +9,35 @@ import { useActionState } from "react";
 import { UploadJournal } from "./upload-journal";
 import { ExternalLinkIcon } from "lucide-react";
 import { fetchJournalSignedUrl } from "@/helpers/fetch-journal-signed-url";
+import { toast } from "sonner";
 
 const initialState = {
+  success: false,
   message: "",
 };
 
-export function CreateJournalForm({ userId }: { userId: string }) {
+export function CreateJournalForm({
+  userId,
+  onSuccess,
+}: {
+  userId: string;
+  onSuccess?: () => void;
+}) {
   const [state, formAction, pending] = useActionState(
     createJournal,
     initialState,
   );
   const [fileUrl, setFileUrl] = useState("");
+
+  useEffect(() => {
+    if (state?.success) {
+      toast.success(state.message);
+      onSuccess?.();
+    } else if (state?.message && !state?.success) {
+      toast.error(state.message);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state]);
 
   const handlePreview = async () => {
     if (!fileUrl) return;
@@ -36,6 +54,7 @@ export function CreateJournalForm({ userId }: { userId: string }) {
   return (
     <form action={formAction} className="space-y-4">
       <input type="hidden" name="userId" value={userId} />
+      <input type="hidden" name="fileUrl" value={fileUrl} />
 
       <div className="space-y-1.5">
         <Label htmlFor="title">Журнал атауы</Label>
@@ -55,8 +74,7 @@ export function CreateJournalForm({ userId }: { userId: string }) {
         )}
       </div>
 
-      <p aria-live="polite">{state?.message}</p>
-      <Button disabled={pending}>Сақтау</Button>
+      <Button disabled={pending || !fileUrl}>Сақтау</Button>
     </form>
   );
 }

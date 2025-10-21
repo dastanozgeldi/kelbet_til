@@ -20,21 +20,34 @@ export async function createJournal(initialState: any, formData: FormData) {
 
   if (!validatedFields.success) {
     return {
+      success: false,
       message: JSON.stringify(validatedFields.error.flatten().fieldErrors),
     };
   }
 
   const { userId, title, fileUrl } = validatedFields.data;
 
-  await db.journal.create({
-    data: {
-      userId,
-      title,
-      fileUrl,
-    },
-  });
+  try {
+    await db.journal.create({
+      data: {
+        userId,
+        title,
+        fileUrl,
+      },
+    });
 
-  revalidatePath("/admin/journals");
+    revalidatePath("/admin/journals");
+    return {
+      success: true,
+      message: "Журнал сәтті қосылды",
+    };
+  } catch (error) {
+    console.error("Error creating journal:", error);
+    return {
+      success: false,
+      message: "Журнал қосуда ақаулық туындады",
+    };
+  }
 }
 
 const editJournalSchema = z.object({

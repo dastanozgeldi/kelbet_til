@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -12,8 +13,10 @@ import { PlusIcon } from "lucide-react";
 import { CreateJournalForm } from "./create-journal-form";
 
 export function CreateJournalDialog({ userId }: { userId: string }) {
+  const [open, setOpen] = useState(false);
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button size="sm">
           <PlusIcon className="size-4" />
@@ -24,7 +27,7 @@ export function CreateJournalDialog({ userId }: { userId: string }) {
         <DialogHeader>
           <DialogTitle>Жаңа журнал</DialogTitle>
         </DialogHeader>
-        <CreateJournalForm userId={userId} />
+        <CreateJournalForm userId={userId} onSuccess={() => setOpen(false)} />
       </DialogContent>
     </Dialog>
   );
