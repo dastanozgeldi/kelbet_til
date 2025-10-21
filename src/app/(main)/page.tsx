@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 
 export default async function Page() {
   return (
-    <div className="grid grid-cols-1 items-center gap-3 lg:grid-cols-2">
+    <div className="flex-1 flex flex-col items-center gap-6 lg:flex-row">
       <div className="mt-3">
         <h1 className="mb-3 text-3xl font-extrabold lg:mb-6 lg:text-4xl">
           Республика мектептерінің әдеби шығармалары бір жерде
@@ -14,11 +14,11 @@ export default async function Page() {
         </Button>
       </div>
       <Image
-        className="w-full"
+        className="mt-6 p-6 lg:mt-0 lg:max-w-4/10"
         alt="hero"
-        src="/hero.png"
-        width={500}
-        height={500}
+        src="/hero.svg"
+        width={834}
+        height={638}
       />
     </div>
   );
