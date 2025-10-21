@@ -16,7 +16,6 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge";
-import Image from "next/image";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,6 +26,7 @@ import { Session } from "next-auth";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { signOut } from "next-auth/react";
 import { links } from "@/config";
+import Logo from "@/components/logo";
 
 export const AdminSidebar = ({ user }: { user: Session["user"] }) => {
   const pathname = usePathname();
@@ -35,8 +35,8 @@ export const AdminSidebar = ({ user }: { user: Session["user"] }) => {
     <Sidebar variant="inset">
       <SidebarHeader>
         <SidebarMenu>
-          <Link href="/" className="flex items-center gap-3 p-2">
-            <Image src="/logo.png" width={51} height={32} alt="Logo" />
+          <Link href="/" className="flex items-center gap-3 p-1">
+            <Logo />
             <Badge>Админ</Badge>
           </Link>
         </SidebarMenu>
