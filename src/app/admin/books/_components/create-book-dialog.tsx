@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -12,8 +13,10 @@ import { PlusIcon } from "lucide-react";
 import { CreateBookForm } from "./create-book-form";
 
 export function CreateBookDialog() {
+  const [open, setOpen] = useState(false);
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button size="sm">
           <PlusIcon className="size-4" />
@@ -24,7 +27,7 @@ export function CreateBookDialog() {
         <DialogHeader>
           <DialogTitle>Жаңа шығарма</DialogTitle>
         </DialogHeader>
-        <CreateBookForm />
+        <CreateBookForm onSuccess={() => setOpen(false)} />
       </DialogContent>
     </Dialog>
   );

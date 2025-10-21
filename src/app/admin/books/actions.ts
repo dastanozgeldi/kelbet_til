@@ -26,24 +26,37 @@ export async function createBook(initialState: any, formData: FormData) {
 
   if (!validatedFields.success) {
     return {
+      success: false,
       message: JSON.stringify(validatedFields.error.flatten().fieldErrors),
     };
   }
 
   const { title, fileUrl, program, grade, language, term } = validatedFields.data;
 
-  await db.book.create({
-    data: {
-      title,
-      fileUrl,
-      program: program as Program,
-      grade,
-      language: language as Language,
-      term,
-    },
-  });
+  try {
+    await db.book.create({
+      data: {
+        title,
+        fileUrl,
+        program: program as Program,
+        grade,
+        language: language as Language,
+        term,
+      },
+    });
 
-  revalidatePath("/admin/books");
+    revalidatePath("/admin/books");
+    return {
+      success: true,
+      message: "Шығарма сәтті қосылды",
+    };
+  } catch (error) {
+    console.error("Error creating book:", error);
+    return {
+      success: false,
+      message: "Шығарма қосуда ақаулық туындады",
+    };
+  }
 }
 
 const editBookSchema = z.object({
@@ -69,25 +82,38 @@ export async function editBook(initialState: any, formData: FormData) {
 
   if (!validatedFields.success) {
     return {
+      success: false,
       message: JSON.stringify(validatedFields.error.flatten().fieldErrors),
     };
   }
 
   const { id, title, fileUrl, program, grade, language, term } = validatedFields.data;
 
-  await db.book.update({
-    where: { id },
-    data: {
-      title,
-      fileUrl,
-      program: program as Program,
-      grade,
-      language: language as Language,
-      term,
-    },
-  });
+  try {
+    await db.book.update({
+      where: { id },
+      data: {
+        title,
+        fileUrl,
+        program: program as Program,
+        grade,
+        language: language as Language,
+        term,
+      },
+    });
 
-  revalidatePath("/admin/books");
+    revalidatePath("/admin/books");
+    return {
+      success: true,
+      message: "Шығарма сәтті өзгертілді",
+    };
+  } catch (error) {
+    console.error("Error editing book:", error);
+    return {
+      success: false,
+      message: "Шығарма өзгертуде ақаулық туындады",
+    };
+  }
 }
 
 export async function deleteBook(bookId: string) {

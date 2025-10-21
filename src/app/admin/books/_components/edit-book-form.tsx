@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -18,14 +18,32 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { toast } from "sonner";
 
 const initialState = {
+  success: false,
   message: "",
 };
 
-export function EditBookForm({ book }: { book: Book }) {
+export function EditBookForm({
+  book,
+  onSuccess,
+}: {
+  book: Book;
+  onSuccess?: () => void;
+}) {
   const [state, formAction, pending] = useActionState(editBook, initialState);
   const [newFileUrl, setNewFileUrl] = useState("");
+
+  useEffect(() => {
+    if (state?.success) {
+      toast.success(state.message);
+      onSuccess?.();
+    } else if (state?.message && !state?.success) {
+      toast.error(state.message);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state]);
 
   const handlePreviewCurrentFile = async () => {
     if (!book.fileUrl) return;
@@ -171,7 +189,6 @@ export function EditBookForm({ book }: { book: Book }) {
         </div>
       </div>
 
-      <p aria-live="polite">{state?.message}</p>
       <Button disabled={pending}>Сақтау</Button>
     </form>
   );

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import type { Book } from "@prisma/client";
 import {
   Dialog,
@@ -12,8 +13,10 @@ import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { EditBookForm } from "./edit-book-form";
 
 export function EditBookDialog({ book }: { book: Book }) {
+  const [open, setOpen] = useState(false);
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
           Өзгерту
@@ -23,7 +26,7 @@ export function EditBookDialog({ book }: { book: Book }) {
         <DialogHeader>
           <DialogTitle>Шығарманы өзгерту</DialogTitle>
         </DialogHeader>
-        <EditBookForm book={book} />
+        <EditBookForm book={book} onSuccess={() => setOpen(false)} />
       </DialogContent>
     </Dialog>
   );
