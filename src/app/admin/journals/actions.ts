@@ -67,22 +67,35 @@ export async function editJournal(initialState: any, formData: FormData) {
 
   if (!validatedFields.success) {
     return {
+      success: false,
       message: JSON.stringify(validatedFields.error.flatten().fieldErrors),
     };
   }
 
   const { id, title, fileUrl, status } = validatedFields.data;
 
-  await db.journal.update({
-    where: { id },
-    data: {
-      title,
-      fileUrl,
-      status,
-    },
-  });
+  try {
+    await db.journal.update({
+      where: { id },
+      data: {
+        title,
+        fileUrl,
+        status,
+      },
+    });
 
-  revalidatePath("/admin/journals");
+    revalidatePath("/admin/journals");
+    return {
+      success: true,
+      message: "Журнал сәтті өзгертілді",
+    };
+  } catch (error) {
+    console.error("Error editing journal:", error);
+    return {
+      success: false,
+      message: "Журнал өзгертуде ақаулық туындады",
+    };
+  }
 }
 
 export async function deleteJournal(journalId: string) {
