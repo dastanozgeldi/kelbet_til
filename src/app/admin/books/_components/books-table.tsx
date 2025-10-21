@@ -73,7 +73,9 @@ export default async function BooksTable({
                 <TableCell>{book.title}</TableCell>
                 <TableCell>
                   <div className="flex flex-wrap gap-1">
-                    <Badge variant="outline">{book.program}</Badge>
+                    <Badge variant="outline">
+                      {book.program === "JBBM" ? "ЖББМ" : "НЗМ"}
+                    </Badge>
                     <Badge variant="outline">{book.grade} сынып</Badge>
                     <Badge variant="outline">{book.language}</Badge>
                     <Badge variant="outline">{book.term} тоқсан</Badge>
