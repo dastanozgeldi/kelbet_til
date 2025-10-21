@@ -20,7 +20,7 @@ export const links = [
 
 export const filters = {
   programs: ["JBBM", "NIS"],
-  grades: ["5", "6", "7", "8", "9", "10", "11", "12"],
+  grades: ["2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
   languages: ["T1", "T2"],
   terms: ["1", "2", "3", "4"],
 };
