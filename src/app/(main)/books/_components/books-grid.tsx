@@ -51,8 +51,6 @@ export default async function BooksGrid({
 
   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE);
 
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-
   if (!books.length) {
     return (
       <div className="text-muted-foreground py-12 text-center">
