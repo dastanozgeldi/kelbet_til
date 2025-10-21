@@ -90,7 +90,7 @@ export default async function JournalsTable({
           ) : (
             <TableRow>
               <TableCell colSpan={4} className="h-16 text-center">
-                {query ? "Шығарма табылмады." : "Шығарма жоқ."}
+                {query ? "Журнал табылмады." : "Журнал жоқ."}
               </TableCell>
             </TableRow>
           )}
