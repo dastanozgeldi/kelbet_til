@@ -21,7 +21,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <GoogleAnalytics GA_TRACKING_ID={env.GA_TRACKING_ID} />
-      <body className="antialiased">
+      <body className="bg-background text-foreground antialiased">
         {children}
         <Toaster />
       </body>
