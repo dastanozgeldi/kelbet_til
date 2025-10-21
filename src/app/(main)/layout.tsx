@@ -8,7 +8,7 @@ export default async function MainLayout({
   return (
     <main className="container mx-auto flex min-h-screen flex-col space-y-3 px-6">
       <Nav />
-      <div className="flex-1">{children}</div>
+      {children}
       <footer className="border-border mt-3 border-t py-3 text-center">
         made with 🥰 by{" "}
         <a
