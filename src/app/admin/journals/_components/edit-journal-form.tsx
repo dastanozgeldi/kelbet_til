@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -17,17 +17,35 @@ import type { Journal } from "@prisma/client";
 import { UploadJournal } from "./upload-journal";
 import { ExternalLinkIcon, FileTextIcon } from "lucide-react";
 import { fetchJournalSignedUrl } from "@/helpers/fetch-journal-signed-url";
+import { toast } from "sonner";
 
 const initialState = {
+  success: false,
   message: "",
 };
 
-export function EditJournalForm({ journal }: { journal: Journal }) {
+export function EditJournalForm({
+  journal,
+  onSuccess,
+}: {
+  journal: Journal;
+  onSuccess?: () => void;
+}) {
   const [state, formAction, pending] = useActionState(
     editJournal,
     initialState,
   );
   const [newFileUrl, setNewFileUrl] = useState("");
+
+  useEffect(() => {
+    if (state?.success) {
+      toast.success(state.message);
+      onSuccess?.();
+    } else if (state?.message && !state?.success) {
+      toast.error(state.message);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state]);
 
   const handlePreviewCurrentFile = async () => {
     if (!journal.fileUrl) return;
@@ -125,7 +143,6 @@ export function EditJournalForm({ journal }: { journal: Journal }) {
         )}
       </div>
 
-      <p aria-live="polite">{state?.message}</p>
       <Button disabled={pending}>Сақтау</Button>
     </form>
   );

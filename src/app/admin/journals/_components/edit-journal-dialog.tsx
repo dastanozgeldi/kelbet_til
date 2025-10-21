@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import type { Journal } from "@prisma/client";
 import {
   Dialog,
@@ -12,8 +13,10 @@ import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { EditJournalForm } from "./edit-journal-form";
 
 export function EditJournalDialog({ journal }: { journal: Journal }) {
+  const [open, setOpen] = useState(false);
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
           Өзгерту
@@ -23,7 +26,7 @@ export function EditJournalDialog({ journal }: { journal: Journal }) {
         <DialogHeader>
           <DialogTitle>Журналды өзгерту</DialogTitle>
         </DialogHeader>
-        <EditJournalForm journal={journal} />
+        <EditJournalForm journal={journal} onSuccess={() => setOpen(false)} />
       </DialogContent>
     </Dialog>
   );
