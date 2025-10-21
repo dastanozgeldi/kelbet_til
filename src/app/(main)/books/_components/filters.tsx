@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { XIcon } from "lucide-react";
 import { useDebouncedCallback } from "use-debounce";
+import { filters } from "@/config";
 
 export default function Filters() {
   const searchParams = useSearchParams();
@@ -46,7 +47,7 @@ export default function Filters() {
       if (grade) params.set("grade", grade);
       if (language) params.set("language", language);
       if (term) params.set("term", term);
-      
+
       // Reset to page 1 when filters change
       params.set("page", "1");
 
@@ -95,7 +96,7 @@ export default function Filters() {
           onValueChange={(value) => handleSearch({ grade: value })}
         >
           <TabsList>
-            {["5", "6", "7", "8", "9", "10", "11", "12"].map((grade) => (
+            {filters.grades.map((grade) => (
               <TabsTrigger key={grade} value={grade}>
                 {grade}
               </TabsTrigger>
@@ -133,7 +134,7 @@ export default function Filters() {
       </div>
 
       <div className="space-y-1">
-        <div className="h-3.5" />
+        <div className="hidden h-3.5 md:block" />
         <Button
           variant="outline"
           onClick={handleReset}
