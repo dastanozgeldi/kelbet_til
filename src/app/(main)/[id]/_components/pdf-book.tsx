@@ -1,36 +1,49 @@
 "use client";
 
-import "react-pdf/dist/Page/AnnotationLayer.css";
+import { useState, useEffect } from "react";
 import type { Book } from "@prisma/client";
 import { Document, Page, pdfjs } from "react-pdf";
+import { Skeleton } from "@/components/ui/skeleton";
+import { fetchBookSignedUrl } from "@/helpers/fetch-book-signed-url";
+import { useContainerWidth } from "../_hooks/use-container-width";
 import { usePDFBook } from "../_hooks/use-pdf-book";
 import PageControls from "./page-controls";
-import { useContainerWidth } from "@/hooks/use-container-width";
-import { Skeleton } from "@/components/ui/skeleton";
-import { useState, useEffect } from "react";
-import { fetchBookSignedUrl } from "@/helpers/fetch-book-signed-url";
+import "react-pdf/dist/Page/AnnotationLayer.css";
 
-pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+  "pdfjs-dist/build/pdf.worker.min.mjs",
+  import.meta.url,
+).toString();
 
 export const PDFBook = ({ book }: { book: Book }) => {
   const width = useContainerWidth();
   const { numPages, currentPage, setCurrentPage, handleDocumentLoadSuccess } =
     usePDFBook(book.id);
-  const [fileUrl, setFileUrl] = useState<string | null>(null);
+  const [fileUrl, setFileUrl] = useState<string | Blob | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    let isMounted = true;
+
     const fetchSignedUrl = async () => {
       try {
-        const signedUrl = await fetchBookSignedUrl(book.fileUrl);
-        setFileUrl(signedUrl);
+        const result = await fetchBookSignedUrl(book.fileUrl);
+        if (isMounted) {
+          setFileUrl(result);
+        }
       } catch (err) {
         console.error("Error fetching signed URL:", err);
-        setError("Файлды жүктеуде қате туындады");
+        if (isMounted) {
+          setError("Файлды жүктеуде қате туындады");
+        }
       }
     };
 
     fetchSignedUrl();
+
+    return () => {
+      isMounted = false;
+    };
   }, [book.fileUrl]);
 
   if (error) {
