@@ -11,6 +11,11 @@ import {
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowRightIcon } from "lucide-react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Kelbet-Til Журналы",
+};
 
 export default async function Page() {
   return (
