@@ -19,21 +19,31 @@ export const PDFBook = ({ book }: { book: Book }) => {
   const width = useContainerWidth();
   const { numPages, currentPage, setCurrentPage, handleDocumentLoadSuccess } =
     usePDFBook(book.id);
-  const [fileUrl, setFileUrl] = useState<string | null>(null);
+  const [fileUrl, setFileUrl] = useState<string | Blob | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    let isMounted = true;
+
     const fetchSignedUrl = async () => {
       try {
-        const signedUrl = await fetchBookSignedUrl(book.fileUrl);
-        setFileUrl(signedUrl);
+        const result = await fetchBookSignedUrl(book.fileUrl);
+        if (isMounted) {
+          setFileUrl(result);
+        }
       } catch (err) {
         console.error("Error fetching signed URL:", err);
-        setError("Файлды жүктеуде қате туындады");
+        if (isMounted) {
+          setError("Файлды жүктеуде қате туындады");
+        }
       }
     };
 
     fetchSignedUrl();
+
+    return () => {
+      isMounted = false;
+    };
   }, [book.fileUrl]);
 
   if (error) {
