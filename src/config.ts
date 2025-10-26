@@ -1,4 +1,4 @@
-import { BookIcon, NotebookIcon, UsersIcon } from "lucide-react";
+import { BookIcon, NewspaperIcon, NotebookIcon, UsersIcon } from "lucide-react";
 
 export const links = [
   {
@@ -10,6 +10,11 @@ export const links = [
     title: "Журналдар",
     url: "/admin/journals",
     icon: NotebookIcon,
+  },
+  {
+    title: "Мақалалар",
+    url: "/admin/articles",
+    icon: NewspaperIcon,
   },
   {
     title: "Қолданушылар",

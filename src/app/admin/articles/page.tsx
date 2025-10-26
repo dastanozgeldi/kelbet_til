@@ -11,6 +11,7 @@ import { Suspense } from "react";
 import TableSearch from "@/components/table-search";
 import TableFallback from "@/components/table-fallback";
 import { CreateArticleDialog } from "./_components/create-article-dialog";
+import ArticlesTable from "./_components/articles-table";
 
 export const metadata: Metadata = {
   title: "Мақалалар",
@@ -42,7 +43,7 @@ export default async function Page(props: {
           key={(query ?? "") + currentPage}
           fallback={<TableFallback columns={4} />}
         >
-          <AritclesTable currentPage={currentPage} query={query} />
+          <ArticlesTable currentPage={currentPage} query={query} />
         </Suspense>
       </CardContent>
     </Card>
