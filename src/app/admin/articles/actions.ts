@@ -58,3 +58,22 @@ export async function createArticle(initialState: any, formData: FormData) {
     };
   }
 }
+
+export async function deleteArticle(id: string) {
+  try {
+    await db.article.delete({ where: { id } });
+
+    revalidatePath("/admin/articles");
+
+    return {
+      success: true,
+      message: "Мақала сәтті жойылды",
+    };
+  } catch (error) {
+    console.error("Error deleting article:", error);
+    return {
+      success: false,
+      message: "Мақала жоюда ақаулық туындады",
+    };
+  }
+}
