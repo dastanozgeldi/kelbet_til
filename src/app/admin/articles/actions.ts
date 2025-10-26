@@ -59,6 +59,57 @@ export async function createArticle(initialState: any, formData: FormData) {
   }
 }
 
+const editArticleSchema = z.object({
+  id: z.string(),
+  title: z.string().optional(),
+  description: z.string().optional(),
+  content: z.string().optional(),
+  status: z.string().optional(),
+});
+
+export async function editArticle(initialState: any, formData: FormData) {
+  const validatedFields = editArticleSchema.safeParse({
+    id: formData.get("id"),
+    title: formData.get("title"),
+    description: formData.get("description"),
+    content: formData.get("content"),
+    status: formData.get("status"),
+  });
+
+  if (!validatedFields.success) {
+    return {
+      success: false,
+      message: JSON.stringify(validatedFields.error.flatten().fieldErrors),
+    };
+  }
+
+  const { id, title, description, content, status } = validatedFields.data;
+
+  try {
+    await db.article.update({
+      where: { id },
+      data: {
+        title,
+        description,
+        content,
+        status: status as ArticleStatus,
+      },
+    });
+
+    revalidatePath("/admin/articles");
+    return {
+      success: true,
+      message: "Мақала сәтті өзгертілді",
+    };
+  } catch (error) {
+    console.error("Error editing article:", error);
+    return {
+      success: false,
+      message: "Мақала өзгертуде ақаулық туындады",
+    };
+  }
+}
+
 export async function deleteArticle(id: string) {
   try {
     await db.article.delete({ where: { id } });
