@@ -9,6 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { DeleteArticleDialog } from "./delete-article-dialog";
+import { EditArticleDialog } from "./edit-article-dialog";
 
 export default function ArticleActions({ article }: { article: Article }) {
   return (
@@ -30,7 +31,7 @@ export default function ArticleActions({ article }: { article: Article }) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          {/* <EditArticleDialog article={article} /> */}
+          <EditArticleDialog article={article} />
           <DropdownMenuSeparator />
           <DeleteArticleDialog id={article.id} />
         </DropdownMenuContent>
