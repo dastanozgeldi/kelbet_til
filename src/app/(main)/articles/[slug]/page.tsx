@@ -16,8 +16,9 @@ export default async function Page({
       fallback={
         <>
           <div className="mb-6">
-            <Skeleton className="h-[32px] w-full sm:h-[36px]" />
+            <Skeleton className="h-[32px] w-3/4 sm:h-[36px]" />
             <hr className="bg-primary mt-1 h-[6px] max-w-[36px] border-0" />
+            <Skeleton className="mt-3 h-6 w-3/4" />
           </div>
           <Skeleton className="h-[500px]" />
         </>
@@ -38,7 +39,10 @@ async function SuspenseBoundary({ slug }: { slug: string }) {
   if (!article) notFound();
   return (
     <>
-      <PageHeader title={article.title} />
+      <PageHeader
+        title={article.title}
+        description={article.description || undefined}
+      />
 
       <div
         className="prose"
