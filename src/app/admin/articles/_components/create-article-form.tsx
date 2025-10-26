@@ -52,9 +52,9 @@ export function CreateArticleForm({ onSuccess }: { onSuccess?: () => void }) {
             <SelectValue placeholder="Статусы" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="DRAFT">DRAFT</SelectItem>
-            <SelectItem value="PUBLISHED">PUBLISHED</SelectItem>
-            <SelectItem value="ARCHIVED">ARCHIVED</SelectItem>
+            <SelectItem value="DRAFT">Черновик</SelectItem>
+            <SelectItem value="PUBLISHED">Публикация</SelectItem>
+            <SelectItem value="ARCHIVED">Архив</SelectItem>
           </SelectContent>
         </Select>
       </div>
