@@ -32,6 +32,7 @@ export default async function Page({
 async function SuspenseBoundary({ slug }: { slug: string }) {
   const article = await db.article.findUnique({
     where: { slug },
+    include: { user: true },
   });
 
   await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -48,6 +49,10 @@ async function SuspenseBoundary({ slug }: { slug: string }) {
         className="prose"
         dangerouslySetInnerHTML={{ __html: article.content }}
       />
+
+      <p className="text-muted-foreground text-center text-sm">
+        Автор: {article.user?.name}
+      </p>
     </>
   );
 }

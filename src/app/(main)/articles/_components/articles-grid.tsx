@@ -25,6 +25,7 @@ export default async function ArticlesGrid({
   const [articles, totalCount] = await Promise.all([
     db.article.findMany({
       where: whereClause,
+      include: { user: true },
       orderBy: {
         createdAt: "desc",
       },
@@ -52,9 +53,7 @@ export default async function ArticlesGrid({
           <Card key={article.id}>
             <CardHeader>
               <CardTitle>{article.title}</CardTitle>
-              <CardDescription className="flex flex-wrap gap-1">
-                {article.description}
-              </CardDescription>
+              <CardDescription>Автор: {article.user?.name}</CardDescription>
             </CardHeader>
             <CardFooter className="mt-auto">
               <Button variant="outline" asChild>
