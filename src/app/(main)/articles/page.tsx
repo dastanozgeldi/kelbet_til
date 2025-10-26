@@ -1,57 +1,43 @@
 import { Metadata } from "next";
-import Link from "next/link";
-import { ArrowRightIcon } from "lucide-react";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardFooter,
-} from "@/components/ui/card";
+import { Card, CardHeader, CardFooter } from "@/components/ui/card";
 import { PageHeader } from "../_components/page-header";
-import { Button } from "@/components/ui/button";
-import { db } from "@/server/db";
 import { Suspense } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
+import ArticlesGrid from "./_components/articles-grid";
 
 export const metadata: Metadata = {
   title: "Мақалалар",
 };
 
-export default async function Page() {
+export default async function Page(props: {
+  searchParams?: Promise<{ page?: string }>;
+}) {
+  const searchParams = await props.searchParams;
+  const currentPage = Number(searchParams?.page) || 1;
+
   return (
     <>
       <PageHeader title="Мақалалар" />
 
-      <Suspense fallback={<>loading articles...</>}>
-        <ArticlesGrid />
+      <Suspense
+        fallback={
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {Array.from({ length: 9 }).map((_, i) => (
+              <Card key={i}>
+                <CardHeader>
+                  <Skeleton className="h-5 w-3/4" />
+                  <Skeleton className="h-4 w-3/4" />
+                </CardHeader>
+                <CardFooter className="mt-auto">
+                  <Skeleton className="h-10 w-24" />
+                </CardFooter>
+              </Card>
+            ))}
+          </div>
+        }
+      >
+        <ArticlesGrid currentPage={currentPage} />
       </Suspense>
     </>
-  );
-}
-
-async function ArticlesGrid() {
-  const articles = await db.article.findMany({ take: 9 });
-
-  return (
-    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-      {articles.map((article) => (
-        <Card key={article.id}>
-          <CardHeader>
-            <CardTitle>{article.title}</CardTitle>
-            <CardDescription className="flex flex-wrap gap-1">
-              {article.description}
-            </CardDescription>
-          </CardHeader>
-          <CardFooter className="mt-auto">
-            <Button variant="outline" asChild>
-              <Link href={`/articles/${article.slug}`}>
-                Оқу
-                <ArrowRightIcon className="size-4" />
-              </Link>
-            </Button>
-          </CardFooter>
-        </Card>
-      ))}
-    </div>
   );
 }

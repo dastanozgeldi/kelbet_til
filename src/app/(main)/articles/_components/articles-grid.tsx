@@ -1,4 +1,3 @@
-import type { Program, Language } from "@prisma/client";
 import Link from "next/link";
 import { ArrowRightIcon } from "lucide-react";
 import {
@@ -9,34 +8,22 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { db } from "@/server/db";
 import GridPagination from "../../_components/grid-pagination";
 
 const ITEMS_PER_PAGE = 9;
 
-export default async function BooksGrid({
-  searchParams,
+export default async function ArticlesGrid({
   currentPage,
 }: {
-  searchParams?: {
-    program?: string;
-    grade?: string;
-    language?: string;
-    term?: string;
-  };
   currentPage: number;
 }) {
   const whereClause = {
-    program: searchParams?.program as Program | undefined,
-    grade: searchParams?.grade,
-    language: searchParams?.language as Language | undefined,
-    term: searchParams?.term,
-    status: "ACTIVE" as const,
+    status: "PUBLISHED" as const,
   };
 
-  const [books, totalCount] = await Promise.all([
-    db.book.findMany({
+  const [articles, totalCount] = await Promise.all([
+    db.article.findMany({
       where: whereClause,
       orderBy: {
         createdAt: "desc",
@@ -44,35 +31,34 @@ export default async function BooksGrid({
       skip: (currentPage - 1) * ITEMS_PER_PAGE,
       take: ITEMS_PER_PAGE,
     }),
-    db.book.count({
+    db.article.count({
       where: whereClause,
     }),
   ]);
 
   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE);
 
-  if (!books.length) {
+  if (!articles.length) {
     return (
       <div className="text-muted-foreground py-12 text-center">
-        Шығармалар табылмады
+        Мақалалар табылмады
       </div>
     );
   }
   return (
     <>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {books.map((book) => (
-          <Card key={book.id}>
+        {articles.map((article) => (
+          <Card key={article.id}>
             <CardHeader>
-              <CardTitle>{book.title}</CardTitle>
+              <CardTitle>{article.title}</CardTitle>
               <CardDescription className="flex flex-wrap gap-1">
-                <Badge>{book.grade}-сынып</Badge>
-                <Badge>{book.term}-тоқсан</Badge>
+                {article.description}
               </CardDescription>
             </CardHeader>
             <CardFooter className="mt-auto">
               <Button variant="outline" asChild>
-                <Link href={`/${book.id}`}>
+                <Link href={`/articles/${article.slug}`}>
                   Оқу
                   <ArrowRightIcon className="size-4" />
                 </Link>
