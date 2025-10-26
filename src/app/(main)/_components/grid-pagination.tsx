@@ -11,15 +11,15 @@ import {
 } from "@/components/ui/pagination";
 import { useSearchParams } from "next/navigation";
 
-interface BooksPaginationProps {
+interface GridPaginationProps {
   currentPage: number;
   totalPages: number;
 }
 
-export default function BooksPagination({
+export default function GridPagination({
   currentPage,
   totalPages,
-}: BooksPaginationProps) {
+}: GridPaginationProps) {
   const searchParams = useSearchParams();
 
   const createPageURL = (pageNumber: number) => {

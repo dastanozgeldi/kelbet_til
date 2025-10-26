@@ -94,6 +94,7 @@ model User {
   image         String?
   role          UserRole  @default(USER)
   accounts      Account[]
+  articles      Article[]
   books         Book[]
   journals      Journal[]
   sessions      Session[]
@@ -105,4 +106,25 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+enum ArticleStatus {
+  PUBLISHED
+  DRAFT
+  ARCHIVED
+}
+
+model Article {
+  id            String        @id @default(cuid())
+  title         String
+  slug          String        @unique
+  description   String?
+  content       String        @db.Text
+  coverImageKey String?
+  userId        String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime?     @updatedAt
+  publishedAt   DateTime?
+  status        ArticleStatus @default(DRAFT)
+  user          User?         @relation(fields: [userId], references: [id])
 }
