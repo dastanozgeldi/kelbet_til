@@ -35,7 +35,6 @@ export function CreateBookForm({ onSuccess }: { onSuccess?: () => void }) {
     } else if (state?.message && !state?.success) {
       toast.error(state.message);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
 
   const handlePreview = async () => {
