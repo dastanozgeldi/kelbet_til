@@ -36,7 +36,7 @@ export function CreateArticleForm({ onSuccess }: { onSuccess?: () => void }) {
   }, [state]);
 
   return (
-    <form action={formAction}>
+    <form action={formAction} className="space-y-4">
       <div className="space-y-1.5">
         <Label htmlFor="title">Тақырыбы</Label>
         <Input id="title" name="title" placeholder="Тақырыбы" />
