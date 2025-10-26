@@ -1,0 +1,19 @@
+"use client";
+
+import RichTextEditor from "@/components/rich-text-editor";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
+
+export default function Editor() {
+  const [post, setPost] = useState("");
+
+  return (
+    <div className="mx-auto flex h-full w-full max-w-3xl flex-col gap-3 py-8">
+      <RichTextEditor content={post} onChange={setPost} />
+
+      <Button className="w-32 self-end" onClick={() => console.log(post)}>
+        Save
+      </Button>
+    </div>
+  );
+}
