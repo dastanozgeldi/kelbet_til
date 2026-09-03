@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useEffectEvent } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { filters } from "@/config";
@@ -27,11 +27,12 @@ const initialState = {
 export function CreateBookForm({ onSuccess }: { onSuccess?: () => void }) {
   const [state, formAction, pending] = useActionState(createBook, initialState);
   const [fileUrl, setFileUrl] = useState("");
+  const notifySuccess = useEffectEvent(() => onSuccess?.());
 
   useEffect(() => {
     if (state?.success) {
       toast.success(state.message);
-      onSuccess?.();
+      notifySuccess();
     } else if (state?.message && !state?.success) {
       toast.error(state.message);
     }

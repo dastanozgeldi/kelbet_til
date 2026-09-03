@@ -3,7 +3,6 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { XIcon } from "lucide-react";
 import { useDebouncedCallback } from "use-debounce";
@@ -14,21 +13,12 @@ export default function Filters() {
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  const [tabs, setTabs] = useState({
+  const tabs = {
     program: searchParams.get("program"),
     grade: searchParams.get("grade"),
     language: searchParams.get("language"),
     term: searchParams.get("term"),
-  });
-
-  useEffect(() => {
-    setTabs({
-      program: searchParams.get("program"),
-      grade: searchParams.get("grade"),
-      language: searchParams.get("language"),
-      term: searchParams.get("term"),
-    });
-  }, [searchParams]);
+  };
 
   const handleSearch = useDebouncedCallback(
     ({

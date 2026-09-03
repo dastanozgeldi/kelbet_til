@@ -1,4 +1,4 @@
-import { useActionState, useEffect, useState } from "react";
+import { useActionState, useEffect, useEffectEvent, useState } from "react";
 import { createArticle } from "../actions";
 import { toast } from "sonner";
 import { Label } from "@/components/ui/label";
@@ -20,6 +20,7 @@ const initialState = {
 
 export function CreateArticleForm({ onSuccess }: { onSuccess?: () => void }) {
   const [content, setContent] = useState("");
+  const notifySuccess = useEffectEvent(() => onSuccess?.());
 
   const [state, formAction, pending] = useActionState(
     createArticle,
@@ -29,7 +30,7 @@ export function CreateArticleForm({ onSuccess }: { onSuccess?: () => void }) {
   useEffect(() => {
     if (state?.success) {
       toast.success(state.message);
-      onSuccess?.();
+      notifySuccess();
     } else if (state?.message && !state?.success) {
       toast.error(state.message);
     }

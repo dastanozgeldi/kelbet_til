@@ -1,7 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Article } from "@prisma/client";
-import { useActionState, useEffect, useState } from "react";
+import { useActionState, useEffect, useEffectEvent, useState } from "react";
 import { toast } from "sonner";
 import {
   Select,
@@ -27,6 +27,7 @@ export function EditArticleForm({
   onSuccess?: () => void;
 }) {
   const [content, setContent] = useState(article.content || "");
+  const notifySuccess = useEffectEvent(() => onSuccess?.());
 
   const [state, formAction, pending] = useActionState(
     editArticle,
@@ -36,7 +37,7 @@ export function EditArticleForm({
   useEffect(() => {
     if (state?.success) {
       toast.success(state.message);
-      onSuccess?.();
+      notifySuccess();
     } else if (state?.message && !state?.success) {
       toast.error(state.message);
     }
