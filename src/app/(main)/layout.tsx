@@ -12,7 +12,7 @@ export default async function MainLayout({
       <footer className="border-border mt-3 border-t py-3 text-center">
         made with 🥰 by{" "}
         <a
-          href="https://instagram.com/dastanozgeldi"
+          href="https://dastanozgeldi.com"
           className="font-semibold"
           target="_blank"
           rel="noopener noreferrer"
