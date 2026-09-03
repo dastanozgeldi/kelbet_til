@@ -19,6 +19,11 @@ import {
 } from "@/components/ui/pagination";
 
 const ITEMS_PER_PAGE = 10;
+const registeredAtFormatter = new Intl.DateTimeFormat("kk-KZ", {
+  dateStyle: "medium",
+  timeStyle: "short",
+  timeZone: "Asia/Almaty",
+});
 
 export async function UsersTable({
   currentPage,
@@ -46,8 +51,9 @@ export async function UsersTable({
         name: true,
         email: true,
         role: true,
+        createdAt: true,
       },
-      orderBy: { role: "desc" },
+      orderBy: [{ createdAt: "desc" }, { id: "desc" }],
       skip,
       take: ITEMS_PER_PAGE,
     }),
@@ -72,6 +78,7 @@ export async function UsersTable({
             <TableHead>Аты-жөні</TableHead>
             <TableHead>Поштасы</TableHead>
             <TableHead>Рөл</TableHead>
+            <TableHead>Тіркелген күні</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -85,11 +92,16 @@ export async function UsersTable({
                     {user.role === "ADMIN" ? "Админ" : "Қолданушы"}
                   </Badge>
                 </TableCell>
+                <TableCell>
+                  <time dateTime={user.createdAt.toISOString()}>
+                    {registeredAtFormatter.format(user.createdAt)}
+                  </time>
+                </TableCell>
               </TableRow>
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan={3} className="h-16 text-center">
+              <TableCell colSpan={4} className="h-16 text-center">
                 {query ? "Қолданушы табылмады." : "Қолданушы жоқ."}
               </TableCell>
             </TableRow>

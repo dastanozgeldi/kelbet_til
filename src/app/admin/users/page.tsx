@@ -37,7 +37,7 @@ export default async function Page(props: {
       <CardContent>
         <Suspense
           key={(query ?? "") + currentPage}
-          fallback={<TableFallback columns={3} />}
+          fallback={<TableFallback columns={4} />}
         >
           <UsersTable currentPage={currentPage} query={query} />
         </Suspense>
