@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { PDFBook } from "./_components/pdf-book";
+import { PDFBookClient } from "./_components/pdf-book-client";
 import { db } from "@/server/db";
 import { notFound } from "next/navigation";
 import { PageHeader } from "../_components/page-header";
@@ -38,7 +38,7 @@ async function SuspenseBoundary({ id }: { id: string }) {
   return (
     <>
       <PageHeader title={book.title} />
-      <PDFBook book={book} />
+      <PDFBookClient book={book} />
     </>
   );
 }
