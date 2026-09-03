@@ -19,6 +19,7 @@ import { Badge } from "@/components/ui/badge";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
@@ -78,15 +79,18 @@ export const AdminSidebar = ({ user }: { user: Session["user"] }) => {
               </DropdownMenuTrigger>
               <DropdownMenuContent
                 side="top"
-                className="w-[--radix-popper-anchor-width]"
+                align="start"
+                className="w-(--radix-dropdown-menu-trigger-width)"
               >
-                <DropdownMenuItem
-                  variant="destructive"
-                  onClick={() => signOut()}
-                >
-                  <LogOutIcon className="size-4" />
-                  <span>Шығу</span>
-                </DropdownMenuItem>
+                <DropdownMenuGroup>
+                  <DropdownMenuItem
+                    variant="destructive"
+                    onClick={() => signOut()}
+                  >
+                    <LogOutIcon className="size-4" />
+                    <span>Шығу</span>
+                  </DropdownMenuItem>
+                </DropdownMenuGroup>
               </DropdownMenuContent>
             </DropdownMenu>
           </SidebarMenuItem>
